@@ -1,0 +1,56 @@
+{
+  "root": true,
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": { "project": "./tsconfig.json" },
+  "env": { "es6": true },
+  "ignorePatterns": [
+    "node_modules",
+    "build",
+    "coverage",
+    "defaultConfig",
+    "defaultJestConfig",
+    "setupTests.ts",
+    "babel.config.js"
+  ],
+  "plugins": ["import", "eslint-comments"],
+  "extends": [
+    "eslint:recommended",
+    "plugin:eslint-comments/recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:import/typescript",
+    "prettier",
+    "prettier/@typescript-eslint"
+  ],
+  "globals": { "BigInt": true, "console": true, "WebAssembly": true },
+  "rules": {
+    "@typescript-eslint/explicit-module-boundary-types": [
+      "error",
+      { "allowArgumentsExplicitlyTypedAsAny": true }
+    ],
+    "eslint-comments/disable-enable-pair": [
+      "error",
+      { "allowWholeFile": true }
+    ],
+    "eslint-comments/no-unused-disable": "error",
+    "eqeqeq": "error",
+    "curly": "error",
+    "@typescript-eslint/no-empty-function": "off",
+    "no-constant-condition": ["error", { "checkLoops": false }],
+    /*
+     * Disabled because of buggy behavior: in
+     *
+     * ```
+     * A extends (...args: infer Args) => infer FunctionResult
+     *   ? (...args: Args) => FunctionResult
+     *   : B
+     * ```
+     *
+     * `FunctionResult` is reported as unused.
+     */
+    "@typescript-eslint/no-unused-vars": "off",
+    "@typescript-eslint/consistent-type-assertions": [
+      "error",
+      { "assertionStyle": "never" }
+    ]
+  }
+}
