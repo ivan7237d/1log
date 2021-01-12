@@ -10,6 +10,8 @@ export type {
   LogHandler,
 } from './internal/logger/handler';
 export type {
+  PluginLoggerResult,
+  PluginLogger,
   GlobalPlugin,
   UniversalPlugin,
   ClosingPlugin,

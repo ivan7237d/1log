@@ -154,6 +154,9 @@ interface UniversalPluginReducer {
     | typeof internalDisablePlugin;
 }
 
+/**
+ * @internal
+ */
 export const universalPluginReducer: UniversalPluginReducer = (
   accumulator,
   value,
