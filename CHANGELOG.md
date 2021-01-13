@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.0.2](https://github.com/ivan7237d/1log/compare/v1.0.1...v1.0.2) (2021-01-13)
+
+
+### Bug Fixes
+
+* incorrect output when the number of arguments is other than 1 and a local plugin is present ([1f972e0](https://github.com/ivan7237d/1log/commit/1f972e0b56710394f275d83df0b0647d77b027d4))
+
 ### [1.0.1](https://github.com/ivan7237d/1log/compare/v1.0.0...v1.0.1) (2021-01-12)
 
 
