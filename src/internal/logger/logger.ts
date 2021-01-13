@@ -250,7 +250,7 @@ const logLocal = (...args: any[]): any => {
     }
     return value;
   }
-  getPluginLogger(internalArg)?.([], ...args);
+  getPluginLogger(internalArg)?.([], ...externalArgs);
 };
 
 /**

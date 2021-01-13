@@ -61,13 +61,15 @@ const sameResult = <Element, Result>(
   return result;
 };
 
-test('usage with only a handler plugin', () => {
+test('usage with number of arguments other than 1', () => {
   expect(log()).toBeUndefined();
   expect(getMessages()).toMatchInlineSnapshot(`+0ms`);
   expect(log(1, 2)).toBeUndefined();
   expect(getMessages()).toMatchInlineSnapshot(`+0ms 1 2`);
-  expect(log(42)).toMatchInlineSnapshot(`42`);
-  expect(getMessages()).toMatchInlineSnapshot(`+0ms 42`);
+  expect(log(badgePlugin('<caption>'))()).toBeUndefined();
+  expect(getMessages()).toMatchInlineSnapshot(`[<caption>] +0ms`);
+  expect(log(badgePlugin('<caption>'))(1, 2)).toBeUndefined();
+  expect(getMessages()).toMatchInlineSnapshot(`[<caption>] +0ms 1 2`);
 });
 
 test('universal plugin installation', () => {
