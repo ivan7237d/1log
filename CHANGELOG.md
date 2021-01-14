@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.1.0](https://github.com/ivan7237d/1log/compare/v1.0.2...v1.1.0) (2021-01-14)
+
+
+### Features
+
+* prevent confusing badge numbers when using with React dev mode ([1e26660](https://github.com/ivan7237d/1log/commit/1e266605fba3c2ebb107b7d08dbc4efc3c08d79f))
+
 ### [1.0.2](https://github.com/ivan7237d/1log/compare/v1.0.1...v1.0.2) (2021-01-13)
 
 
