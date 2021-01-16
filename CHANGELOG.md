@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.2.0](https://github.com/ivan7237d/1log/compare/v1.1.0...v1.2.0) (2021-01-16)
+
+
+### Features
+
+* when no handlers are installed, disable logging instead of throwing an error ([6862d49](https://github.com/ivan7237d/1log/commit/6862d49c04f91b67addf76123aa3f7e1987a42d8))
+
 ## [1.1.0](https://github.com/ivan7237d/1log/compare/v1.0.2...v1.1.0) (2021-01-14)
 
 
