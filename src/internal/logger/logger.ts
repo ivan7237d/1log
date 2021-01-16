@@ -10,9 +10,8 @@ import {
   reverseArray,
   setInMap,
 } from 'antiutils';
-import { throwError } from '../throwError';
 import { addNumberedBadge } from './addNumberedBadge';
-import { LogHandler, LogMessage } from './handler';
+import { LogHandler } from './handler';
 import {
   ClosingPlugin,
   closingPluginSymbol,
@@ -80,38 +79,31 @@ const getInstalledCombinedUniversalPlugin: CurrentCombinedUniversalPlugin = memo
     ),
 );
 
-const getInstalledCombinedLogHandler = memoizeWeak(
-  (plugins: typeof installedPlugins): LogHandler => {
-    const handlers = [
-      ...applyPipe(
-        plugins.values(),
-        flatMapIterable((value) =>
-          value.type === globalPluginSymbol && value.handler !== undefined
-            ? [value.handler]
-            : [],
-        ),
+const getInstalledHandlers = memoizeWeak(
+  (plugins: typeof installedPlugins): LogHandler[] => [
+    ...applyPipe(
+      plugins.values(),
+      flatMapIterable((value) =>
+        value.type === globalPluginSymbol && value.handler !== undefined
+          ? [value.handler]
+          : [],
       ),
-    ];
-    if (handlers.length === 0) {
-      throwError('NoLogHandlersError');
-    }
-    return (message: LogMessage) => {
-      for (const handler of handlers) {
-        handler(message);
-      }
-    };
-  },
+    ),
+  ],
 );
 
 const getInstalledPluginLogger = memoizeStrong(
   (severityLevel: number | undefined): PluginLogger => (badges, ...data) => {
-    getInstalledCombinedLogHandler(installedPlugins)({
+    const message = {
       severityLevel,
       stackLevel: getStackLevel(severityLevel),
       badges,
       timeDelta: getTimeDelta(),
       data,
-    });
+    };
+    for (const handler of getInstalledHandlers(installedPlugins)) {
+      handler(message);
+    }
     return increaseStackLevel(severityLevel);
   },
 );
@@ -133,8 +125,9 @@ const getPluginLogger = (
         ? applyPipe(
             combinedUniversalPlugin,
             ({ badges, enabled, severityLevel }) =>
-              enabled === undefined ||
-              (severityLevel !== undefined && severityLevel >= enabled)
+              getInstalledHandlers(installedPlugins).length !== 0 &&
+              (enabled === undefined ||
+                (severityLevel !== undefined && severityLevel >= enabled))
                 ? badges.reduce(
                     (log, caption) => addBadgeToPluginLogger(log)(caption),
                     getInstalledPluginLogger(severityLevel),
