@@ -85,7 +85,7 @@ This will produce the following log:
 
 <img src="https://github.com/ivan7237d/1log/raw/master/images/basic.png" alt="screenshot">
 
-Time deltas that you see in this screenshot are computed using `performance.now` and exclude the time spent on logging itself. If the time delta is less than 10ms, it is muted, if greater than 1s, bold. For time deltas less than 1ms, we display up to 3 significant digits after the decimal point, and for time deltas of 1ms and more we display time delta with millisecond precision, e.g. `1h 2m 3.450s`.
+Time deltas that you see in this screenshot are computed using `performance.now` and exclude the time spent on logging itself. If the time delta is less than 10ms, it is muted, if greater than 1s, bold. For time deltas less than 1ms, we display up to 3 significant digits after the decimal point (on Node, you can see deltas like 0.00572ms), and for time deltas of 1ms and more we display time delta with millisecond precision, e.g. `1h 2m 3.450s`.
 
 Indentation indicates (synchronous) stack level.
 
