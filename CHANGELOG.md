@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.0.0](https://github.com/ivan7237d/1log/compare/v1.2.0...v2.0.0) (2021-01-22)
+
+
+### ⚠ BREAKING CHANGES
+
+* plugin API has changed, disablePlugin was removed, installPlugin, SeverityLevel,
+jestSerializer were renamed, iterablePlugin is superceded by iterableIteratorPlugin
+
+### Features
+
+* simplified plugin API ([36e6900](https://github.com/ivan7237d/1log/commit/36e6900eec0b626c904082f05914edf4cbfac0b5))
+
 ## [1.2.0](https://github.com/ivan7237d/1log/compare/v1.1.0...v1.2.0) (2021-01-16)
 
 
