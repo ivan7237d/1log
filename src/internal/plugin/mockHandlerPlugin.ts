@@ -1,19 +1,24 @@
 import { LogMessage } from '../logger/handler';
-import { GlobalPlugin, globalPluginSymbol } from '../logger/plugin';
+import { HandlerPlugin, pluginSymbol, PluginType } from '../logger/plugin';
 
 let messages: LogMessage[] = [];
 
 const returnedMessageArrays = new WeakSet();
 
 /**
- * A plugin that buffers log messages in memory.
+ * A plugin that buffers log messages in memory. Can optionally be passed a
+ * predicate to mute messages for which it returns false.
  */
-export const mockHandlerPlugin: GlobalPlugin = {
-  type: globalPluginSymbol,
-  handler: (logRecord) => {
-    messages = [...messages, logRecord];
+export const mockHandlerPlugin = (
+  filter?: (message: LogMessage) => boolean,
+): HandlerPlugin => ({
+  [pluginSymbol]: PluginType.Handler,
+  handler: (message) => {
+    if (filter === undefined || filter(message)) {
+      messages = [...messages, message];
+    }
   },
-};
+});
 
 /**
  * Returns buffered log messages and clears the buffer.

@@ -1,29 +1,24 @@
-/**
- * Stores current stack level for each severity level and for undefined severity
- * level.
- */
-const stackLevels = new Map<number | undefined, number>();
+let stackLevel = 0;
 
 /**
- * @internal
+ * Increments stack level for messages that are synchronously logged by the
+ * callback.
  */
-export const increaseStackLevel = (severityLevel: number | undefined) => <
+export const increaseStackLevel = <
   CallbackParameters extends unknown[],
   CallbackResult
 >(
   callback: (...args: CallbackParameters) => CallbackResult,
 ) => (...args: CallbackParameters): CallbackResult => {
-  stackLevels.set(severityLevel, (stackLevels.get(severityLevel) ?? 0) + 1);
+  stackLevel++;
   try {
     return callback(...args);
   } finally {
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    stackLevels.set(severityLevel, stackLevels.get(severityLevel)! - 1);
+    stackLevel--;
   }
 };
 
 /**
  * @internal
  */
-export const getStackLevel = (severityLevel: number | undefined): number =>
-  stackLevels.get(severityLevel) ?? 0;
+export const getStackLevel = (): number => stackLevel;

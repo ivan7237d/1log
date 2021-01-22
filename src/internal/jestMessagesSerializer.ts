@@ -1,29 +1,29 @@
 import { applyPipe, asNever, mapIterable, rangeIterable } from 'antiutils';
 import { LogMessage } from './logger/handler';
-import { normalizeSeverityLevel } from './logger/normalizeSeverityLevel';
-import { SeverityLevel } from './logger/severityLevel';
+import { normalizeSeverity } from './logger/normalizeSeverity';
+import { Severity } from './logger/severity';
 import { formatTime } from './plugin/consoleHandlerPlugin/pureConsoleHandler/formatTime';
 import { isMessages } from './plugin/mockHandlerPlugin';
 
 const formatMessageHeader = ({
   stackLevel,
-  severityLevel,
+  severity,
   badges,
   timeDelta,
 }: LogMessage) =>
   [
-    ...applyPipe(severityLevel, normalizeSeverityLevel, (severityLevel) =>
-      severityLevel === SeverityLevel.debug
+    ...applyPipe(severity, normalizeSeverity, (severity) =>
+      severity === Severity.debug
         ? ['DEBUG']
-        : severityLevel === SeverityLevel.info
+        : severity === Severity.info
         ? ['INFO']
-        : severityLevel === SeverityLevel.warn
+        : severity === Severity.warn
         ? ['WARNING']
-        : severityLevel === SeverityLevel.error
+        : severity === Severity.error
         ? ['ERROR']
-        : severityLevel === undefined
+        : severity === undefined
         ? []
-        : asNever(severityLevel),
+        : asNever(severity),
     ),
     ...applyPipe(
       rangeIterable(undefined, stackLevel),
@@ -74,7 +74,7 @@ const serializeItems: import('pretty-format').NewPlugin['serialize'] = (
 /**
  * A Jest serializer plugin that formats log messages.
  */
-export const jestSerializer: import('pretty-format').NewPlugin = {
+export const jestMessagesSerializer: import('pretty-format').NewPlugin = {
   test: isMessages,
   serialize: (val, config, indentation, depth, refs, printer) => {
     // eslint-disable-next-line @typescript-eslint/consistent-type-assertions

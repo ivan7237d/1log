@@ -1,7 +1,7 @@
-import { SeverityLevel } from '../../logger/severityLevel';
+import { Severity } from '../../logger/severity';
 import { severityPlugin } from './severityPlugin';
 
 /**
- * Shorthand for `severityPlugin(SeverityLevel.warn)`.
+ * Shorthand for `severityPlugin(Severity.warn)`.
  */
-export const warnPlugin = severityPlugin(SeverityLevel.warn);
+export const warnPlugin = severityPlugin(Severity.warn);

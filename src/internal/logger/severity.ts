@@ -1,7 +1,7 @@
 /**
  * Default severity levels.
  */
-export enum SeverityLevel {
+export enum Severity {
   debug = 10,
   info = 20,
   warn = 30,

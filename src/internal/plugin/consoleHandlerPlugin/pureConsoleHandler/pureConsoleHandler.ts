@@ -8,8 +8,8 @@ import {
   zipIterables,
 } from 'antiutils';
 import { LogMessage } from '../../../logger/handler';
-import { normalizeSeverityLevel } from '../../../logger/normalizeSeverityLevel';
-import { SeverityLevel } from '../../../logger/severityLevel';
+import { normalizeSeverity } from '../../../logger/normalizeSeverity';
+import { Severity } from '../../../logger/severity';
 import { logPalette } from '../../../logPalette';
 import { LogStyle } from '../logStyle';
 import { formatTime } from './formatTime';
@@ -38,16 +38,16 @@ const ansiClear = `\u001B[0m`;
 
 const mutedTextColor = '#c0c0c0';
 
-const getSeverityCaption = (severityLevel: SeverityLevel) =>
-  severityLevel === SeverityLevel.debug
+const getSeverityCaption = (severity: Severity) =>
+  severity === Severity.debug
     ? 'DEBUG'
-    : severityLevel === SeverityLevel.info
+    : severity === Severity.info
     ? 'INFO'
-    : severityLevel === SeverityLevel.warn
+    : severity === Severity.warn
     ? 'WARNING'
-    : severityLevel === SeverityLevel.error
+    : severity === Severity.error
     ? 'ERROR'
-    : asNever(severityLevel);
+    : asNever(severity);
 
 const getStyledTimeDelta = (
   timeDelta: number,
@@ -103,13 +103,11 @@ export const pureConsoleHandler = ({
   logStyle,
   maxLength,
 }: {
-  getImpureHandler: (
-    severityLevel?: SeverityLevel,
-  ) => (...data: unknown[]) => void;
+  getImpureHandler: (severity?: Severity) => (...data: unknown[]) => void;
   logStyle: LogStyle;
   maxLength?: number;
 }) => ({
-  severityLevel: nonNormalizedSeverityLevel,
+  severity: nonNormalizedSeverity,
   stackLevel,
   badges,
   timeDelta,
@@ -120,17 +118,17 @@ export const pureConsoleHandler = ({
     mapIterable(() => '\u00B7'),
   );
   const styledTimeDelta = getStyledTimeDelta(timeDelta);
-  const severityLevel = normalizeSeverityLevel(nonNormalizedSeverityLevel);
-  const log = getImpureHandler(severityLevel);
+  const severity = normalizeSeverity(nonNormalizedSeverity);
+  const log = getImpureHandler(severity);
   if (logStyle === 'css') {
     log(
       ...renderWithCssStyles([
         ...applyPipe(
-          zipIterables(firstIterable, [
-            ...(severityLevel !== undefined
+          zipIterables(firstIterable(), [
+            ...(severity !== undefined
               ? [
                   [
-                    getSeverityCaption(severityLevel),
+                    getSeverityCaption(severity),
                     `color: ${mutedTextColor}`,
                   ] as const,
                 ]
@@ -168,15 +166,15 @@ export const pureConsoleHandler = ({
   } else if (logStyle === 'ansi') {
     log(
       [
-        ...(severityLevel !== undefined
+        ...(severity !== undefined
           ? [
               `${
-                severityLevel === SeverityLevel.warn
+                severity === Severity.warn
                   ? ansiColor(logPalette.yellow)
-                  : severityLevel === SeverityLevel.error
+                  : severity === Severity.error
                   ? ansiColor(logPalette.red)
                   : ansiDim
-              }${getSeverityCaption(severityLevel)}${ansiClear}`,
+              }${getSeverityCaption(severity)}${ansiClear}`,
             ]
           : []),
         ...applyPipe(
@@ -203,9 +201,7 @@ export const pureConsoleHandler = ({
   } else if (logStyle === 'none') {
     log(
       `${[
-        ...(severityLevel !== undefined
-          ? [getSeverityCaption(severityLevel)]
-          : []),
+        ...(severity !== undefined ? [getSeverityCaption(severity)] : []),
         ...stackIndicator,
         ...applyPipe(
           badges,

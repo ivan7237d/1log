@@ -1,18 +1,30 @@
 import {
   functionPlugin,
   getMessages,
-  installPlugin,
-  jestSerializer,
+  installPlugins,
+  iterableIteratorPlugin,
+  jestMessagesSerializer,
   mockHandlerPlugin,
   promisePlugin,
   resetBadgeNumbers,
   resetTimeDelta,
 } from './src';
 
-expect.addSnapshotSerializer(jestSerializer);
-installPlugin(mockHandlerPlugin);
-installPlugin(functionPlugin);
-installPlugin(promisePlugin);
+expect.addSnapshotSerializer(jestMessagesSerializer);
+expect.addSnapshotSerializer({
+  test: (value) =>
+    value !== undefined &&
+    value !== null &&
+    value[Symbol.iterator]?.() === value,
+  serialize: () => `[IterableIterator]`,
+});
+
+installPlugins(
+  mockHandlerPlugin(),
+  functionPlugin,
+  promisePlugin,
+  iterableIteratorPlugin,
+);
 
 beforeEach(() => {
   jest.useFakeTimers('modern');
@@ -22,6 +34,5 @@ beforeEach(() => {
 });
 
 afterEach(() => {
-  jest.runOnlyPendingTimers();
   jest.useRealTimers();
 });

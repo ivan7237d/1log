@@ -1,164 +1,69 @@
 import {
   applyPipe,
-  as,
-  asContext,
-  deleteFromMap,
-  flatMapIterable,
-  memoizeStrong,
+  filterIterable,
+  firstInIterable,
   memoizeWeak,
-  reduceIterable,
-  reverseArray,
-  setInMap,
+  reverseIterable,
 } from 'antiutils';
 import { addNumberedBadge } from './addNumberedBadge';
-import { LogHandler } from './handler';
+import { LogMessage } from './handler';
 import {
-  ClosingPlugin,
-  closingPluginSymbol,
-  CombinedUniversalPlugin,
-  GlobalPlugin,
-  globalPluginSymbol,
-  internalDisablePlugin,
+  CombinedPlugin,
+  combinedPluginReducer,
+  LogPlugin,
   PluginLogger,
-  UniversalPlugin,
-  universalPluginReducer,
-  universalPluginSymbol,
+  pluginSymbol,
 } from './plugin';
-import { getStackLevel, increaseStackLevel } from './stackLevel';
+import { getStackLevel } from './stackLevel';
 import { systemPalette } from './systemPalette';
 import { excludeFromTimeDelta, getTimeDelta } from './timeDelta';
 
-let installedPlugins = new Map<symbol, GlobalPlugin | UniversalPlugin>();
-
 /**
- * Globally installs a plugin. Returns a function that uninstalls the plugin.
+ * Combined globally installed plugins.
  */
-export const installPlugin = (
-  plugin: GlobalPlugin | UniversalPlugin,
-): (() => void) => {
-  const symbol = Symbol();
-  installedPlugins = applyPipe(
-    installedPlugins,
-    setInMap(asContext(symbol), plugin),
-  );
-  return () => {
-    installedPlugins = applyPipe(
-      installedPlugins,
-      deleteFromMap(asContext(symbol)),
-    );
-  };
+let globalCombinedPlugin: CombinedPlugin = {
+  handlers: [],
+  proxyPlugins: [],
+  badgeCaptions: [],
 };
 
 /**
- * Given currently installed plugins, returns a value representing a combination
- * of the installed `UniversalPlugin`s and 0 or more additional
- * `UniversalPlugin`s.
+ * Globally installs plugins.
  */
-interface CurrentCombinedUniversalPlugin {
-  (value: typeof installedPlugins):
-    | CombinedUniversalPlugin
-    | typeof internalDisablePlugin;
-}
-
-const getInstalledCombinedUniversalPlugin: CurrentCombinedUniversalPlugin = memoizeWeak(
-  (plugins) =>
-    applyPipe(
-      plugins.values(),
-      flatMapIterable((plugin) =>
-        plugin.type === universalPluginSymbol ? [plugin] : [],
-      ),
-      reduceIterable(
-        (accumulator, value) =>
-          accumulator === internalDisablePlugin
-            ? undefined
-            : universalPluginReducer(accumulator, value),
-        as<CombinedUniversalPlugin | typeof internalDisablePlugin>({
-          badges: [],
-        }),
-      ),
-    ),
-);
-
-const getInstalledHandlers = memoizeWeak(
-  (plugins: typeof installedPlugins): LogHandler[] => [
-    ...applyPipe(
-      plugins.values(),
-      flatMapIterable((value) =>
-        value.type === globalPluginSymbol && value.handler !== undefined
-          ? [value.handler]
-          : [],
-      ),
-    ),
-  ],
-);
-
-const getInstalledPluginLogger = memoizeStrong(
-  (severityLevel: number | undefined): PluginLogger => (badges, ...data) => {
-    const message = {
-      severityLevel,
-      stackLevel: getStackLevel(severityLevel),
-      badges,
-      timeDelta: getTimeDelta(),
-      data,
-    };
-    for (const handler of getInstalledHandlers(installedPlugins)) {
-      handler(message);
-    }
-    return increaseStackLevel(severityLevel);
-  },
-);
-
-const addBadgeToPluginLogger = memoizeWeak((log: PluginLogger) =>
-  memoizeStrong(
-    (caption: string): PluginLogger => (badges, ...args) =>
-      log([{ caption, color: systemPalette.blue }, ...badges], ...args),
-  ),
-);
-
-const getPluginLogger = (
-  currentCombinedUniversalPlugin: CurrentCombinedUniversalPlugin,
-) =>
-  applyPipe(
-    currentCombinedUniversalPlugin(installedPlugins),
-    (combinedUniversalPlugin) =>
-      combinedUniversalPlugin !== internalDisablePlugin
-        ? applyPipe(
-            combinedUniversalPlugin,
-            ({ badges, enabled, severityLevel }) =>
-              getInstalledHandlers(installedPlugins).length !== 0 &&
-              (enabled === undefined ||
-                (severityLevel !== undefined && severityLevel >= enabled))
-                ? badges.reduce(
-                    (log, caption) => addBadgeToPluginLogger(log)(caption),
-                    getInstalledPluginLogger(severityLevel),
-                  )
-                : undefined,
-          )
-        : undefined,
+export const installPlugins = (...plugins: LogPlugin[]): void => {
+  globalCombinedPlugin = plugins.reduce(
+    combinedPluginReducer,
+    globalCombinedPlugin,
   );
+};
 
-const addCreateBadge = addNumberedBadge('create', systemPalette.gray);
+const getBadges = memoizeWeak((badgeCaptions: string[]) =>
+  badgeCaptions.map((caption) => ({ caption, color: systemPalette.blue })),
+);
 
-const getInstalledProxies = memoizeWeak((plugins: typeof installedPlugins) =>
-  applyPipe(
-    plugins.values(),
-    flatMapIterable((value) =>
-      value.type === globalPluginSymbol && value.proxy !== undefined
-        ? [value.proxy]
-        : [],
-    ),
-    (value) => [...value],
-    reverseArray,
-  ),
+const getPluginLogger = (combinedPlugin: CombinedPlugin): PluginLogger => (
+  badges,
+  ...data
+) => {
+  const message: LogMessage = {
+    severity: combinedPlugin.severity,
+    stackLevel: getStackLevel(),
+    badges: [...getBadges(combinedPlugin.badgeCaptions), ...badges],
+    timeDelta: getTimeDelta(),
+    data,
+  };
+  combinedPlugin.handlers.forEach((handler) => handler(message));
+};
+
+const addCreateBadge = memoizeWeak((_badgeCaptions: string[]) =>
+  addNumberedBadge('create', systemPalette.gray),
 );
 
 export interface Logger {
   <Parameters extends unknown[]>(...args: Parameters): Parameters extends [
-    UniversalPlugin,
+    LogPlugin,
   ]
     ? Logger
-    : Parameters extends [ClosingPlugin<infer T>]
-    ? T
     : Parameters extends [infer T]
     ? T
     : void;
@@ -171,13 +76,13 @@ const logLocalInternalArgs = new WeakSet();
 
 /**
  * Implements `Logger`, but also optionally takes at first position an argument
- * of type `CurrentCombinedUniversalPlugin` which is marked as internal by
- * adding it to `logLocalInternalArgs` WeakSet.
+ * of type `CombinedPlugin` which is marked as internal by adding it to
+ * `logLocalInternalArgs` WeakSet.
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const logLocal = (...args: any[]): any => {
-  const [internalArg = getInstalledCombinedUniversalPlugin, externalArgs]: [
-    CurrentCombinedUniversalPlugin,
+  const [combinedPlugin = globalCombinedPlugin, externalArgs]: [
+    CombinedPlugin,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     any[],
   ] = applyPipe(args[0], (value) =>
@@ -185,71 +90,41 @@ const logLocal = (...args: any[]): any => {
       ? [value, args.slice(1)]
       : [undefined, args],
   );
+  const pluginLogger = getPluginLogger(combinedPlugin);
   if (externalArgs.length === 1) {
     const externalArg = externalArgs[0];
-    if (externalArg?.type === universalPluginSymbol) {
-      const universalPlugin: UniversalPlugin = externalArg;
-      const newInternalArg = memoizeWeak((value: typeof installedPlugins) =>
-        applyPipe(internalArg(value), (value) =>
-          value === internalDisablePlugin
-            ? internalDisablePlugin
-            : universalPluginReducer(value, universalPlugin),
-        ),
-      );
-      logLocalInternalArgs.add(newInternalArg);
+    if (externalArg?.[pluginSymbol] !== undefined) {
+      const plugin: LogPlugin = externalArg;
+      const newCombinedPlugin = combinedPluginReducer(combinedPlugin, plugin);
+      logLocalInternalArgs.add(newCombinedPlugin);
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       return excludeFromTimeDelta((...args: any[]) =>
-        logLocal(newInternalArg, ...args),
+        logLocal(newCombinedPlugin, ...args),
       );
     }
-    if (externalArg?.type === closingPluginSymbol) {
-      const { transform }: ClosingPlugin<unknown> = externalArg;
-      return excludeFromTimeDelta((value) => {
-        const log = getPluginLogger(internalArg);
-        if (log === undefined) {
-          return value;
-        }
-        const logWithCreate = addCreateBadge(log);
-        logWithCreate([], value);
-        // eslint-disable-next-line @typescript-eslint/consistent-type-assertions, @typescript-eslint/no-explicit-any
-        return (transform as any)(logWithCreate)(value);
-      });
-    }
-    const log = getPluginLogger(internalArg);
-    if (log === undefined) {
-      return externalArg;
-    }
-    const { value, done } = applyPipe(
-      getInstalledProxies(installedPlugins),
-      reduceIterable(
-        ({ value, done }, { scope, transform }) =>
-          done
-            ? undefined
-            : scope(value)
-            ? {
-                value: (() => {
-                  const logWithCreate = addCreateBadge(log);
-                  logWithCreate([], value);
-                  return transform(logWithCreate)(value);
-                })(),
-                done: true,
-              }
-            : { value, done },
-        { value: externalArg, done: false },
-      ),
+    const proxyPlugin = applyPipe(
+      combinedPlugin.proxyPlugins,
+      reverseIterable,
+      filterIterable((plugin) => plugin.scope(externalArg)),
+      firstInIterable,
     );
-    if (!done) {
-      log([], externalArg);
+    if (proxyPlugin !== undefined) {
+      const logWithCreate = addCreateBadge(combinedPlugin.badgeCaptions)(
+        pluginLogger,
+      );
+      logWithCreate([], externalArg);
+      return proxyPlugin.transform(logWithCreate)(externalArg);
     }
-    return value;
+    pluginLogger([], externalArg);
+    return externalArg;
   }
-  getPluginLogger(internalArg)?.([], ...externalArgs);
+  pluginLogger([], ...externalArgs);
 };
 
 /**
  * Logs a value, or if a plugin is passed as argument, returns another logger.
  * If there is 1 agrument and it's not a plugin, returns the argument possibly
- * transformed by a plugin.
+ * proxied by a plugin.
  */
 // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
 export const log = excludeFromTimeDelta(logLocal) as Logger;

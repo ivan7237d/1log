@@ -1437,10 +1437,10 @@ ansi-styles@^4.0.0, ansi-styles@^4.1.0:
   dependencies:
     color-convert "^2.0.1"
 
-antiutils@^2.2.0:
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/antiutils/-/antiutils-2.2.0.tgz#065f03239c2271a260b407f5e00e3c746f63774c"
-  integrity sha512-dj+zQVjyRsKMiPdRNZHx7r3dGVC/GJTa3wGz+lNdIJFG0s2/hRy/OqB5lYThOOh0QMOJ0BjRLLNsbtLVVuOOzQ==
+antiutils@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/antiutils/-/antiutils-3.0.0.tgz#68ce363da9f04e04d297911714346c6d683e403d"
+  integrity sha512-O+5n/HmevgJBMKdDVhFkiGfkUxg7dsyZOfvLAHIz0mUBT9yekFqQ6FTqQ9cWYMsHxxE4yMz0zcO46dtqmvb1lw==
 
 anymatch@^2.0.0:
   version "2.0.0"

@@ -1,4 +1,4 @@
-import { SeverityLevel } from '../../../logger/severityLevel';
+import { Severity } from '../../../logger/severity';
 import { logPalette } from '../../../logPalette';
 import { LogStyle } from '../logStyle';
 import { pureConsoleHandler } from './pureConsoleHandler';
@@ -13,8 +13,8 @@ const getHandlerLocal = ({
   const messages: unknown[] = [];
   return {
     handler: pureConsoleHandler({
-      getImpureHandler: (severityLevel) => (...data) => {
-        messages.push([severityLevel, ...data]);
+      getImpureHandler: (severity) => (...data) => {
+        messages.push([severity, ...data]);
       },
       logStyle,
       maxLength,
@@ -33,7 +33,7 @@ it('renders css-styled messages correctly', () => {
   });
 
   handler({
-    severityLevel: SeverityLevel.error,
+    severity: Severity.error,
     stackLevel: 2,
     badges: [
       { color: logPalette.blue, caption: '<caption 1>' },
@@ -128,7 +128,7 @@ it('renders ansi-styled messages correctly', () => {
   });
 
   handler({
-    severityLevel: SeverityLevel.error,
+    severity: Severity.error,
     stackLevel: 2,
     badges: [
       { color: logPalette.blue, caption: '<caption 1>' },
@@ -189,7 +189,7 @@ it('renders unstyled messages correctly', () => {
   });
 
   handler({
-    severityLevel: SeverityLevel.error,
+    severity: Severity.error,
     stackLevel: 2,
     badges: [
       { color: logPalette.blue, caption: '<caption 1>' },

@@ -1,18 +1,13 @@
-import { memoizeStrong, memoizeWeak } from 'antiutils';
 import { PluginLogger } from './plugin';
 
-let getIndex: (log: PluginLogger) => (captionBase: string) => () => number;
+/**
+ * Counters are specific to an era.
+ */
+let era = Symbol();
 
 export const resetBadgeNumbers = (): void => {
-  getIndex = memoizeWeak(() =>
-    memoizeStrong(() => {
-      let counter = 0;
-      return () => ++counter;
-    }),
-  );
+  era = Symbol();
 };
-
-resetBadgeNumbers();
 
 /**
  * Prefixes the first log message with a badge captioned
@@ -34,7 +29,7 @@ resetBadgeNumbers();
  * ```
  *
  * otherwise. The number is computed by incrementing a counter specific to each
- * combination of logger function and caption base.
+ * outer function call.
  */
 export const addNumberedBadge = (
   captionBase: string,
@@ -42,26 +37,34 @@ export const addNumberedBadge = (
    * The same format as in `LogBadge`.
    */
   color: string,
-): ((log: PluginLogger) => PluginLogger) => (log) => {
-  let index: number | undefined = undefined;
-  return (badges, ...args) => {
-    if (index === undefined) {
-      index = getIndex(log)(captionBase)();
+): ((log: PluginLogger) => PluginLogger) => {
+  let eraLocal: symbol;
+  let counter: number;
+  return (log) => {
+    let index: number | undefined = undefined;
+    return (badges, ...args) => {
+      if (index === undefined) {
+        if (eraLocal !== era) {
+          eraLocal = era;
+          counter = 0;
+        }
+        index = ++counter;
+        return log(
+          [{ caption: `${captionBase} ${index}`, color }, ...badges],
+          ...args,
+        );
+      }
       return log(
-        [{ caption: `${captionBase} ${index}`, color }, ...badges],
+        [
+          {
+            caption: `${index}`,
+            color,
+            captionNoColor: `${captionBase} ${index}`,
+          },
+          ...badges,
+        ],
         ...args,
       );
-    }
-    return log(
-      [
-        {
-          caption: `${index}`,
-          color,
-          captionNoColor: `${captionBase} ${index}`,
-        },
-        ...badges,
-      ],
-      ...args,
-    );
+    };
   };
 };

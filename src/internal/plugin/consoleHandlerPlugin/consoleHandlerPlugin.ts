@@ -1,6 +1,7 @@
 import { applyPipe, asNever } from 'antiutils';
-import { GlobalPlugin, globalPluginSymbol } from '../../logger/plugin';
-import { SeverityLevel } from '../../logger/severityLevel';
+import { LogMessage } from '../../logger/handler';
+import { HandlerPlugin, pluginSymbol, PluginType } from '../../logger/plugin';
+import { Severity } from '../../logger/severity';
 import { detectedLogStyle } from './detectedLogStyle';
 import { pureConsoleHandler } from './pureConsoleHandler/pureConsoleHandler';
 
@@ -12,24 +13,37 @@ const consoleSnapshot = applyPipe(
 );
 
 /**
- * A plugin that writes log messages to the console.
+ * A plugin that writes log messages to the console. Can optionally be passed a
+ * predicate to mute messages for which the predicate returns false.
  */
-export const consoleHandlerPlugin: GlobalPlugin = {
-  type: globalPluginSymbol,
-  handler: pureConsoleHandler({
-    getImpureHandler: (severityLevel) =>
-      severityLevel === SeverityLevel.debug
-        ? consoleSnapshot.debug
-        : severityLevel === SeverityLevel.info
-        ? consoleSnapshot.info
-        : severityLevel === SeverityLevel.warn
-        ? consoleSnapshot.warn
-        : severityLevel === SeverityLevel.error
-        ? consoleSnapshot.error
-        : severityLevel === undefined
-        ? consoleSnapshot.log
-        : asNever(severityLevel),
-    logStyle: detectedLogStyle,
-    maxLength: 4000,
-  }),
-};
+export const consoleHandlerPlugin = (
+  filter?: (message: LogMessage) => boolean,
+): HandlerPlugin => ({
+  [pluginSymbol]: PluginType.Handler,
+  handler: applyPipe(
+    pureConsoleHandler({
+      getImpureHandler: (severity) =>
+        severity === Severity.debug
+          ? consoleSnapshot.debug
+          : severity === Severity.info
+          ? consoleSnapshot.info
+          : severity === Severity.warn
+          ? consoleSnapshot.warn
+          : severity === Severity.error
+          ? consoleSnapshot.error
+          : severity === undefined
+          ? consoleSnapshot.log
+          : asNever(severity),
+      logStyle: detectedLogStyle,
+      maxLength: 4000,
+    }),
+    (handler) =>
+      filter
+        ? (message) => {
+            if (filter(message)) {
+              handler(message);
+            }
+          }
+        : handler,
+  ),
+});

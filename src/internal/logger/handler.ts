@@ -11,7 +11,7 @@ export interface LogBadge {
 }
 
 export interface LogMessage {
-  severityLevel?: number;
+  severity?: number;
   stackLevel: number;
   badges: LogBadge[];
   timeDelta: number;

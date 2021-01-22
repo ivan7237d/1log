@@ -3,25 +3,23 @@ export {
   resetBadgeNumbers,
 } from './internal/logger/addNumberedBadge';
 export type { Logger } from './internal/logger/logger';
-export { installPlugin, log } from './internal/logger/logger';
+export { installPlugins, log } from './internal/logger/logger';
 export type {
   LogBadge,
   LogMessage,
   LogHandler,
 } from './internal/logger/handler';
 export type {
-  PluginLoggerResult,
   PluginLogger,
-  GlobalPlugin,
-  UniversalPlugin,
-  ClosingPlugin,
+  HandlerPlugin,
+  ProxyPlugin,
+  BadgePlugin,
+  SeverityPlugin,
+  LogPlugin,
 } from './internal/logger/plugin';
-export {
-  globalPluginSymbol,
-  universalPluginSymbol,
-  closingPluginSymbol,
-} from './internal/logger/plugin';
-export { SeverityLevel } from './internal/logger/severityLevel';
+export { pluginSymbol, PluginType } from './internal/logger/plugin';
+export { Severity } from './internal/logger/severity';
+export { increaseStackLevel } from './internal/logger/stackLevel';
 export {
   excludeFromTimeDelta,
   includeInTimeDelta,
@@ -34,14 +32,13 @@ export { infoPlugin } from './internal/plugin/severityPlugin/infoPlugin';
 export { severityPlugin } from './internal/plugin/severityPlugin/severityPlugin';
 export { warnPlugin } from './internal/plugin/severityPlugin/warnPlugin';
 export { badgePlugin } from './internal/plugin/badgePlugin';
-export { disablePlugin } from './internal/plugin/disablePlugin';
 export { functionPlugin } from './internal/plugin/functionPlugin';
-export { iterablePlugin } from './internal/plugin/iterablePlugin';
+export { iterableIteratorPlugin } from './internal/plugin/iterableIteratorPlugin';
 export {
   mockHandlerPlugin,
   getMessages,
   isMessages,
 } from './internal/plugin/mockHandlerPlugin';
 export { promisePlugin } from './internal/plugin/promisePlugin';
-export { jestSerializer } from './internal/jestSerializer';
+export { jestMessagesSerializer } from './internal/jestMessagesSerializer';
 export { logPalette } from './internal/logPalette';

@@ -1,10 +1,14 @@
 import {
   consoleHandlerPlugin,
   functionPlugin,
-  installPlugin,
+  installPlugins,
+  iterableIteratorPlugin,
   promisePlugin,
 } from '../..';
 
-installPlugin(consoleHandlerPlugin);
-installPlugin(functionPlugin);
-installPlugin(promisePlugin);
+installPlugins(
+  consoleHandlerPlugin(),
+  functionPlugin,
+  promisePlugin,
+  iterableIteratorPlugin,
+);
