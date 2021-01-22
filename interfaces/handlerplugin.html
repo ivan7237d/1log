@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>UniversalPluginReducer | 1log</title>
+	<title>HandlerPlugin | 1log</title>
 	<meta name="description" content="Documentation for 1log">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -54,48 +54,67 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="universalpluginreducer.html">UniversalPluginReducer</a>
+					<a href="handlerplugin.html">HandlerPlugin</a>
 				</li>
 			</ul>
-			<h1>Interface UniversalPluginReducer</h1>
+			<h1>Interface HandlerPlugin</h1>
 		</div>
 	</div>
 </header>
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>A plugin that handles log messages.</p>
+					</div>
+				</div>
+			</section>
 			<section class="tsd-panel tsd-hierarchy">
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">UniversalPluginReducer</span>
+						<span class="target">HandlerPlugin</span>
 					</li>
 				</ul>
 			</section>
-			<section class="tsd-panel">
-				<h3 class="tsd-before-signature">Callable</h3>
-				<ul class="tsd-signatures tsd-kind-interface tsd-is-external">
-					<li class="tsd-signature tsd-kind-icon">__call<span class="tsd-signature-symbol">(</span>accumulator<span class="tsd-signature-symbol">: </span><a href="combineduniversalplugin.html" class="tsd-signature-type">CombinedUniversalPlugin</a>, value<span class="tsd-signature-symbol">: </span><a href="universalplugin.html" class="tsd-signature-type">UniversalPlugin</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="combineduniversalplugin.html" class="tsd-signature-type">CombinedUniversalPlugin</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-symbol">typeof </span><a href="../globals.html#internaldisableplugin" class="tsd-signature-type">internalDisablePlugin</a></li>
-				</ul>
-				<ul class="tsd-descriptions">
-					<li class="tsd-description">
-						<aside class="tsd-sources">
-							<ul>
-								<li>Defined in <a href="https://github.com/ivan7237d/1log/blob/6862d49/src/internal/logger/plugin.ts#L151">src/internal/logger/plugin.ts:151</a></li>
+			<section class="tsd-panel-group tsd-index-group">
+				<h2>Index</h2>
+				<section class="tsd-panel tsd-index-panel">
+					<div class="tsd-index-content">
+						<section class="tsd-index-section tsd-is-external">
+							<h3>Properties</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-external"><a href="handlerplugin.html#_pluginsymbol_" class="tsd-kind-icon">[plugin<wbr>Symbol]</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-external"><a href="handlerplugin.html#handler" class="tsd-kind-icon">handler</a></li>
 							</ul>
-						</aside>
-						<h4 class="tsd-parameters-title">Parameters</h4>
-						<ul class="tsd-parameters">
-							<li>
-								<h5>accumulator: <a href="combineduniversalplugin.html" class="tsd-signature-type">CombinedUniversalPlugin</a></h5>
-							</li>
-							<li>
-								<h5>value: <a href="universalplugin.html" class="tsd-signature-type">UniversalPlugin</a></h5>
-							</li>
+						</section>
+					</div>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group tsd-is-external">
+				<h2>Properties</h2>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-external">
+					<a name="_pluginsymbol_" class="tsd-anchor"></a>
+					<h3>[plugin<wbr>Symbol]</h3>
+					<div class="tsd-signature tsd-kind-icon">[plugin<wbr>Symbol]<span class="tsd-signature-symbol">:</span> <a href="../enums/plugintype.html#handler" class="tsd-signature-type">Handler</a></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/ivan7237d/1log/blob/36e6900/src/internal/logger/plugin.ts#L24">src/internal/logger/plugin.ts:24</a></li>
 						</ul>
-						<h4 class="tsd-returns-title">Returns <a href="combineduniversalplugin.html" class="tsd-signature-type">CombinedUniversalPlugin</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-symbol">typeof </span><a href="../globals.html#internaldisableplugin" class="tsd-signature-type">internalDisablePlugin</a></h4>
-					</li>
-				</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-external">
+					<a name="handler" class="tsd-anchor"></a>
+					<h3>handler</h3>
+					<div class="tsd-signature tsd-kind-icon">handler<span class="tsd-signature-symbol">:</span> <a href="loghandler.html" class="tsd-signature-type">LogHandler</a></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/ivan7237d/1log/blob/36e6900/src/internal/logger/plugin.ts#L25">src/internal/logger/plugin.ts:25</a></li>
+						</ul>
+					</aside>
+				</section>
 			</section>
 		</div>
 		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
@@ -111,7 +130,15 @@
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-interface tsd-is-external">
-						<a href="universalpluginreducer.html" class="tsd-kind-icon">Universal<wbr>Plugin<wbr>Reducer</a>
+						<a href="handlerplugin.html" class="tsd-kind-icon">Handler<wbr>Plugin</a>
+						<ul>
+							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-external">
+								<a href="handlerplugin.html#_pluginsymbol_" class="tsd-kind-icon">[plugin<wbr>Symbol]</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-external">
+								<a href="handlerplugin.html#handler" class="tsd-kind-icon">handler</a>
+							</li>
+						</ul>
 					</li>
 				</ul>
 				<ul class="after-current">

@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>CombinedUniversalPlugin | 1log</title>
+	<title>CombinedPlugin | 1log</title>
 	<meta name="description" content="Documentation for 1log">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -54,10 +54,10 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="combineduniversalplugin.html">CombinedUniversalPlugin</a>
+					<a href="combinedplugin.html">CombinedPlugin</a>
 				</li>
 			</ul>
-			<h1>Interface CombinedUniversalPlugin</h1>
+			<h1>Interface CombinedPlugin</h1>
 		</div>
 	</div>
 </header>
@@ -66,9 +66,6 @@
 		<div class="col-8 col-content">
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
-					<div class="lead">
-						<p>A combination of 0 or more universal plugins.</p>
-					</div>
 					<dl class="tsd-comment-tags">
 						<dt>internal</dt>
 						<dd></dd>
@@ -79,7 +76,7 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">CombinedUniversalPlugin</span>
+						<span class="target">CombinedPlugin</span>
 					</li>
 				</ul>
 			</section>
@@ -90,9 +87,10 @@
 						<section class="tsd-index-section tsd-is-external">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-external"><a href="combineduniversalplugin.html#badges" class="tsd-kind-icon">badges</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-external"><a href="combineduniversalplugin.html#enabled" class="tsd-kind-icon">enabled</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-external"><a href="combineduniversalplugin.html#severitylevel" class="tsd-kind-icon">severity<wbr>Level</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-external"><a href="combinedplugin.html#badgecaptions" class="tsd-kind-icon">badge<wbr>Captions</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-external"><a href="combinedplugin.html#handlers" class="tsd-kind-icon">handlers</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-external"><a href="combinedplugin.html#proxyplugins" class="tsd-kind-icon">proxy<wbr>Plugins</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-external"><a href="combinedplugin.html#severity" class="tsd-kind-icon">severity</a></li>
 							</ul>
 						</section>
 					</div>
@@ -101,32 +99,47 @@
 			<section class="tsd-panel-group tsd-member-group tsd-is-external">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-external">
-					<a name="badges" class="tsd-anchor"></a>
-					<h3>badges</h3>
-					<div class="tsd-signature tsd-kind-icon">badges<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></div>
+					<a name="badgecaptions" class="tsd-anchor"></a>
+					<h3>badge<wbr>Captions</h3>
+					<div class="tsd-signature tsd-kind-icon">badge<wbr>Captions<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/ivan7237d/1log/blob/6862d49/src/internal/logger/plugin.ts#L106">src/internal/logger/plugin.ts:106</a></li>
+							<li>Defined in <a href="https://github.com/ivan7237d/1log/blob/36e6900/src/internal/logger/plugin.ts#L81">src/internal/logger/plugin.ts:81</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Arrays with the same elements are guaranteed to be ===.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-external">
+					<a name="handlers" class="tsd-anchor"></a>
+					<h3>handlers</h3>
+					<div class="tsd-signature tsd-kind-icon">handlers<span class="tsd-signature-symbol">:</span> <a href="loghandler.html" class="tsd-signature-type">LogHandler</a><span class="tsd-signature-symbol">[]</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/ivan7237d/1log/blob/36e6900/src/internal/logger/plugin.ts#L76">src/internal/logger/plugin.ts:76</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-external">
-					<a name="enabled" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> enabled</h3>
-					<div class="tsd-signature tsd-kind-icon">enabled<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></div>
+					<a name="proxyplugins" class="tsd-anchor"></a>
+					<h3>proxy<wbr>Plugins</h3>
+					<div class="tsd-signature tsd-kind-icon">proxy<wbr>Plugins<span class="tsd-signature-symbol">:</span> <a href="proxyplugin.html" class="tsd-signature-type">ProxyPlugin</a><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/ivan7237d/1log/blob/6862d49/src/internal/logger/plugin.ts#L108">src/internal/logger/plugin.ts:108</a></li>
+							<li>Defined in <a href="https://github.com/ivan7237d/1log/blob/36e6900/src/internal/logger/plugin.ts#L77">src/internal/logger/plugin.ts:77</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-external">
-					<a name="severitylevel" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> severity<wbr>Level</h3>
-					<div class="tsd-signature tsd-kind-icon">severity<wbr>Level<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></div>
+					<a name="severity" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> severity</h3>
+					<div class="tsd-signature tsd-kind-icon">severity<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/ivan7237d/1log/blob/6862d49/src/internal/logger/plugin.ts#L107">src/internal/logger/plugin.ts:107</a></li>
+							<li>Defined in <a href="https://github.com/ivan7237d/1log/blob/36e6900/src/internal/logger/plugin.ts#L82">src/internal/logger/plugin.ts:82</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -145,16 +158,19 @@
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-interface tsd-is-external">
-						<a href="combineduniversalplugin.html" class="tsd-kind-icon">Combined<wbr>Universal<wbr>Plugin</a>
+						<a href="combinedplugin.html" class="tsd-kind-icon">Combined<wbr>Plugin</a>
 						<ul>
 							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-external">
-								<a href="combineduniversalplugin.html#badges" class="tsd-kind-icon">badges</a>
+								<a href="combinedplugin.html#badgecaptions" class="tsd-kind-icon">badge<wbr>Captions</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-external">
-								<a href="combineduniversalplugin.html#enabled" class="tsd-kind-icon">enabled</a>
+								<a href="combinedplugin.html#handlers" class="tsd-kind-icon">handlers</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-external">
-								<a href="combineduniversalplugin.html#severitylevel" class="tsd-kind-icon">severity<wbr>Level</a>
+								<a href="combinedplugin.html#proxyplugins" class="tsd-kind-icon">proxy<wbr>Plugins</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-external">
+								<a href="combinedplugin.html#severity" class="tsd-kind-icon">severity</a>
 							</li>
 						</ul>
 					</li>
