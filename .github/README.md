@@ -273,7 +273,7 @@ Returns a plugin that buffers log messages in memory. Like `consoleHandlerPlugin
 
 ### `functionPlugin`
 
-If the piped value is a function, logs its creation and invocations. You can see sample output in the section _[Reading log messages](reading-log-messages)_.
+If the piped value is a function, logs its creation and invocations. You can see sample output in the section _[Reading log messages](#reading-log-messages)_.
 
 ### `promisePlugin`
 
@@ -323,7 +323,7 @@ import { log } from '1log';
 
 ### `badgePlugin`
 
-Prefixes messages with a blue-colored badge, taking badge caption as the single parameter. You can see sample output in the section _[Reading log messages](reading-log-messages)_.
+Prefixes messages with a blue-colored badge, taking badge caption as the single parameter. You can see sample output in the section _[Reading log messages](#reading-log-messages)_.
 
 ### `severityPlugin`
 
