@@ -246,7 +246,7 @@ and using `prefixedLog` in any code that's included in the build. This way,
 
 - The user can enable logging by configuring `1log`.
 
-- By passing a filter to `consoleHandlerPlugin`/`mockHandlerPlugin`, the user will be able to mute messages from your library, using `[<library name>]` badge to identify them.
+- Messages logged by the library will be prefixed with `[<library name>]` badge. The user will be able to mute them by passing a filter to `consoleHandlerPlugin`/`mockHandlerPlugin`.
 
 ## Plugins included in this package
 
@@ -334,7 +334,7 @@ Sets severity level to a number provided as the single parameter. If multiple pl
 Although the library supports any number as severity level, plugins `consoleHandlerPlugin` and `mockHandlerPlugin` attach special meaning to severities from the following enum:
 
 ```ts
-export enum Severity {
+enum Severity {
   debug = 10,
   info = 20,
   warn = 30,
