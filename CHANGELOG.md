@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.1.0](https://github.com/ivan7237d/1log/compare/v2.0.0...v2.1.0) (2021-01-23)
+
+
+### Features
+
+* avoid proxying values with subtypes ([176685c](https://github.com/ivan7237d/1log/commit/176685c00a4035f84b3b5f384351a646551b996b))
+
 ## [2.0.0](https://github.com/ivan7237d/1log/compare/v1.2.0...v2.0.0) (2021-01-22)
 
 
