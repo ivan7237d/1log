@@ -102,7 +102,7 @@
 					<div class="tsd-signature tsd-kind-icon">[plugin<wbr>Symbol]<span class="tsd-signature-symbol">:</span> <a href="../enums/plugintype.html#proxy" class="tsd-signature-type">Proxy</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/ivan7237d/1log/blob/36e6900/src/internal/logger/plugin.ts#L32">src/internal/logger/plugin.ts:32</a></li>
+							<li>Defined in <a href="https://github.com/ivan7237d/1log/blob/176685c/src/internal/logger/plugin.ts#L32">src/internal/logger/plugin.ts:32</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -112,12 +112,14 @@
 					<div class="tsd-signature tsd-kind-icon">scope<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">unknown</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/ivan7237d/1log/blob/36e6900/src/internal/logger/plugin.ts#L36">src/internal/logger/plugin.ts:36</a></li>
+							<li>Defined in <a href="https://github.com/ivan7237d/1log/blob/176685c/src/internal/logger/plugin.ts#L38">src/internal/logger/plugin.ts:38</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Determines if the piped value is in the scope of the plugin.</p>
+							<p>Determines if the piped value is in the scope of the plugin. If a value
+								matches scopes of multiple plugins, the plugin that was installed last
+							wins.</p>
 						</div>
 					</div>
 					<div class="tsd-type-declaration">
@@ -148,16 +150,13 @@
 					<div class="tsd-signature tsd-kind-icon">transform<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>log<span class="tsd-signature-symbol">: </span><a href="pluginlogger.html" class="tsd-signature-type">PluginLogger</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">any</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/ivan7237d/1log/blob/36e6900/src/internal/logger/plugin.ts#L45">src/internal/logger/plugin.ts:45</a></li>
+							<li>Defined in <a href="https://github.com/ivan7237d/1log/blob/176685c/src/internal/logger/plugin.ts#L44">src/internal/logger/plugin.ts:44</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Takes a logger pre-configured with a &quot;create&quot; badge, and returns a
-								function whose type is a subtype of the identity function. This
-								function will be used to transform the piped value if the value is in
-								scope. If a value matches scopes of multiple plugins, the plugin that
-							was installed last wins.</p>
+							<p>Takes a logger pre-configured with a &quot;create&quot; badge, and returns a function
+							that transforms a value to its proxy.</p>
 						</div>
 					</div>
 					<div class="tsd-type-declaration">
