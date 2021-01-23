@@ -5,22 +5,32 @@ import { excludeFromTimeDelta, includeInTimeDelta } from '../logger/timeDelta';
 import { logPalette } from '../logPalette';
 
 /**
- * If the piped value is a function, logs its creation, calls and returns.
+ * If the piped value is a function (`constructor` is `Function`), logs its
+ * creation, calls and returns.
  */
 export const functionPlugin: ProxyPlugin = {
   [pluginSymbol]: PluginType.Proxy,
-  scope: (value) => typeof value === 'function',
-  transform: (log) => <Parameters extends unknown[], Result>(
-    value: (...args: Parameters) => Result,
-  ): ((...args: Parameters) => Result) =>
-    excludeFromTimeDelta((...args: Parameters) => {
-      log([{ caption: 'call', color: logPalette.green }], ...args);
-      const result = applyPipe(
-        value,
-        includeInTimeDelta,
-        increaseStackLevel,
-      )(...args);
-      log([{ caption: 'return', color: logPalette.purple }], result);
-      return result;
-    }),
+  scope: (value) =>
+    value !== null &&
+    value !== undefined &&
+    // eslint-disable-next-line @typescript-eslint/consistent-type-assertions, @typescript-eslint/no-explicit-any
+    (value as any).constructor === Function,
+  transform: (log) => (
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    value: any,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  ): any =>
+    Object.assign(
+      excludeFromTimeDelta((...args) => {
+        log([{ caption: 'call', color: logPalette.green }], ...args);
+        const result = applyPipe(
+          value,
+          includeInTimeDelta,
+          increaseStackLevel,
+        )(...args);
+        log([{ caption: 'return', color: logPalette.purple }], result);
+        return result;
+      }),
+      value,
+    ),
 };

@@ -374,26 +374,15 @@ log(errorPlugin)(42);
 
 ## Writing plugins
 
-Plugin type signature is documented in file [plugin.ts](https://github.com/ivan7237d/1log/blob/master/src/internal/logger/plugin.ts). If you are writing a proxy plugin, you can use package [1log-rxjs](https://github.com/ivan7237d/1log-rxjs) or [1log-antiutils](https://github.com/ivan7237d/1log-antiutils) as a starting point. There are two things to keep in mind as regards proxy plugins:
+Plugin type signature is documented in file [plugin.ts](https://github.com/ivan7237d/1log/blob/master/src/internal/logger/plugin.ts). If you are writing a proxy plugin, you can use package [1log-rxjs](https://github.com/ivan7237d/1log-rxjs) or [1log-antiutils](https://github.com/ivan7237d/1log-antiutils) as a starting point. There are a few things to keep in mind as regards proxy plugins:
 
 - `transform` function is run in an [`excludeFromTimeDelta`](https://github.com/ivan7237d/1log/blob/master/src/internal/logger/timeDelta.ts) callback to exclude that function's execution time from time deltas included in log messages. If your proxy creates a function and makes it available externally, you should yourself wrap that function in `excludeFromTimeDelta`, and if you call a user-provided function, you should do the opposite and wrap it in `includeInTimeDelta`.
 
 - To keep track of stack level, user-provided functions should also be wrapped in [`increaseStackLevel`](https://github.com/ivan7237d/1log/blob/master/src/internal/logger/stackLevel.ts).
 
-## TypeScript typing issue
+- If you use instances of class `C` as proxies, make sure that `scope` catches instances of `C` but not instances of a superclass of `C` by checking that `value.constructor === C`. This has to be done even when proxies are functions (`C` is `Function`) or plain objects (`C` is `Object`).
 
-Consider the following example: with `functionPlugin` installed, you pass to `log` a function-object hybrid of type
-
-```ts
-interface YourFunction {
-  (...args: Parameters): ReturnedValue;
-  someProperty: SomeProperty;
-}
-```
-
-The result will be typed as `YourFunction`, but in reality the `functionPlugin` will proxy the original object with a plain function of type `{ (...args: Parameters): ReturnValue }`, with `someProperty` dropped. Generally speaking, a globally installed plugin may proxy a value with a supertype, and this will not be reflected in the type system.
-
-With plugins included in this package, you will not run into this issue unless you're dealing with functions like the one above or classes that extend Promise. We have an idea for a fix involving ambient overloads for `log`, but as of this writing there is a blocking [TypeScript issue](https://github.com/microsoft/TypeScript/issues/41066).
+- If you're proxying a user function, make sure to copy over any properties, because a function can couple as an object: `Object.assign(yourProxyFunction, originalFunction)`.
 
 ---
 

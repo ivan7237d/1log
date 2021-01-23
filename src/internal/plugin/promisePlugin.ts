@@ -8,7 +8,11 @@ import { logPalette } from '../logPalette';
  */
 export const promisePlugin: ProxyPlugin = {
   [pluginSymbol]: PluginType.Proxy,
-  scope: (value) => value instanceof Promise,
+  scope: (value) =>
+    value !== null &&
+    value !== undefined &&
+    // eslint-disable-next-line @typescript-eslint/consistent-type-assertions, @typescript-eslint/no-explicit-any
+    (value as any).constructor === Promise,
   transform: (log) => <T>(value: Promise<T>): Promise<T> =>
     new Promise((resolve, reject) => {
       value.then(

@@ -31,15 +31,14 @@ export interface HandlerPlugin {
 export interface ProxyPlugin {
   [pluginSymbol]: PluginType.Proxy;
   /**
-   * Determines if the piped value is in the scope of the plugin.
+   * Determines if the piped value is in the scope of the plugin. If a value
+   * matches scopes of multiple plugins, the plugin that was installed last
+   * wins.
    */
   scope: (value: unknown) => boolean;
   /**
-   * Takes a logger pre-configured with a "create" badge, and returns a
-   * function whose type is a subtype of the identity function. This
-   * function will be used to transform the piped value if the value is in
-   * scope. If a value matches scopes of multiple plugins, the plugin that
-   * was installed last wins.
+   * Takes a logger pre-configured with a "create" badge, and returns a function
+   * that transforms a value to its proxy.
    */
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   transform: (log: PluginLogger) => any;
