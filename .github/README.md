@@ -226,7 +226,7 @@ export {};
 
 With this configuration,
 
-- The bulk of the `1log` library will be tree-shaken in production.
+- The bulk of the 1log library will be tree-shaken in production.
 
 - Values that are proxied in development (e.g. when you have `functionPlugin` installed and write `log(yourFunction)`) will be passed through the `log` function unchanged in production, removing the performance cost of proxying.
 
@@ -244,7 +244,7 @@ and using `prefixedLog` in any code that's included in the build. This way,
 
 - By default, the library will not log any messages.
 
-- The user can enable logging by configuring `1log`.
+- The user can enable logging by configuring 1log.
 
 - Messages logged by the library will be prefixed with `[<library name>]` badge. The user will be able to mute them by passing a filter to `consoleHandlerPlugin`/`mockHandlerPlugin`.
 
