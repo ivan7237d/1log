@@ -318,8 +318,10 @@ Example:
 ```ts
 import { log } from '1log';
 
-[...log(new Set([1]))];
+[...log(new Set([1, 2]).values())];
 ```
+
+<img src="https://github.com/ivan7237d/1log/raw/master/images/iterable-iterator.png" alt="screenshot">
 
 ### `badgePlugin`
 
