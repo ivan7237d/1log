@@ -83,7 +83,7 @@ f2(42);
 
 This will produce the following log:
 
-<img src="https://github.com/ivan7237d/1log/raw/master/images/basic.png" alt="screenshot">
+<img src="https://github.com/ivan7237d/1log/raw/master/images/basic-adjusted.png" alt="screenshot">
 
 Time deltas that you see in this screenshot are computed using `performance.now` and exclude the time spent on logging itself. If the time delta is less than 10ms, it is muted, if greater than 1s, bold. For time deltas less than 1ms, we display up to 3 significant digits after the decimal point (on Node, you can see deltas like 0.00572ms), and for time deltas of 1ms and more we display time delta with millisecond precision, e.g. `1h 2m 3.450s`.
 
@@ -103,7 +103,7 @@ f2(42);
 
 [create 2] will become [create 1], because counters are specific to the combination of preceding badges:
 
-<img src="https://github.com/ivan7237d/1log/raw/master/images/basic-with-badges.png" alt="screenshot">
+<img src="https://github.com/ivan7237d/1log/raw/master/images/basic-with-badges-adjusted.png" alt="screenshot">
 
 > :bulb: TIP
 >
@@ -265,7 +265,7 @@ consoleHandlerPlugin(
 
 The plugin supports styled messages in modern browsers and Node. For Node, the output looks as follows:
 
-<img src="https://github.com/ivan7237d/1log/raw/master/images/node.png" alt="screenshot">
+<img src="https://github.com/ivan7237d/1log/raw/master/images/node-adjusted.png" alt="screenshot">
 
 ### [`mockHandlerPlugin`](https://github.com/ivan7237d/1log/blob/master/src/internal/plugin/mockHandlerPlugin.ts)
 
@@ -287,7 +287,7 @@ import { log } from '1log';
 log((async () => 42)());
 ```
 
-<img src="https://github.com/ivan7237d/1log/raw/master/images/promise-resolve.png" alt="screenshot">
+<img src="https://github.com/ivan7237d/1log/raw/master/images/promise-resolve-adjusted.png" alt="screenshot">
 
 Example (promise rejected):
 
@@ -301,7 +301,7 @@ log(
 ).catch(() => {});
 ```
 
-<img src="https://github.com/ivan7237d/1log/raw/master/images/promise-reject.png" alt="screenshot">
+<img src="https://github.com/ivan7237d/1log/raw/master/images/promise-reject-adjusted.png" alt="screenshot">
 
 ### `iterableIteratorPlugin`
 
@@ -321,7 +321,7 @@ import { log } from '1log';
 [...log(new Set([1, 2]).values())];
 ```
 
-<img src="https://github.com/ivan7237d/1log/raw/master/images/iterable-iterator.png" alt="screenshot">
+<img src="https://github.com/ivan7237d/1log/raw/master/images/iterable-iterator-adjusted.png" alt="screenshot">
 
 ### `badgePlugin`
 
@@ -366,7 +366,7 @@ log(warnPlugin)(42);
 log(errorPlugin)(42);
 ```
 
-<img src="https://github.com/ivan7237d/1log/raw/master/images/severity.png" alt="screenshot">
+<img src="https://github.com/ivan7237d/1log/raw/master/images/severity-adjusted.png" alt="screenshot">
 
 ## Plugins from other packages
 
