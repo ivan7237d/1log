@@ -265,7 +265,7 @@ consoleHandlerPlugin(
 
 The plugin supports styled messages in modern browsers and Node. For Node, the output looks as follows:
 
-<img src="https://github.com/ivan7237d/1log/raw/master/images/node-adjusted.png" alt="screenshot">
+<img src="https://github.com/ivan7237d/1log/raw/master/images/node-manually-adjusted.png" alt="screenshot">
 
 ### [`mockHandlerPlugin`](https://github.com/ivan7237d/1log/blob/master/src/internal/plugin/mockHandlerPlugin.ts)
 
