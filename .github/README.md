@@ -366,7 +366,7 @@ log(warnPlugin)(42);
 log(errorPlugin)(42);
 ```
 
-<img src="https://github.com/ivan7237d/1log/raw/master/images/severity-adjusted.png" alt="screenshot">
+<img src="https://github.com/ivan7237d/1log/raw/master/images/severity-manually-adjusted.png" alt="screenshot">
 
 ## Plugins from other packages
 
