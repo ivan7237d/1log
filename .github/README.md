@@ -7,6 +7,46 @@
 
 Log function with superpowers.
 
+## Table of contents
+
+- [Installing](#installing)
+
+- [Usage](#usage)
+
+- [Reading log messages](#reading-log-messages)
+
+- [Using log snapshots in tests](#using-log-snapshots-in-tests)
+
+- [Default config](#default-config)
+
+- [Default Jest config](#default-Jest-config)
+
+- [Building for production](#building-for-production)
+
+- [Usage in libraries](#usage-in-libraries)
+
+- [Plugins included in this package](#plugins-included-in-this-package)
+
+  - [`consoleHandlerPlugin`](#consolehandlerplugin)
+
+  - [`mockHandlerPlugin`](#mockhandlerplugin)
+
+  - [`functionPlugin`](#functionplugin)
+
+  - [`promisePlugin`](#promiseplugin)
+
+  - [`iterableIteratorPlugin`](#iterableiteratorplugin)
+
+  - [`badgePlugin`](#badgeplugin)
+
+  - [`severityPlugin`](#severityplugin)
+
+  - [Shortcuts to set severity](#shortcuts-to-set-severity)
+
+- [Plugins from other packages](#plugins-from-other-packages)
+
+- [Writing plugins](#writing-plugins)
+
 ## Installing
 
 1. Install the npm package:
