@@ -267,6 +267,8 @@ export {};
 
 With this configuration,
 
+- Nothing will be logged in production, since [`consoleHandlerPlugin`](#consolehandlerplugin) won't be installed.
+
 - The bulk of the 1log library will be tree-shaken in production.
 
 - Values that are proxied in development (e.g. when you have `functionPlugin` installed and write `log(yourFunction)`) will be passed through the `log` function unchanged in production, removing the performance cost of proxying.
