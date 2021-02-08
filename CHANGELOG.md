@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file. See [standa
 
 ### [2.1.2](https://github.com/ivan7237d/1log/compare/v2.1.1...v2.1.2) (2021-02-08)
 
+Chore release.
+
 ### [2.1.1](https://github.com/ivan7237d/1log/compare/v2.1.0...v2.1.1) (2021-02-06)
 
 Chore release.
