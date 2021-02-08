@@ -4,6 +4,7 @@
 [![gzip size](https://badgen.net/bundlephobia/minzip/1log?color=green)](https://bundlephobia.com/result?p=1log)
 [![tree shaking](https://badgen.net/bundlephobia/tree-shaking/1log)](https://bundlephobia.com/result?p=1log)
 [![types](https://img.shields.io/npm/types/1log?color=brightgreen)](https://www.npmjs.com/package/1log)
+[![coverage status](https://coveralls.io/repos/github/ivan7237d/1log/badge.svg?branch=master)](https://coveralls.io/github/ivan7237d/1log?branch=master)
 
 Log function with superpowers.
 
