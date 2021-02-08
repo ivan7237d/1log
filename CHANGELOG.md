@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.1.3](https://github.com/ivan7237d/1log/compare/v2.1.2...v2.1.3) (2021-02-08)
+
+
+### Bug Fixes
+
+* minor fixes in log message formatting ([c24f67f](https://github.com/ivan7237d/1log/commit/c24f67fb3d71ddcdf67dee4b33c11694e5fad45e))
+
 ### [2.1.2](https://github.com/ivan7237d/1log/compare/v2.1.1...v2.1.2) (2021-02-08)
 
 Chore release.
