@@ -81,7 +81,7 @@ export const jestMessagesSerializer: import('pretty-format').NewPlugin = {
     const messages = val as LogMessage[];
     return messages.length === 0
       ? `[No log messages]`
-      : ++depth > config.maxDepth
+      : depth > 0
       ? `[Log messages]`
       : serializeItems(messages, config, indentation, depth, refs, printer);
   },

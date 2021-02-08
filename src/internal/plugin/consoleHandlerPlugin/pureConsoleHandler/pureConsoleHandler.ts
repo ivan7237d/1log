@@ -208,7 +208,8 @@ export const pureConsoleHandler = ({
           mapIterable((value) => `[${value.captionNoColor ?? value.caption}]`),
         ),
         styledTimeDelta[0],
-      ].join(' ')} ${data.length ? tryToSerialize({ data, maxLength }) : ''}`,
+        ...(data.length ? [tryToSerialize({ data, maxLength })] : []),
+      ].join(' ')}`,
     );
   } else {
     asNever(logStyle);

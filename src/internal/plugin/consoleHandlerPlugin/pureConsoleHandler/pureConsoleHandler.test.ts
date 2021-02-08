@@ -209,6 +209,21 @@ it('renders unstyled messages correctly', () => {
       ],
     ]
   `);
+
+  handler({
+    stackLevel: 0,
+    badges: [],
+    timeDelta: 0,
+    data: [],
+  });
+  expect(getMessages()).toMatchInlineSnapshot(`
+    Array [
+      Array [
+        undefined,
+        "+0ms",
+      ],
+    ]
+  `);
 });
 
 it('correctly truncates big objects', () => {
@@ -253,6 +268,78 @@ it('correctly truncates big objects', () => {
         "· · [<caption 1>] [<caption 2>] +0ms [
      \\"abcd\\"
     ... [truncated]",
+      ],
+    ]
+  `);
+
+  const objectWithCircularReference: Record<string, unknown> = {};
+  objectWithCircularReference.a = objectWithCircularReference;
+  handler({
+    stackLevel: 0,
+    badges: [],
+    timeDelta: 0,
+    data: [objectWithCircularReference],
+  });
+  expect(getMessages()).toMatchInlineSnapshot(`
+    Array [
+      Array [
+        undefined,
+        "+0ms [object Object]",
+      ],
+    ]
+  `);
+});
+
+it('shows correct severity levels', () => {
+  const { handler, getMessages } = getHandlerLocal({
+    logStyle: 'ansi',
+  });
+
+  handler({
+    stackLevel: 0,
+    badges: [],
+    timeDelta: 0,
+    data: [],
+    severity: Severity.debug,
+  });
+  handler({
+    stackLevel: 0,
+    badges: [],
+    timeDelta: 0,
+    data: [],
+    severity: Severity.info,
+  });
+  handler({
+    stackLevel: 0,
+    badges: [],
+    timeDelta: 0,
+    data: [],
+    severity: Severity.warn,
+  });
+  handler({
+    stackLevel: 0,
+    badges: [],
+    timeDelta: 0,
+    data: [],
+    severity: Severity.error,
+  });
+  expect(getMessages()).toMatchInlineSnapshot(`
+    Array [
+      Array [
+        10,
+        "[2mDEBUG[0m [2;3m+0ms[0m",
+      ],
+      Array [
+        20,
+        "[2mINFO[0m [2;3m+0ms[0m",
+      ],
+      Array [
+        30,
+        "[38;5;184mWARNING[0m [2;3m+0ms[0m",
+      ],
+      Array [
+        40,
+        "[38;5;210mERROR[0m [2;3m+0ms[0m",
       ],
     ]
   `);
