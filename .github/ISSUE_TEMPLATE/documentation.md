@@ -1,5 +1,5 @@
 ---
 name: Documentation
-about: Suggest new features
+about: If there is a bug in documentation
 labels: 'documentation'
 ---

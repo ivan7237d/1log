@@ -7,11 +7,8 @@ labels: 'bug'
 ## The current behavior
 
 <!--
-  Please provide a clear and concise description of what the bug is. If this is
-  a typechecking issue, make sure it cannot be easily resolved using `asContext`
-  or another function for downcasting
-  (https://github.com/ivan7237d/antiutils#functions-for-downcasting). Please
-  test using the latest version of the library to make sure your issue has not
+  Please provide a clear and concise description of what the bug is. Please test
+  using the latest version of the library to make sure your issue has not
   already been fixed.
 -->
 
