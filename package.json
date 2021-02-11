@@ -34,14 +34,9 @@
     "test:unit": "jest",
     "watch:build": "tsc -p tsconfig.json -w",
     "watch:test": "jest --watch",
-    "doc": "run-s doc:html && open-cli build/docs/index.html",
-    "doc:html": "typedoc --inputFiles src/index.ts --exclude **/*.test.ts --target ES6 --mode file --out build/docs --excludeNotExported",
-    "doc:json": "typedoc --inputFiles src/index.ts --exclude **/*.test.ts --target ES6 --mode file --json build/docs/typedoc.json --excludeNotExported",
-    "doc:publish": "gh-pages -m \"[ci skip] Updates\" -d build/docs",
     "version": "standard-version",
     "reset-hard": "git clean -dfx && git reset --hard && yarn",
-    "release:prepare": "run-s test doc:html version doc:publish",
-    "release": "run-s release:prepare",
+    "release": "run-s test version",
     "commit": "cz",
     "coveralls": "jest --coverage && cat ./coverage/lcov.info | coveralls"
   },
@@ -72,7 +67,6 @@
     "prettier": "2.1.1",
     "standard-version": "9.0.0",
     "ts-node": "9.0.0",
-    "typedoc": "0.19.0",
     "typescript": "4.0.3"
   },
   "files": [
