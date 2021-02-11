@@ -44,7 +44,7 @@
     "node": ">=14"
   },
   "dependencies": {
-    "antiutils": "^3.0.4"
+    "antiutils": "^3.0.5"
   },
   "devDependencies": {
     "@babel/preset-env": "7.12.13",
