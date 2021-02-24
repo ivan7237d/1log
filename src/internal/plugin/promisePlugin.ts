@@ -17,7 +17,7 @@ export const promisePlugin: ProxyPlugin = {
     new Promise((resolve, reject) => {
       value.then(
         excludeFromTimeDelta((result) => {
-          log([{ caption: 'resolve', color: logPalette.green }], result);
+          log([{ caption: 'resolve', color: logPalette.yellow }], result);
           includeInTimeDelta(resolve)(result);
         }),
         excludeFromTimeDelta((reason) => {

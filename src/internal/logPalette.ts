@@ -8,4 +8,5 @@ export const logPalette = {
   red: '#ff6f53',
   orange: '#ff8f00',
   purple: '#bc73e2',
+  pink: '#f78c9f',
 };

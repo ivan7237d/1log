@@ -32,13 +32,13 @@ export const iterableIteratorPlugin: LogPlugin = {
         increaseStackLevel,
       )();
       if (result.done) {
-        log([{ caption: `done`, color: logPalette.orange }]);
+        log([{ caption: `done`, color: logPalette.purple }]);
       } else {
         log(
           [
             {
               caption: `yield`,
-              color: logPalette.yellow,
+              color: logPalette.pink,
             },
           ],
           result.value,
