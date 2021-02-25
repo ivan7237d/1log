@@ -24,7 +24,7 @@ test('basic usage', () => {
     [myIterable] [create 1] [next] +0ms
     [myIterable] [create 1] [yield] +0ms 2
     [myIterable] [create 1] [next] +0ms
-    [myIterable] [create 1] [done] +0ms
+    [myIterable] [create 1] [done] +0ms undefined
   `);
 });
 
@@ -50,8 +50,23 @@ test('stack level', () => {
     [create 3] [next] +0ms
     · [create 2] [next] +0ms
     · · [create 1] [next] +0ms
-    · · [create 1] [done] +0ms
-    · [create 2] [done] +0ms
-    [create 3] [done] +0ms
+    · · [create 1] [done] +0ms undefined
+    · [create 2] [done] +0ms undefined
+    [create 3] [done] +0ms undefined
+  `);
+});
+
+test('returned value', () => {
+  const generatorFunction = function* () {
+    yield 1;
+    return 2;
+  };
+  [...log(generatorFunction())];
+  expect(getMessages()).toMatchInlineSnapshot(`
+    [create 1] +0ms [IterableIterator]
+    [create 1] [next] +0ms
+    [create 1] [yield] +0ms 1
+    [create 1] [next] +0ms
+    [create 1] [done] +0ms 2
   `);
 });

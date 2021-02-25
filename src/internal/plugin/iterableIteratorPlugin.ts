@@ -23,27 +23,28 @@ export const iterableIteratorPlugin: LogPlugin = {
     value !== null &&
     // eslint-disable-next-line @typescript-eslint/consistent-type-assertions, @typescript-eslint/no-explicit-any
     (value as any)[Symbol.iterator]?.() === value,
-  transform: (log) => <T>(value: IterableIterator<T>): IterableIterator<T> => ({
+  transform: (log) => <T>(
+    iterator: IterableIterator<T>,
+  ): IterableIterator<T> => ({
     next: excludeFromTimeDelta(() => {
       log([{ caption: `next`, color: logPalette.green }]);
       const result = applyPipe(
-        () => value.next(),
+        () => iterator.next(),
         includeInTimeDelta,
         increaseStackLevel,
       )();
-      if (result.done) {
-        log([{ caption: `done`, color: logPalette.purple }]);
-      } else {
-        log(
-          [
-            {
-              caption: `yield`,
-              color: logPalette.pink,
-            },
-          ],
-          result.value,
-        );
-      }
+      const { value, done } = result;
+      log(
+        [
+          done
+            ? { caption: `done`, color: logPalette.purple }
+            : {
+                caption: `yield`,
+                color: logPalette.pink,
+              },
+        ],
+        value,
+      );
       return result;
     }),
     [Symbol.iterator]: function () {
