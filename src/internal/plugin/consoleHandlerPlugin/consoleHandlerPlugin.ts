@@ -3,7 +3,7 @@ import { LogMessage } from '../../logger/handler';
 import { HandlerPlugin, pluginSymbol, PluginType } from '../../logger/plugin';
 import { Severity } from '../../logger/severity';
 import { detectedLogStyle } from './detectedLogStyle';
-import { pureConsoleHandler } from './pureConsoleHandler/pureConsoleHandler';
+import { pureConsoleHandler } from './pureConsoleHandler/pch';
 
 // This works around the problem that React overwrites console methods in dev
 // mode during test renders, leading to confusing badge numbers.

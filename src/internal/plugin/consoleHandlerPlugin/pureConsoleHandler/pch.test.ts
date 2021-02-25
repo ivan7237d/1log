@@ -1,7 +1,7 @@
 import { Severity } from '../../../logger/severity';
 import { logPalette } from '../../../logPalette';
 import { LogStyle } from '../logStyle';
-import { pureConsoleHandler } from './pureConsoleHandler';
+import { pureConsoleHandler } from './pch';
 
 const getHandlerLocal = ({
   logStyle,
