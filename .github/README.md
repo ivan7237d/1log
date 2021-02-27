@@ -36,7 +36,7 @@ Log function with superpowers.
 
   - [`promisePlugin`](#promiseplugin)
 
-  - [`iterableIteratorPlugin`](#iterableiteratorplugin)
+  - [`iterablePlugin`](#iterableplugin)
 
   - [`badgePlugin`](#badgeplugin)
 
@@ -189,7 +189,7 @@ import {
   consoleHandlerPlugin,
   functionPlugin,
   installPlugins,
-  iterableIteratorPlugin,
+  iterablePlugin,
   promisePlugin,
 } from '1log';
 
@@ -197,7 +197,7 @@ installPlugins(
   consoleHandlerPlugin(),
   functionPlugin,
   promisePlugin,
-  iterableIteratorPlugin,
+  iterablePlugin,
 );
 ```
 
@@ -210,7 +210,7 @@ import {
   functionPlugin,
   getMessages,
   installPlugins,
-  iterableIteratorPlugin,
+  iterablePlugin,
   jestMessagesSerializer,
   mockHandlerPlugin,
   promisePlugin,
@@ -221,7 +221,7 @@ import {
 // Add a Jest snapshot serializer that formats log messages.
 expect.addSnapshotSerializer(jestMessagesSerializer);
 // Add a Jest snapshot serializer for values proxied by
-// iterableIteratorPlugin.
+// iterablePlugin.
 expect.addSnapshotSerializer({
   test: (value) =>
     value !== undefined &&
@@ -234,7 +234,7 @@ installPlugins(
   mockHandlerPlugin(),
   functionPlugin,
   promisePlugin,
-  iterableIteratorPlugin,
+  iterablePlugin,
 );
 
 beforeEach(() => {
@@ -347,7 +347,7 @@ log(
 
 <img src="https://github.com/ivan7237d/1log/raw/master/images/promise-reject-adjusted.png" alt="screenshot">
 
-### `iterableIteratorPlugin`
+### `iterablePlugin`
 
 For a value that satisfies
 

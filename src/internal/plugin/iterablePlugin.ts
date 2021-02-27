@@ -16,7 +16,7 @@ import { logPalette } from '../logPalette';
  * (e.g. one returned by a generator function or methods `entries`, `keys`,
  * `values` of `Map` and `Set`), logs creation, nexts, yields, and done's.
  */
-export const iterableIteratorPlugin: LogPlugin = {
+export const iterablePlugin: LogPlugin = {
   [pluginSymbol]: PluginType.Proxy,
   scope: (value) =>
     value !== undefined &&

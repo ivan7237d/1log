@@ -15,7 +15,7 @@ lib.installPlugins(
   lib.mockHandlerPlugin(),
   lib.functionPlugin,
   lib.promisePlugin,
-  lib.iterableIteratorPlugin,
+  lib.iterablePlugin,
 );
 
 beforeEach(() => {

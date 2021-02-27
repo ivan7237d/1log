@@ -2,7 +2,7 @@ import {
   functionPlugin,
   getMessages,
   installPlugins,
-  iterableIteratorPlugin,
+  iterablePlugin,
   jestMessagesSerializer,
   mockHandlerPlugin,
   promisePlugin,
@@ -23,7 +23,7 @@ installPlugins(
   mockHandlerPlugin(),
   functionPlugin,
   promisePlugin,
-  iterableIteratorPlugin,
+  iterablePlugin,
 );
 
 beforeEach(() => {

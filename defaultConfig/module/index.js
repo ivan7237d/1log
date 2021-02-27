@@ -2,7 +2,7 @@ import {
   consoleHandlerPlugin,
   functionPlugin,
   installPlugins,
-  iterableIteratorPlugin,
+  iterablePlugin,
   promisePlugin,
 } from '../..';
 
@@ -10,5 +10,5 @@ installPlugins(
   consoleHandlerPlugin(),
   functionPlugin,
   promisePlugin,
-  iterableIteratorPlugin,
+  iterablePlugin,
 );

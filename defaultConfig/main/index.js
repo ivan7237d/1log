@@ -6,5 +6,5 @@ lib.installPlugins(
   lib.consoleHandlerPlugin(),
   lib.functionPlugin,
   lib.promisePlugin,
-  lib.iterableIteratorPlugin,
+  lib.iterablePlugin,
 );

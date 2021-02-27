@@ -33,7 +33,7 @@ export { severityPlugin } from './internal/plugin/severityPlugin/severityPlugin'
 export { warnPlugin } from './internal/plugin/severityPlugin/warnPlugin';
 export { badgePlugin } from './internal/plugin/badgePlugin';
 export { functionPlugin } from './internal/plugin/functionPlugin';
-export { iterableIteratorPlugin } from './internal/plugin/iterableIteratorPlugin';
+export { iterablePlugin } from './internal/plugin/iterablePlugin';
 export {
   mockHandlerPlugin,
   getMessages,

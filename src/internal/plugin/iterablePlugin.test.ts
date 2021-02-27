@@ -1,13 +1,13 @@
 import { pipe } from 'antiutils';
 import { log } from '../logger/logger';
 import { badgePlugin } from './badgePlugin';
-import { iterableIteratorPlugin } from './iterableIteratorPlugin';
+import { iterablePlugin } from './iterablePlugin';
 import { getMessages } from './mockHandlerPlugin';
 
 test('basic usage', () => {
   const iterable = pipe(
     new Set([1, 2]).values(),
-    log(badgePlugin('myIterable'))(iterableIteratorPlugin),
+    log(badgePlugin('myIterable'))(iterablePlugin),
   );
   expect(getMessages()).toMatchInlineSnapshot(
     `[myIterable] [create 1] +0ms [IterableIterator]`,
@@ -32,9 +32,9 @@ test('stack level', () => {
   [
     ...pipe(
       new Set([1]).values(),
-      log(iterableIteratorPlugin),
-      log(iterableIteratorPlugin),
-      log(iterableIteratorPlugin),
+      log(iterablePlugin),
+      log(iterablePlugin),
+      log(iterablePlugin),
     ),
   ];
   expect(getMessages()).toMatchInlineSnapshot(`
