@@ -1,4 +1,4 @@
-import { applyPipe, asNever } from 'antiutils';
+import { asNever, pipe } from 'antiutils';
 import { LogMessage } from '../../logger/handler';
 import { HandlerPlugin, pluginSymbol, PluginType } from '../../logger/plugin';
 import { Severity } from '../../logger/severity';
@@ -7,10 +7,13 @@ import { pureConsoleHandler } from './pureConsoleHandler/pch';
 
 // This works around the problem that React overwrites console methods in dev
 // mode during test renders, leading to confusing badge numbers.
-const consoleSnapshot = applyPipe(
-  console,
-  ({ debug, info, warn, error, log }) => ({ debug, info, warn, error, log }),
-);
+const consoleSnapshot = pipe(console, ({ debug, info, warn, error, log }) => ({
+  debug,
+  info,
+  warn,
+  error,
+  log,
+}));
 
 /**
  * A plugin that writes log messages to the console. Can optionally be passed a
@@ -20,7 +23,7 @@ export const consoleHandlerPlugin = (
   filter?: (message: LogMessage) => boolean,
 ): HandlerPlugin => ({
   [pluginSymbol]: PluginType.Handler,
-  handler: applyPipe(
+  handler: pipe(
     pureConsoleHandler({
       getImpureHandler: (severity) =>
         severity === Severity.debug

@@ -1,4 +1,4 @@
-import { applyPipe } from 'antiutils';
+import { pipe } from 'antiutils';
 import { pluginSymbol, PluginType, ProxyPlugin } from '../logger/plugin';
 import { increaseStackLevel } from '../logger/stackLevel';
 import { excludeFromTimeDelta, includeInTimeDelta } from '../logger/timeDelta';
@@ -23,7 +23,7 @@ export const functionPlugin: ProxyPlugin = {
     Object.assign(
       excludeFromTimeDelta((...args) => {
         log([{ caption: 'call', color: logPalette.green }], ...args);
-        const result = applyPipe(
+        const result = pipe(
           value,
           includeInTimeDelta,
           increaseStackLevel,

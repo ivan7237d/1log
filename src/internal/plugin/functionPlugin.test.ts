@@ -1,4 +1,4 @@
-import { applyPipe } from 'antiutils';
+import { pipe } from 'antiutils';
 import { log } from '../logger/logger';
 import { getMessages } from './mockHandlerPlugin';
 
@@ -25,7 +25,7 @@ test('basic usage', () => {
 });
 
 test('stack level', () => {
-  applyPipe(() => '<return value 1>', log, log)();
+  pipe(() => '<return value 1>', log, log)();
   expect(getMessages()).toMatchInlineSnapshot(`
     [create 1] +0ms [Function]
     [create 2] +0ms [Function]

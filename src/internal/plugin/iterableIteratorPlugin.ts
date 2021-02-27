@@ -1,4 +1,4 @@
-import { applyPipe } from 'antiutils';
+import { pipe } from 'antiutils';
 import { LogPlugin, pluginSymbol, PluginType } from '../logger/plugin';
 import { increaseStackLevel } from '../logger/stackLevel';
 import { excludeFromTimeDelta, includeInTimeDelta } from '../logger/timeDelta';
@@ -28,7 +28,7 @@ export const iterableIteratorPlugin: LogPlugin = {
   ): IterableIterator<T> => ({
     next: excludeFromTimeDelta(() => {
       log([{ caption: `next`, color: logPalette.green }]);
-      const result = applyPipe(
+      const result = pipe(
         () => iterator.next(),
         includeInTimeDelta,
         increaseStackLevel,

@@ -1,11 +1,11 @@
-import { applyPipe } from 'antiutils';
+import { pipe } from 'antiutils';
 import { log } from '../logger/logger';
 import { badgePlugin } from './badgePlugin';
 import { iterableIteratorPlugin } from './iterableIteratorPlugin';
 import { getMessages } from './mockHandlerPlugin';
 
 test('basic usage', () => {
-  const iterable = applyPipe(
+  const iterable = pipe(
     new Set([1, 2]).values(),
     log(badgePlugin('myIterable'))(iterableIteratorPlugin),
   );
@@ -30,7 +30,7 @@ test('basic usage', () => {
 
 test('stack level', () => {
   [
-    ...applyPipe(
+    ...pipe(
       new Set([1]).values(),
       log(iterableIteratorPlugin),
       log(iterableIteratorPlugin),

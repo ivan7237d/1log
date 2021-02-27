@@ -1,4 +1,4 @@
-import { applyPipe, asNever, mapIterable, rangeIterable } from 'antiutils';
+import { asNever, mapIterable, pipe, rangeIterable } from 'antiutils';
 import { LogMessage } from './logger/handler';
 import { normalizeSeverity } from './logger/normalizeSeverity';
 import { Severity } from './logger/severity';
@@ -12,7 +12,7 @@ const formatMessageHeader = ({
   timeDelta,
 }: LogMessage) =>
   [
-    ...applyPipe(severity, normalizeSeverity, (severity) =>
+    ...pipe(severity, normalizeSeverity, (severity) =>
       severity === Severity.debug
         ? ['DEBUG']
         : severity === Severity.info
@@ -25,11 +25,11 @@ const formatMessageHeader = ({
         ? []
         : asNever(severity),
     ),
-    ...applyPipe(
+    ...pipe(
       rangeIterable(undefined, stackLevel),
       mapIterable(() => '·'),
     ),
-    ...applyPipe(
+    ...pipe(
       badges,
       mapIterable((badge) => `[${badge.captionNoColor ?? badge.caption}]`),
     ),
@@ -53,7 +53,7 @@ const serializeItems: import('pretty-format').NewPlugin['serialize'] = (
         (message) =>
           indentation +
           formatMessageHeader(message) +
-          applyPipe(
+          pipe(
             message.data.map((value) =>
               printer(value, config, indentationItems, depth, refs),
             ),

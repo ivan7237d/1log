@@ -1,4 +1,4 @@
-import { applyPipe } from 'antiutils';
+import { pipe } from 'antiutils';
 import { log } from '../logger/logger';
 import { getMessages } from './mockHandlerPlugin';
 
@@ -20,7 +20,7 @@ const getPromise = () => {
 
 test('resolve', async () => {
   const { promise, resolve } = getPromise();
-  const promise2 = applyPipe(promise, log);
+  const promise2 = pipe(promise, log);
   expect(getMessages()).toMatchInlineSnapshot(`[create 1] +0ms Promise {}`);
   resolve(42);
   expect(getMessages()).toMatchInlineSnapshot(`[No log messages]`);
@@ -30,7 +30,7 @@ test('resolve', async () => {
 
 test('reject', async () => {
   const { promise, reject } = getPromise();
-  const promise2 = applyPipe(promise, log);
+  const promise2 = pipe(promise, log);
   expect(getMessages()).toMatchInlineSnapshot(`[create 1] +0ms Promise {}`);
   reject(42);
   expect(getMessages()).toMatchInlineSnapshot(`[No log messages]`);

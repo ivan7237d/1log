@@ -1,8 +1,8 @@
 import {
-  applyPipe,
   filterIterable,
   firstInIterable,
   memoizeWeak,
+  pipe,
   reverseIterable,
 } from 'antiutils';
 import { addNumberedBadge } from './addNumberedBadge';
@@ -85,7 +85,7 @@ const logLocal = (...args: any[]): any => {
     CombinedPlugin,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     any[],
-  ] = applyPipe(args[0], (value) =>
+  ] = pipe(args[0], (value) =>
     logLocalInternalArgs.has(value)
       ? [value, args.slice(1)]
       : [undefined, args],
@@ -102,7 +102,7 @@ const logLocal = (...args: any[]): any => {
         logLocal(newCombinedPlugin, ...args),
       );
     }
-    const proxyPlugin = applyPipe(
+    const proxyPlugin = pipe(
       combinedPlugin.proxyPlugins,
       reverseIterable,
       filterIterable((plugin) => plugin.scope(externalArg)),

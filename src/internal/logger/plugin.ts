@@ -1,4 +1,4 @@
-import { applyPipe, memoizeStrong, memoizeWeak, Reducer } from 'antiutils';
+import { memoizeStrong, memoizeWeak, pipe, Reducer } from 'antiutils';
 import { LogBadge, LogHandler } from './handler';
 
 /**
@@ -93,26 +93,26 @@ export const combinedPluginReducer: Reducer<CombinedPlugin, LogPlugin> = (
   value,
 ) =>
   value[pluginSymbol] === PluginType.Handler
-    ? applyPipe(accumulator, ({ handlers, ...rest }) => ({
+    ? pipe(accumulator, ({ handlers, ...rest }) => ({
         // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
         handlers: [...handlers, (value as HandlerPlugin).handler],
         ...rest,
       }))
     : value[pluginSymbol] === PluginType.Proxy
-    ? applyPipe(accumulator, ({ proxyPlugins, ...rest }) => ({
+    ? pipe(accumulator, ({ proxyPlugins, ...rest }) => ({
         // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
         proxyPlugins: [...proxyPlugins, value as ProxyPlugin],
         ...rest,
       }))
     : value[pluginSymbol] === PluginType.Badge
-    ? applyPipe(accumulator, ({ badgeCaptions, ...rest }) => ({
+    ? pipe(accumulator, ({ badgeCaptions, ...rest }) => ({
         badgeCaptions: appendBadge(badgeCaptions)(
           // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
           (value as BadgePlugin).caption,
         ),
         ...rest,
       }))
-    : applyPipe(accumulator, ({ severity, ...rest }) => ({
+    : pipe(accumulator, ({ severity, ...rest }) => ({
         severity:
           severity === undefined ||
           // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
