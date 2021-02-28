@@ -19,12 +19,12 @@ test('basic usage', () => {
     ]
   `);
   expect(getMessages()).toMatchInlineSnapshot(`
-    [myIterable] [create 1] [next] +0ms
-    [myIterable] [create 1] [yield] +0ms 1
-    [myIterable] [create 1] [next] +0ms
-    [myIterable] [create 1] [yield] +0ms 2
-    [myIterable] [create 1] [next] +0ms
-    [myIterable] [create 1] [done] +0ms undefined
+    [myIterable] [create 1] [next 1] +0ms
+    [myIterable] [create 1] [next 1] [yield] +0ms 1
+    [myIterable] [create 1] [next 2] +0ms
+    [myIterable] [create 1] [next 2] [yield] +0ms 2
+    [myIterable] [create 1] [next 3] +0ms
+    [myIterable] [create 1] [next 3] [done] +0ms undefined
   `);
 });
 
@@ -41,18 +41,18 @@ test('stack level', () => {
     [create 1] +0ms [IterableIterator]
     [create 2] +0ms [IterableIterator]
     [create 3] +0ms [IterableIterator]
-    [create 3] [next] +0ms
-    · [create 2] [next] +0ms
-    · · [create 1] [next] +0ms
-    · · [create 1] [yield] +0ms 1
-    · [create 2] [yield] +0ms 1
-    [create 3] [yield] +0ms 1
-    [create 3] [next] +0ms
-    · [create 2] [next] +0ms
-    · · [create 1] [next] +0ms
-    · · [create 1] [done] +0ms undefined
-    · [create 2] [done] +0ms undefined
-    [create 3] [done] +0ms undefined
+    [create 3] [next 1] +0ms
+    · [create 2] [next 1] +0ms
+    · · [create 1] [next 1] +0ms
+    · · [create 1] [next 1] [yield] +0ms 1
+    · [create 2] [next 1] [yield] +0ms 1
+    [create 3] [next 1] [yield] +0ms 1
+    [create 3] [next 2] +0ms
+    · [create 2] [next 2] +0ms
+    · · [create 1] [next 2] +0ms
+    · · [create 1] [next 2] [done] +0ms undefined
+    · [create 2] [next 2] [done] +0ms undefined
+    [create 3] [next 2] [done] +0ms undefined
   `);
 });
 
@@ -64,9 +64,28 @@ test('returned value', () => {
   [...log(generatorFunction())];
   expect(getMessages()).toMatchInlineSnapshot(`
     [create 1] +0ms [IterableIterator]
-    [create 1] [next] +0ms
-    [create 1] [yield] +0ms 1
-    [create 1] [next] +0ms
-    [create 1] [done] +0ms 2
+    [create 1] [next 1] +0ms
+    [create 1] [next 1] [yield] +0ms 1
+    [create 1] [next 2] +0ms
+    [create 1] [next 2] [done] +0ms 2
+  `);
+});
+
+test('argument passed to next', () => {
+  const generatorFunction = function* () {
+    log(badgePlugin('yield result'))(yield 1);
+  };
+  const iterator = log(generatorFunction());
+  iterator.next();
+  expect(getMessages()).toMatchInlineSnapshot(`
+    [create 1] +0ms [IterableIterator]
+    [create 1] [next 1] +0ms
+    [create 1] [next 1] [yield] +0ms 1
+  `);
+  iterator.next(42);
+  expect(getMessages()).toMatchInlineSnapshot(`
+    [create 1] [next 2] +0ms 42
+    · [yield result] +0ms 42
+    [create 1] [next 2] [done] +0ms undefined
   `);
 });

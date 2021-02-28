@@ -1,4 +1,5 @@
 import { pipe } from 'antiutils';
+import { addNumberedBadge } from '../logger/addNumberedBadge';
 import { pluginSymbol, PluginType, ProxyPlugin } from '../logger/plugin';
 import { increaseStackLevel } from '../logger/stackLevel';
 import { excludeFromTimeDelta, includeInTimeDelta } from '../logger/timeDelta';
@@ -19,18 +20,24 @@ export const functionPlugin: ProxyPlugin = {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     value: any,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  ): any =>
-    Object.assign(
+  ): any => {
+    const addCallBadge = addNumberedBadge('call', logPalette.green);
+    return Object.assign(
       excludeFromTimeDelta((...args) => {
-        log([{ caption: 'call', color: logPalette.green }], ...args);
+        const logWithCallBadge = addCallBadge(log);
+        logWithCallBadge([], ...args);
         const result = pipe(
           value,
           includeInTimeDelta,
           increaseStackLevel,
         )(...args);
-        log([{ caption: 'return', color: logPalette.purple }], result);
+        logWithCallBadge(
+          [{ caption: 'return', color: logPalette.purple }],
+          result,
+        );
         return result;
       }),
       value,
-    ),
+    );
+  },
 };

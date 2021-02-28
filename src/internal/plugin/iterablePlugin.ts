@@ -1,4 +1,5 @@
 import { pipe } from 'antiutils';
+import { addNumberedBadge } from '../logger/addNumberedBadge';
 import { LogPlugin, pluginSymbol, PluginType } from '../logger/plugin';
 import { increaseStackLevel } from '../logger/stackLevel';
 import { excludeFromTimeDelta, includeInTimeDelta } from '../logger/timeDelta';
@@ -25,30 +26,34 @@ export const iterablePlugin: LogPlugin = {
     (value as any)[Symbol.iterator]?.() === value,
   transform: (log) => <T>(
     iterator: IterableIterator<T>,
-  ): IterableIterator<T> => ({
-    next: excludeFromTimeDelta(() => {
-      log([{ caption: `next`, color: logPalette.green }]);
-      const result = pipe(
-        () => iterator.next(),
-        includeInTimeDelta,
-        increaseStackLevel,
-      )();
-      const { value, done } = result;
-      log(
-        [
-          done
-            ? { caption: `done`, color: logPalette.purple }
-            : {
-                caption: `yield`,
-                color: logPalette.pink,
-              },
-        ],
-        value,
-      );
-      return result;
-    }),
-    [Symbol.iterator]: function () {
-      return this;
-    },
-  }),
+  ): IterableIterator<T> => {
+    const addNextBadge = addNumberedBadge('next', logPalette.green);
+    return {
+      next: excludeFromTimeDelta((...nextArgs) => {
+        const logWithNextBadge = addNextBadge(log);
+        logWithNextBadge([], ...nextArgs);
+        const result = pipe(
+          () => iterator.next(...nextArgs),
+          includeInTimeDelta,
+          increaseStackLevel,
+        )();
+        const { value, done } = result;
+        logWithNextBadge(
+          [
+            done
+              ? { caption: `done`, color: logPalette.purple }
+              : {
+                  caption: `yield`,
+                  color: logPalette.pink,
+                },
+          ],
+          value,
+        );
+        return result;
+      }),
+      [Symbol.iterator]: function () {
+        return this;
+      },
+    };
+  },
 };
