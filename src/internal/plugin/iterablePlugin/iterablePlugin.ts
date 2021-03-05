@@ -1,9 +1,12 @@
 import { pipe } from 'antiutils';
-import { addNumberedBadge } from '../logger/addNumberedBadge';
-import { LogPlugin, pluginSymbol, PluginType } from '../logger/plugin';
-import { increaseStackLevel } from '../logger/stackLevel';
-import { excludeFromTimeDelta, includeInTimeDelta } from '../logger/timeDelta';
-import { logPalette } from '../logPalette';
+import { addNumberedBadge } from '../../logger/addNumberedBadge';
+import { LogPlugin, pluginSymbol, PluginType } from '../../logger/plugin';
+import { increaseStackLevel } from '../../logger/stackLevel';
+import {
+  excludeFromTimeDelta,
+  includeInTimeDelta,
+} from '../../logger/timeDelta';
+import { logPalette } from '../../logPalette';
 
 /**
  * For a value that satisfies

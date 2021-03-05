@@ -1,8 +1,8 @@
 import { pipe } from 'antiutils';
-import { log } from '../logger/logger';
-import { badgePlugin } from './badgePlugin';
+import { log } from '../../logger/logger';
+import { badgePlugin } from '../badgePlugin';
 import { iterablePlugin } from './iterablePlugin';
-import { getMessages } from './mockHandlerPlugin';
+import { getMessages } from '../mockHandlerPlugin';
 
 test('basic usage', () => {
   const iterable = pipe(
@@ -72,7 +72,7 @@ test('returned value', () => {
 });
 
 test('argument passed to next', () => {
-  const generatorFunction = function* () {
+  const generatorFunction = function* (): Generator<number, void, number> {
     log(badgePlugin('yield result'))(yield 1);
   };
   const iterator = log(generatorFunction());
