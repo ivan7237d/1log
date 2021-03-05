@@ -1,13 +1,13 @@
 import { pipe } from 'antiutils';
 import { log } from '../../logger/logger';
 import { badgePlugin } from '../badgePlugin';
-import { iterablePlugin } from './iterablePlugin';
 import { getMessages } from '../mockHandlerPlugin';
+import { toIterable } from './toIterable';
 
 test('basic usage', () => {
   const iterable = pipe(
     new Set([1, 2]).values(),
-    log(badgePlugin('myIterable'))(iterablePlugin),
+    log(badgePlugin('myIterable')),
   );
   expect(getMessages()).toMatchInlineSnapshot(
     `[myIterable] [create 1] +0ms [IterableIterator]`,
@@ -29,14 +29,7 @@ test('basic usage', () => {
 });
 
 test('stack level', () => {
-  [
-    ...pipe(
-      new Set([1]).values(),
-      log(iterablePlugin),
-      log(iterablePlugin),
-      log(iterablePlugin),
-    ),
-  ];
+  [...pipe(new Set([1]).values(), log, log, log)];
   expect(getMessages()).toMatchInlineSnapshot(`
     [create 1] +0ms [IterableIterator]
     [create 2] +0ms [IterableIterator]
@@ -87,5 +80,18 @@ test('argument passed to next', () => {
     [create 1] [next 2] +0ms 42
     · [yield result] +0ms 42
     [create 1] [next 2] [done] +0ms undefined
+  `);
+});
+
+test('toIterable', () => {
+  [...log(toIterable(new Set([1, 2])))];
+  expect(getMessages()).toMatchInlineSnapshot(`
+    [create 1] +0ms [IterableIterator]
+    [create 1] [next 1] +0ms
+    [create 1] [next 1] [yield] +0ms 1
+    [create 1] [next 2] +0ms
+    [create 1] [next 2] [yield] +0ms 2
+    [create 1] [next 3] +0ms
+    [create 1] [next 3] [done] +0ms undefined
   `);
 });

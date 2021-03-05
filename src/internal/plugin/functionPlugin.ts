@@ -9,8 +9,9 @@ import { isPromise } from './isPromise';
 const AsyncFunction = (async () => {}).constructor;
 
 /**
- * If the piped value is a function (`constructor` is `Function`), logs its
- * creation, calls and returns.
+ * If the piped value is a function (`constructor` is `Function` or
+ * `AsyncFunction`), logs its creation and invocations, and if it returns a
+ * promise, fullfillment/rejection of that promise.
  */
 export const functionPlugin: ProxyPlugin = {
   [pluginSymbol]: PluginType.Proxy,
@@ -37,13 +38,19 @@ export const functionPlugin: ProxyPlugin = {
           includeInTimeDelta,
           increaseStackLevel,
         )(...args);
+        const resultIsPromise = isPromise(result);
         logWithCallBadge(
-          [{ caption: 'return', color: logPalette.purple }],
+          [
+            resultIsPromise
+              ? { caption: 'await', color: logPalette.pink }
+              : { caption: 'return', color: logPalette.purple },
+          ],
           result,
         );
-        return isPromise(result)
+        return resultIsPromise
           ? new Promise((resolve, reject) => {
-              result.then(
+              // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
+              (result as Promise<unknown>).then(
                 excludeFromTimeDelta((result) => {
                   logWithCallBadge(
                     [{ caption: 'resolve', color: logPalette.yellow }],

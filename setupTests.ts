@@ -1,8 +1,11 @@
 import {
+  asyncIterablePlugin,
   functionPlugin,
   getMessages,
   installPlugins,
   iterablePlugin,
+  jestAsyncIterableSerializer,
+  jestIterableSerializer,
   jestMessagesSerializer,
   mockHandlerPlugin,
   promisePlugin,
@@ -11,19 +14,15 @@ import {
 } from './src';
 
 expect.addSnapshotSerializer(jestMessagesSerializer);
-expect.addSnapshotSerializer({
-  test: (value) =>
-    value !== undefined &&
-    value !== null &&
-    value[Symbol.iterator]?.() === value,
-  serialize: () => `[IterableIterator]`,
-});
+expect.addSnapshotSerializer(jestIterableSerializer);
+expect.addSnapshotSerializer(jestAsyncIterableSerializer);
 
 installPlugins(
   mockHandlerPlugin(),
   functionPlugin,
   promisePlugin,
   iterablePlugin,
+  asyncIterablePlugin,
 );
 
 beforeEach(() => {

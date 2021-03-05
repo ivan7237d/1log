@@ -49,7 +49,7 @@ test('async function', async () => {
   expect(getMessages()).toMatchInlineSnapshot(`
     [create 1] +0ms [Function]
     [create 1] [call 1] +0ms
-    [create 1] [call 1] [return] +0ms Promise {}
+    [create 1] [call 1] [await] +0ms Promise {}
     [create 1] [call 1] [resolve] +0ms 42
   `);
 
@@ -65,7 +65,7 @@ test('async function', async () => {
   expect(getMessages()).toMatchInlineSnapshot(`
     [create 2] +0ms [Function]
     [create 2] [call 1] +0ms
-    [create 2] [call 1] [return] +0ms Promise {}
+    [create 2] [call 1] [await] +0ms Promise {}
     +0ms "promise resolved"
     [create 2] [call 1] [resolve] +0ms 42
   `);
@@ -77,7 +77,7 @@ test('async function', async () => {
   expect(getMessages()).toMatchInlineSnapshot(`
     [create 3] +0ms [Function]
     [create 3] [call 1] +0ms
-    [create 3] [call 1] [return] +0ms Promise {}
+    [create 3] [call 1] [await] +0ms Promise {}
     [create 3] [call 1] [reject] +0ms 42
   `);
 });

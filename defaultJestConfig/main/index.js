@@ -3,19 +3,15 @@ Object.defineProperty(exports, '__esModule', { value: true });
 const lib = require('../..');
 
 expect.addSnapshotSerializer(lib.jestMessagesSerializer);
-expect.addSnapshotSerializer({
-  test: (value) =>
-    value !== undefined &&
-    value !== null &&
-    value[Symbol.iterator]?.() === value,
-  serialize: () => `[IterableIterator]`,
-});
+expect.addSnapshotSerializer(lib.jestIterableSerializer);
+expect.addSnapshotSerializer(lib.jestAsyncIterableSerializer);
 
 lib.installPlugins(
   lib.mockHandlerPlugin(),
   lib.functionPlugin,
   lib.promisePlugin,
   lib.iterablePlugin,
+  lib.asyncIterablePlugin,
 );
 
 beforeEach(() => {

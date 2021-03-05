@@ -1,4 +1,5 @@
 import {
+  asyncIterablePlugin,
   consoleHandlerPlugin,
   functionPlugin,
   installPlugins,
@@ -11,4 +12,5 @@ installPlugins(
   functionPlugin,
   promisePlugin,
   iterablePlugin,
+  asyncIterablePlugin,
 );

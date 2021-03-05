@@ -7,4 +7,5 @@ lib.installPlugins(
   lib.functionPlugin,
   lib.promisePlugin,
   lib.iterablePlugin,
+  lib.asyncIterablePlugin,
 );

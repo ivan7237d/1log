@@ -47,7 +47,7 @@ export const iterablePlugin: LogPlugin = {
               ? { caption: `done`, color: logPalette.purple }
               : {
                   caption: `yield`,
-                  color: logPalette.pink,
+                  color: logPalette.yellow,
                 },
           ],
           value,

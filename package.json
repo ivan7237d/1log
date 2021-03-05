@@ -18,7 +18,8 @@
     "snapshot",
     "function",
     "promise",
-    "iterable"
+    "iterable",
+    "async"
   ],
   "scripts": {
     "prebuild": "rm -rf build",

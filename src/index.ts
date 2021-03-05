@@ -25,7 +25,13 @@ export {
   includeInTimeDelta,
   resetTimeDelta,
 } from './internal/logger/timeDelta';
+export { asyncIterablePlugin } from './internal/plugin/asyncIterablePlugin/asyncIterablePlugin';
+export { jestAsyncIterableSerializer } from './internal/plugin/asyncIterablePlugin/jestAsyncIterableSerializer';
+export { toAsyncIterable } from './internal/plugin/asyncIterablePlugin/toAsyncIterable';
 export { consoleHandlerPlugin } from './internal/plugin/consoleHandlerPlugin/consoleHandlerPlugin';
+export { iterablePlugin } from './internal/plugin/iterablePlugin/iterablePlugin';
+export { jestIterableSerializer } from './internal/plugin/iterablePlugin/jestIterableSerializer';
+export { toIterable } from './internal/plugin/iterablePlugin/toIterable';
 export { debugPlugin } from './internal/plugin/severityPlugin/debugPlugin';
 export { errorPlugin } from './internal/plugin/severityPlugin/errorPlugin';
 export { infoPlugin } from './internal/plugin/severityPlugin/infoPlugin';
@@ -33,7 +39,6 @@ export { severityPlugin } from './internal/plugin/severityPlugin/severityPlugin'
 export { warnPlugin } from './internal/plugin/severityPlugin/warnPlugin';
 export { badgePlugin } from './internal/plugin/badgePlugin';
 export { functionPlugin } from './internal/plugin/functionPlugin';
-export { iterablePlugin } from './internal/plugin/iterablePlugin/iterablePlugin';
 export {
   mockHandlerPlugin,
   getMessages,

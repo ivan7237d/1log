@@ -168,17 +168,19 @@ const timer = (duration: number) =>
   });
 
 test('timer', async () => {
-  const promise = log(timer(500));
+  const promise = log(timer)(500);
   jest.runAllTimers();
   await promise;
   expect(getMessages()).toMatchInlineSnapshot(`
-    [create 1] +0ms Promise {}
-    [create 1] [resolve] +500ms 42
+    [create 1] +0ms [Function]
+    [create 1] [call 1] +0ms 500
+    [create 1] [call 1] [await] +0ms Promise {}
+    [create 1] [call 1] [resolve] +500ms 42
   `);
 });
 ```
 
-Logging saved us the need to advance the time by 499ms, check that the promise is not resolved, then advance the time some more and check that the promise has resolved to the right value.
+Logging saved us the need to advance the time by 499ms, check that the promise is not resolved, then advance the time some more and check that the promise has resolved to the right value. Values that appear in log messages are serialized in the same way as in other snapshots, and where necessary Jest will use a custom serializer such as the one for JSX.
 
 ## Default config
 
@@ -186,6 +188,7 @@ Importing `'1log/defaultConfig'` is the same as importing a file with the follow
 
 ```ts
 import {
+  asyncIterablePlugin,
   consoleHandlerPlugin,
   functionPlugin,
   installPlugins,
@@ -198,6 +201,7 @@ installPlugins(
   functionPlugin,
   promisePlugin,
   iterablePlugin,
+  asyncIterablePlugin,
 );
 ```
 
@@ -207,10 +211,13 @@ Importing `'1log/defaultJestConfig'` is the same as importing a file with the fo
 
 ```ts
 import {
+  asyncIterablePlugin,
   functionPlugin,
   getMessages,
   installPlugins,
   iterablePlugin,
+  jestAsyncIterableSerializer,
+  jestIterableSerializer,
   jestMessagesSerializer,
   mockHandlerPlugin,
   promisePlugin,
@@ -220,21 +227,19 @@ import {
 
 // Add a Jest snapshot serializer that formats log messages.
 expect.addSnapshotSerializer(jestMessagesSerializer);
-// Add a Jest snapshot serializer for values proxied by
-// iterablePlugin.
-expect.addSnapshotSerializer({
-  test: (value) =>
-    value !== undefined &&
-    value !== null &&
-    value[Symbol.iterator]?.() === value,
-  serialize: () => `[IterableIterator]`,
-});
+// Add a Jest snapshot serializer that represents values proxied by
+// iterablePlugin as [IterableIterator].
+expect.addSnapshotSerializer(jestIterableSerializer);
+// Add a Jest snapshot serializer that represents values proxied by
+// asyncIterablePlugin as [AsyncIterableIterator].
+expect.addSnapshotSerializer(jestAsyncIterableSerializer);
 
 installPlugins(
   mockHandlerPlugin(),
   functionPlugin,
   promisePlugin,
   iterablePlugin,
+  asyncIterablePlugin,
 );
 
 beforeEach(() => {
@@ -317,7 +322,27 @@ Returns a plugin that buffers log messages in memory. Like `consoleHandlerPlugin
 
 ### `functionPlugin`
 
-If the piped value is a function, logs its creation and invocations. You can see sample output in the section _[Reading log messages](#reading-log-messages)_.
+If the piped value is a function (`constructor` property is `Function` or `AsyncFunction`), logs its creation and invocations, and if it returns a promise, fullfillment/rejection of that promise.
+
+Example (sync function):
+
+```ts
+import { log } from '1log';
+
+log((x: number) => x * 10)(42);
+```
+
+<img src="https://github.com/ivan7237d/1log/raw/master/images/function-adjusted.png" alt="screenshot">
+
+Example (async function):
+
+```ts
+import { log } from '1log';
+
+log(async (x: number) => x * 10)(42);
+```
+
+<img src="https://github.com/ivan7237d/1log/raw/master/images/async-function-adjusted.png" alt="screenshot">
 
 ### `promisePlugin`
 
@@ -365,7 +390,57 @@ import { log } from '1log';
 [...log(new Set([1, 2]).values())];
 ```
 
-<img src="https://github.com/ivan7237d/1log/raw/master/images/iterable-iterator-adjusted.png" alt="screenshot">
+<img src="https://github.com/ivan7237d/1log/raw/master/images/iterable-adjusted.png" alt="screenshot">
+
+The above condition excludes objects like arrays because they cannot be proxied by a plain iterable. To log such an object as an iterable, wrap it with `toIterable` utility function.
+
+### `asyncIterablePlugin`
+
+For a value that satisfies
+
+```ts
+value !== undefined &&
+  value !== null &&
+  value[Symbol.asyncIterator]?.() === value;
+```
+
+(e.g. one returned by an async generator function), logs the following messages:
+
+- Initial message with a `create` badge.
+
+- Just before calling the iterator's `next` method, a log message with a `next` badge.
+
+- Immediately after `next` returns a promise, a log message with `queued` badge.
+
+- If and when that promise resolves, a log message with either a `yield` or a `done` badge depending on the `done` property of the promise result.
+
+- If and when that promise rejects, a log message with a `reject` badge.
+
+Example:
+
+```ts
+import { log } from '1log';
+
+const timer = (duration: number) =>
+  new Promise<number>((resolve) => {
+    setTimeout(() => resolve(42), duration);
+  });
+
+async function* asyncGeneratorFunction() {
+  yield await timer(500);
+  return (await timer(500)) + 1;
+}
+
+(async () => {
+  for await (const value of log(asyncGeneratorFunction())) {
+    await timer(500);
+  }
+})();
+```
+
+<img src="https://github.com/ivan7237d/1log/raw/master/images/async-iterable-adjusted.png" alt="screenshot">
+
+The above condition excludes objects like Node's readable streams because they cannot be proxied by a plain async iterable. To log such an object as an async iterable, wrap it with `toAsyncIterable` utility function.
 
 ### `badgePlugin`
 
