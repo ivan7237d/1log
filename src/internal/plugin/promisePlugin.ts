@@ -1,6 +1,7 @@
 import { pluginSymbol, PluginType, ProxyPlugin } from '../logger/plugin';
 import { excludeFromTimeDelta, includeInTimeDelta } from '../logger/timeDelta';
 import { logPalette } from '../logPalette';
+import { isPromise } from './isPromise';
 
 /**
  * If the piped value is a promise, logs its creation and
@@ -8,11 +9,7 @@ import { logPalette } from '../logPalette';
  */
 export const promisePlugin: ProxyPlugin = {
   [pluginSymbol]: PluginType.Proxy,
-  scope: (value) =>
-    value !== null &&
-    value !== undefined &&
-    // eslint-disable-next-line @typescript-eslint/consistent-type-assertions, @typescript-eslint/no-explicit-any
-    (value as any).constructor === Promise,
+  scope: isPromise,
   transform: (log) => <T>(value: Promise<T>): Promise<T> =>
     new Promise((resolve, reject) => {
       value.then(
