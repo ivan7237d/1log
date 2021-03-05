@@ -7,7 +7,7 @@ All notable changes to this project will be documented in this file. See [standa
 ### ⚠ BREAKING CHANGES
 
 - iterableIteratorPlugin was renamed to iterablePlugin
-- badges for functions and iterables are now numbered and messages for iterables now include values passed to `next()`/`return`, so you may need to update Jest snapshots
+- there is more data included in log messages (see new features), so you may need to update Jest snapshots
 
 ### Features
 
