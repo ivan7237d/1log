@@ -1,10 +1,10 @@
-import { applyPipe } from 'antiutils';
+import { pipe } from 'antiutils';
 
 /**
  * @internal
  */
 export const hexToRgb = (source: string): [number, number, number] =>
-  applyPipe(
+  pipe(
     source.startsWith('#') ? source.substring(1).match(/.{2}/g) : [],
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     (value) => value!.map((value) => parseInt(value, 16)),

@@ -1,4 +1,4 @@
-import { applyPipe, as, flatMapIterable } from 'antiutils';
+import { as, flatMapIterable, pipe } from 'antiutils';
 import { logPalette } from '../logPalette';
 import { badgePlugin } from '../plugin/badgePlugin';
 import { getMessages } from '../plugin/mockHandlerPlugin';
@@ -73,7 +73,7 @@ test('plugins', () => {
   const getMessagesForPlugins = (plugins: LogPlugin[][]) =>
     sameResult(
       [
-        ...applyPipe(
+        ...pipe(
           plugins,
           flatMapIterable((value) => permute(value)),
         ),

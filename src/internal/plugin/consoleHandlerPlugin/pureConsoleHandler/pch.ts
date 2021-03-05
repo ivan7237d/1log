@@ -1,9 +1,9 @@
 import {
-  applyPipe,
   asNever,
   firstIterable,
   flatMapIterable,
   mapIterable,
+  pipe,
   rangeIterable,
   zipIterables,
 } from 'antiutils';
@@ -19,7 +19,7 @@ import { rgbToAnsi256 } from './rgbToAnsi256';
 type TimeDeltaStyle = { bold: boolean; mutedColor: boolean };
 
 const ansiColor = (color: string) =>
-  applyPipe(
+  pipe(
     color,
     hexToRgb,
     (value) => rgbToAnsi256(...value),
@@ -53,7 +53,7 @@ const getStyledTimeDelta = (
   timeDelta: number,
 ): [caption: string, style: TimeDeltaStyle] => [
   '+' + formatTime(timeDelta),
-  applyPipe(Math.round(timeDelta), (value) => ({
+  pipe(Math.round(timeDelta), (value) => ({
     bold: value >= 1000,
     mutedColor: !(value >= 10),
   })),
@@ -88,8 +88,8 @@ const tryToSerialize = ({
 const renderWithCssStyles = (
   data: readonly (readonly [text: string, style: string])[],
 ) => [
-  applyPipe(data.map(([text]) => `%c${text}%c`)).join(''),
-  ...applyPipe(
+  pipe(data.map(([text]) => `%c${text}%c`)).join(''),
+  ...pipe(
     data,
     flatMapIterable(([, style]) => [style, '']),
   ),
@@ -113,7 +113,7 @@ export const pureConsoleHandler = ({
   timeDelta,
   data,
 }: LogMessage): void => {
-  const stackIndicator = applyPipe(
+  const stackIndicator = pipe(
     rangeIterable(undefined, stackLevel),
     mapIterable(() => '\u00B7'),
   );
@@ -123,7 +123,7 @@ export const pureConsoleHandler = ({
   if (logStyle === 'css') {
     log(
       ...renderWithCssStyles([
-        ...applyPipe(
+        ...pipe(
           zipIterables(firstIterable(), [
             ...(severity !== undefined
               ? [
@@ -133,13 +133,13 @@ export const pureConsoleHandler = ({
                   ] as const,
                 ]
               : []),
-            ...applyPipe(
+            ...pipe(
               stackIndicator,
               mapIterable(
                 (caption) => [caption, `color: ${mutedTextColor}`] as const,
               ),
             ),
-            ...applyPipe(
+            ...pipe(
               badges,
               mapIterable(
                 ({ caption, color }) =>
@@ -149,7 +149,7 @@ export const pureConsoleHandler = ({
                   ] as const,
               ),
             ),
-            applyPipe(
+            pipe(
               styledTimeDelta,
               ([caption, style]) =>
                 [caption, timeDeltaStyleToCss(style)] as const,
@@ -177,18 +177,18 @@ export const pureConsoleHandler = ({
               }${getSeverityCaption(severity)}${ansiClear}`,
             ]
           : []),
-        ...applyPipe(
+        ...pipe(
           stackIndicator,
           mapIterable((caption) => `${ansiDim}${caption}${ansiClear}`),
         ),
-        ...applyPipe(
+        ...pipe(
           badges,
           mapIterable(
             ({ caption, color }) =>
               `${ansiColor(color)}[${caption}]${ansiClear}`,
           ),
         ),
-        `${applyPipe(
+        `${pipe(
           styledTimeDelta,
           ([caption, { bold, mutedColor }]) =>
             `${
@@ -203,7 +203,7 @@ export const pureConsoleHandler = ({
       `${[
         ...(severity !== undefined ? [getSeverityCaption(severity)] : []),
         ...stackIndicator,
-        ...applyPipe(
+        ...pipe(
           badges,
           mapIterable((value) => `[${value.captionNoColor ?? value.caption}]`),
         ),
