@@ -38,6 +38,8 @@ Log function with superpowers.
 
   - [`iterablePlugin`](#iterableplugin)
 
+  - [`asyncIterablePlugin`](#asynciterableplugin)
+
   - [`badgePlugin`](#badgeplugin)
 
   - [`severityPlugin`](#severityplugin)
