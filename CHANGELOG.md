@@ -22,8 +22,6 @@ All notable changes to this project will be documented in this file. See [standa
 
 - potential issue with some bundlers detecting Node's require ([3e99bd1](https://github.com/ivan7237d/1log/commit/3e99bd153ea23aff53f9622fe2bdca44f0cce560))
 
-- rename iterableIteratorPlugin to iterablePlugin ([2d05c92](https://github.com/ivan7237d/1log/commit/2d05c92feeaefc6d4a3c6a5ebfd3078947a38884))
-
 ### [2.1.4](https://github.com/ivan7237d/1log/compare/v2.1.3...v2.1.4) (2021-02-11)
 
 Chore release.
