@@ -412,7 +412,7 @@ value !== undefined &&
 
 - Just before calling the iterator's `next` method, a log message with a `next` badge.
 
-- Immediately after `next` returns a promise, a log message with `queued` badge.
+- Immediately after `next` returns a promise, a log message with `await` badge.
 
 - If and when that promise resolves, a log message with either a `yield` or a `done` badge depending on the `done` property of the promise result.
 
