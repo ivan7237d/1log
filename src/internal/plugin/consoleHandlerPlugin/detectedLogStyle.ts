@@ -24,6 +24,7 @@ export const detectedLogStyle: LogStyle = (() => {
 
   const isNode =
     typeof process !== 'undefined' &&
+    typeof process.versions !== 'undefined' &&
     typeof process.versions.node !== 'undefined';
 
   return isNonChromiumEdge || isIOsChrome ? 'none' : isNode ? 'ansi' : 'css';
