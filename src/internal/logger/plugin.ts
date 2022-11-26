@@ -1,4 +1,5 @@
-import { memoizeStrong, memoizeWeak, pipe, Reducer } from 'antiutils';
+import { pipe } from 'antiutils';
+import memoize from 'monomemo';
 import { LogBadge, LogHandler } from './handler';
 
 /**
@@ -81,17 +82,19 @@ export interface CombinedPlugin {
   severity?: number;
 }
 
-const appendBadge = memoizeWeak((badgeCaptions: string[]) =>
-  memoizeStrong((caption: string) => [...badgeCaptions, caption]),
+const appendBadge = memoize(
+  (badgeCaptions: string[]) =>
+    memoize((caption: string) => [...badgeCaptions, caption], new Map()),
+  new WeakMap(),
 );
 
 /**
  * @internal
  */
-export const combinedPluginReducer: Reducer<CombinedPlugin, LogPlugin> = (
-  accumulator,
-  value,
-) =>
+export const combinedPluginReducer = (
+  accumulator: CombinedPlugin,
+  value: LogPlugin,
+): CombinedPlugin =>
   value[pluginSymbol] === PluginType.Handler
     ? pipe(accumulator, ({ handlers, ...rest }) => ({
         // eslint-disable-next-line @typescript-eslint/consistent-type-assertions

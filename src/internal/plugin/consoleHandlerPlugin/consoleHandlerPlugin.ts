@@ -1,4 +1,4 @@
-import { asNever, pipe } from 'antiutils';
+import { assertNever, pipe } from 'antiutils';
 import { LogMessage } from '../../logger/handler';
 import { HandlerPlugin, pluginSymbol, PluginType } from '../../logger/plugin';
 import { Severity } from '../../logger/severity';
@@ -36,7 +36,7 @@ export const consoleHandlerPlugin = (
           ? consoleSnapshot.error
           : severity === undefined
           ? consoleSnapshot.log
-          : asNever(severity),
+          : assertNever(severity),
       logStyle: detectedLogStyle,
       maxLength: 4000,
     }),

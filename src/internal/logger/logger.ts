@@ -1,10 +1,5 @@
-import {
-  filterIterable,
-  firstInIterable,
-  memoizeWeak,
-  pipe,
-  reverseIterable,
-} from 'antiutils';
+import { pipe } from 'antiutils';
+import memoize from 'monomemo';
 import { addNumberedBadge } from './addNumberedBadge';
 import { LogMessage } from './handler';
 import {
@@ -37,8 +32,10 @@ export const installPlugins = (...plugins: LogPlugin[]): void => {
   );
 };
 
-const getBadges = memoizeWeak((badgeCaptions: string[]) =>
-  badgeCaptions.map((caption) => ({ caption, color: systemPalette.blue })),
+const getBadges = memoize(
+  (badgeCaptions: string[]) =>
+    badgeCaptions.map((caption) => ({ caption, color: systemPalette.blue })),
+  new WeakMap(),
 );
 
 const getPluginLogger = (combinedPlugin: CombinedPlugin): PluginLogger => (
@@ -55,8 +52,9 @@ const getPluginLogger = (combinedPlugin: CombinedPlugin): PluginLogger => (
   combinedPlugin.handlers.forEach((handler) => handler(message));
 };
 
-const addCreateBadge = memoizeWeak((_badgeCaptions: string[]) =>
-  addNumberedBadge('create', systemPalette.gray),
+const addCreateBadge = memoize(
+  (_badgeCaptions: string[]) => addNumberedBadge('create', systemPalette.gray),
+  new WeakMap(),
 );
 
 export interface Logger {
@@ -102,12 +100,9 @@ const logLocal = (...args: any[]): any => {
         logLocal(newCombinedPlugin, ...args),
       );
     }
-    const proxyPlugin = pipe(
-      combinedPlugin.proxyPlugins,
-      reverseIterable,
-      filterIterable((plugin) => plugin.scope(externalArg)),
-      firstInIterable,
-    );
+    const proxyPlugin = [...combinedPlugin.proxyPlugins]
+      .reverse()
+      .find((plugin) => plugin.scope(externalArg));
     if (proxyPlugin !== undefined) {
       const logWithCreate = addCreateBadge(combinedPlugin.badgeCaptions)(
         pluginLogger,

@@ -1,4 +1,3 @@
-import { as, flatMapIterable, pipe } from 'antiutils';
 import { logPalette } from '../logPalette';
 import { badgePlugin } from '../plugin/badgePlugin';
 import { getMessages } from '../plugin/mockHandlerPlugin';
@@ -45,13 +44,16 @@ const sameResult = <Element, Result>(
   callback: (array: Element) => Result,
 ) => {
   const noResult = Symbol();
-  const result = array.reduce((accumulator, value) => {
-    const result = callback(value);
-    if (accumulator !== noResult) {
-      expect(accumulator).toEqual(result);
-    }
-    return result;
-  }, as<Result | typeof noResult>(noResult));
+  const result = array.reduce(
+    (accumulator: Result | typeof noResult, value) => {
+      const result = callback(value);
+      if (accumulator !== noResult) {
+        expect(accumulator).toEqual(result);
+      }
+      return result;
+    },
+    noResult,
+  );
   if (result === noResult) {
     fail();
   }
@@ -71,21 +73,11 @@ test('usage with number of arguments other than 1', () => {
 
 test('plugins', () => {
   const getMessagesForPlugins = (plugins: LogPlugin[][]) =>
-    sameResult(
-      [
-        ...pipe(
-          plugins,
-          flatMapIterable((value) => permute(value)),
-        ),
-      ],
-      (plugins) => {
-        resetBadgeNumbers();
-        expect(plugins.reduce((log, plugin) => log(plugin), log)(42)).toEqual(
-          42,
-        );
-        return getMessages();
-      },
-    );
+    sameResult(plugins.flatMap(permute), (plugins) => {
+      resetBadgeNumbers();
+      expect(plugins.reduce((log, plugin) => log(plugin), log)(42)).toEqual(42);
+      return getMessages();
+    });
   const proxyPlugin: ProxyPlugin = {
     [pluginSymbol]: PluginType.Proxy,
     scope: (value) => value === 42,
@@ -110,20 +102,17 @@ test('plugins', () => {
 });
 
 test('proxy plugin order', () => {
+  const log2 = log<[ProxyPlugin]>({
+    [pluginSymbol]: PluginType.Proxy,
+    scope: (value) => value === 42,
+    transform: () => () => 1,
+  });
   expect(
-    log(
-      as<ProxyPlugin>({
-        [pluginSymbol]: PluginType.Proxy,
-        scope: (value) => value === 42,
-        transform: () => () => 1,
-      }),
-    )(
-      as<ProxyPlugin>({
-        [pluginSymbol]: PluginType.Proxy,
-        scope: (value) => value === 42,
-        transform: () => () => 2,
-      }),
-    )(42),
+    log2<[ProxyPlugin]>({
+      [pluginSymbol]: PluginType.Proxy,
+      scope: (value) => value === 42,
+      transform: () => () => 2,
+    })(42),
   ).toEqual(2);
 });
 

@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "incremental": true,
-    "target": "es2017",
+    "target": "es2021",
     "outDir": "build/main",
     "rootDir": "src",
     "moduleResolution": "node",
@@ -38,7 +38,7 @@
     // "experimentalDecorators": true /* Enables experimental support for ES7 decorators. */,
     // "emitDecoratorMetadata": true /* Enables experimental support for emitting type metadata for decorators. */,
 
-    "lib": ["es2017", "WebWorker"],
+    "lib": ["es2021", "WebWorker"],
     "types": ["jest", "node"],
     "typeRoots": ["node_modules/@types", "src/types"]
   },

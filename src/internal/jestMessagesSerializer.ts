@@ -1,4 +1,4 @@
-import { asNever, mapIterable, pipe, rangeIterable } from 'antiutils';
+import { assertNever, pipe } from 'antiutils';
 import { LogMessage } from './logger/handler';
 import { normalizeSeverity } from './logger/normalizeSeverity';
 import { Severity } from './logger/severity';
@@ -23,16 +23,10 @@ const formatMessageHeader = ({
         ? ['ERROR']
         : severity === undefined
         ? []
-        : asNever(severity),
+        : assertNever(severity),
     ),
-    ...pipe(
-      rangeIterable(undefined, stackLevel),
-      mapIterable(() => '·'),
-    ),
-    ...pipe(
-      badges,
-      mapIterable((badge) => `[${badge.captionNoColor ?? badge.caption}]`),
-    ),
+    ...Array(stackLevel).fill('·'),
+    ...badges.map((badge) => `[${badge.captionNoColor ?? badge.caption}]`),
     '+' + formatTime(timeDelta),
   ].join(' ');
 

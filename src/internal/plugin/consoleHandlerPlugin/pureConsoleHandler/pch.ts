@@ -1,12 +1,4 @@
-import {
-  asNever,
-  firstIterable,
-  flatMapIterable,
-  mapIterable,
-  pipe,
-  rangeIterable,
-  zipIterables,
-} from 'antiutils';
+import { assertNever, pipe } from 'antiutils';
 import { LogMessage } from '../../../logger/handler';
 import { normalizeSeverity } from '../../../logger/normalizeSeverity';
 import { Severity } from '../../../logger/severity';
@@ -47,7 +39,7 @@ const getSeverityCaption = (severity: Severity) =>
     ? 'WARNING'
     : severity === Severity.error
     ? 'ERROR'
-    : asNever(severity);
+    : assertNever(severity);
 
 const getStyledTimeDelta = (
   timeDelta: number,
@@ -88,11 +80,8 @@ const tryToSerialize = ({
 const renderWithCssStyles = (
   data: readonly (readonly [text: string, style: string])[],
 ) => [
-  pipe(data.map(([text]) => `%c${text}%c`)).join(''),
-  ...pipe(
-    data,
-    flatMapIterable(([, style]) => [style, '']),
-  ),
+  data.map(([text]) => `%c${text}%c`).join(''),
+  ...data.flatMap(([, style]) => [style, '']),
 ];
 
 /**
@@ -113,54 +102,42 @@ export const pureConsoleHandler = ({
   timeDelta,
   data,
 }: LogMessage): void => {
-  const stackIndicator = pipe(
-    rangeIterable(undefined, stackLevel),
-    mapIterable(() => '\u00B7'),
-  );
+  const stackIndicator = new Array(stackLevel).fill('\u00B7');
   const styledTimeDelta = getStyledTimeDelta(timeDelta);
   const severity = normalizeSeverity(nonNormalizedSeverity);
   const log = getImpureHandler(severity);
   if (logStyle === 'css') {
     log(
-      ...renderWithCssStyles([
-        ...pipe(
-          zipIterables(firstIterable(), [
-            ...(severity !== undefined
-              ? [
-                  [
-                    getSeverityCaption(severity),
-                    `color: ${mutedTextColor}`,
-                  ] as const,
-                ]
-              : []),
-            ...pipe(
-              stackIndicator,
-              mapIterable(
-                (caption) => [caption, `color: ${mutedTextColor}`] as const,
-              ),
-            ),
-            ...pipe(
-              badges,
-              mapIterable(
-                ({ caption, color }) =>
-                  [
-                    caption,
-                    `background: ${color}; color: #ffffff; padding: 0 3px;`,
-                  ] as const,
-              ),
-            ),
-            pipe(
-              styledTimeDelta,
-              ([caption, style]) =>
-                [caption, timeDeltaStyleToCss(style)] as const,
-            ),
-          ]),
-          flatMapIterable(([isFirst, el]) => [
-            ...(isFirst ? [] : [[' ', ''] as const]),
-            el,
-          ]),
-        ),
-      ]),
+      ...renderWithCssStyles(
+        [
+          ...(severity !== undefined
+            ? [
+                [
+                  getSeverityCaption(severity),
+                  `color: ${mutedTextColor}`,
+                ] as const,
+              ]
+            : []),
+          ...stackIndicator.map(
+            (caption) => [caption, `color: ${mutedTextColor}`] as const,
+          ),
+          ...badges.map(
+            ({ caption, color }) =>
+              [
+                caption,
+                `background: ${color}; color: #ffffff; padding: 0 3px;`,
+              ] as const,
+          ),
+          pipe(
+            styledTimeDelta,
+            ([caption, style]) =>
+              [caption, timeDeltaStyleToCss(style)] as const,
+          ),
+        ].flatMap((el, index) => [
+          ...(index === 0 ? [] : [[' ', ''] as const]),
+          el,
+        ]),
+      ),
       ...data,
     );
   } else if (logStyle === 'ansi') {
@@ -177,16 +154,9 @@ export const pureConsoleHandler = ({
               }${getSeverityCaption(severity)}${ansiClear}`,
             ]
           : []),
-        ...pipe(
-          stackIndicator,
-          mapIterable((caption) => `${ansiDim}${caption}${ansiClear}`),
-        ),
-        ...pipe(
-          badges,
-          mapIterable(
-            ({ caption, color }) =>
-              `${ansiColor(color)}[${caption}]${ansiClear}`,
-          ),
+        ...stackIndicator.map((caption) => `${ansiDim}${caption}${ansiClear}`),
+        ...badges.map(
+          ({ caption, color }) => `${ansiColor(color)}[${caption}]${ansiClear}`,
         ),
         `${pipe(
           styledTimeDelta,
@@ -203,15 +173,12 @@ export const pureConsoleHandler = ({
       `${[
         ...(severity !== undefined ? [getSeverityCaption(severity)] : []),
         ...stackIndicator,
-        ...pipe(
-          badges,
-          mapIterable((value) => `[${value.captionNoColor ?? value.caption}]`),
-        ),
+        ...badges.map((value) => `[${value.captionNoColor ?? value.caption}]`),
         styledTimeDelta[0],
         ...(data.length ? [tryToSerialize({ data, maxLength })] : []),
       ].join(' ')}`,
     );
   } else {
-    asNever(logStyle);
+    assertNever(logStyle);
   }
 };
