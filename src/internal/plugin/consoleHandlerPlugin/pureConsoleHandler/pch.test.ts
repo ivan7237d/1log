@@ -1,7 +1,7 @@
-import { Severity } from '../../../logger/severity';
-import { logPalette } from '../../../logPalette';
-import { LogStyle } from '../logStyle';
-import { pureConsoleHandler } from './pch';
+import { Severity } from "../../../logger/severity";
+import { logPalette } from "../../../logPalette";
+import { LogStyle } from "../logStyle";
+import { pureConsoleHandler } from "./pch";
 
 const getHandlerLocal = ({
   logStyle,
@@ -13,9 +13,11 @@ const getHandlerLocal = ({
   const messages: unknown[] = [];
   return {
     handler: pureConsoleHandler({
-      getImpureHandler: (severity) => (...data) => {
-        messages.push([severity, ...data]);
-      },
+      getImpureHandler:
+        (severity) =>
+        (...data) => {
+          messages.push([severity, ...data]);
+        },
       logStyle,
       maxLength,
     }),
@@ -27,20 +29,20 @@ const getHandlerLocal = ({
   };
 };
 
-it('renders css-styled messages correctly', () => {
+it("renders css-styled messages correctly", () => {
   const { handler, getMessages } = getHandlerLocal({
-    logStyle: 'css',
+    logStyle: "css",
   });
 
   handler({
     severity: Severity.error,
     stackLevel: 2,
     badges: [
-      { color: logPalette.blue, caption: '<caption 1>' },
-      { color: logPalette.purple, caption: '<caption 2>' },
+      { color: logPalette.blue, caption: "<caption 1>" },
+      { color: logPalette.purple, caption: "<caption 2>" },
     ],
     timeDelta: 9,
-    data: ['<value 1>', '<value 2>'],
+    data: ["<value 1>", "<value 2>"],
   });
   expect(getMessages()).toMatchInlineSnapshot(`
     Array [
@@ -78,9 +80,9 @@ it('renders css-styled messages correctly', () => {
   // Check rendering of time delta (1 of 2).
   handler({
     stackLevel: 0,
-    badges: [{ color: logPalette.blue, caption: '<caption 1>' }],
+    badges: [{ color: logPalette.blue, caption: "<caption 1>" }],
     timeDelta: 10,
-    data: ['<data>'],
+    data: ["<data>"],
   });
   expect(getMessages()).toMatchInlineSnapshot(`
     Array [
@@ -101,9 +103,9 @@ it('renders css-styled messages correctly', () => {
   // Check rendering of time delta (2 of 2).
   handler({
     stackLevel: 0,
-    badges: [{ color: logPalette.blue, caption: '<caption 1>' }],
+    badges: [{ color: logPalette.blue, caption: "<caption 1>" }],
     timeDelta: 1000,
-    data: ['<data>'],
+    data: ["<data>"],
   });
   expect(getMessages()).toMatchInlineSnapshot(`
     Array [
@@ -122,20 +124,20 @@ it('renders css-styled messages correctly', () => {
   `);
 });
 
-it('renders ansi-styled messages correctly', () => {
+it("renders ansi-styled messages correctly", () => {
   const { handler, getMessages } = getHandlerLocal({
-    logStyle: 'ansi',
+    logStyle: "ansi",
   });
 
   handler({
     severity: Severity.error,
     stackLevel: 2,
     badges: [
-      { color: logPalette.blue, caption: '<caption 1>' },
-      { color: logPalette.purple, caption: '<caption 2>' },
+      { color: logPalette.blue, caption: "<caption 1>" },
+      { color: logPalette.purple, caption: "<caption 2>" },
     ],
     timeDelta: 9,
-    data: ['<value 1>', '<value 2>'],
+    data: ["<value 1>", "<value 2>"],
   });
   expect(getMessages()).toMatchInlineSnapshot(`
     Array [
@@ -151,9 +153,9 @@ it('renders ansi-styled messages correctly', () => {
   // Check rendering of time delta (1 of 2).
   handler({
     stackLevel: 0,
-    badges: [{ color: logPalette.blue, caption: '<caption 1>' }],
+    badges: [{ color: logPalette.blue, caption: "<caption 1>" }],
     timeDelta: 10,
-    data: ['<data>'],
+    data: ["<data>"],
   });
   expect(getMessages()).toMatchInlineSnapshot(`
     Array [
@@ -168,9 +170,9 @@ it('renders ansi-styled messages correctly', () => {
   // Check rendering of time delta (2 of 2).
   handler({
     stackLevel: 0,
-    badges: [{ color: logPalette.blue, caption: '<caption 1>' }],
+    badges: [{ color: logPalette.blue, caption: "<caption 1>" }],
     timeDelta: 1000,
-    data: ['<data>'],
+    data: ["<data>"],
   });
   expect(getMessages()).toMatchInlineSnapshot(`
     Array [
@@ -183,20 +185,20 @@ it('renders ansi-styled messages correctly', () => {
   `);
 });
 
-it('renders unstyled messages correctly', () => {
+it("renders unstyled messages correctly", () => {
   const { handler, getMessages } = getHandlerLocal({
-    logStyle: 'none',
+    logStyle: "none",
   });
 
   handler({
     severity: Severity.error,
     stackLevel: 2,
     badges: [
-      { color: logPalette.blue, caption: '<caption 1>' },
-      { color: logPalette.purple, caption: '<caption 2>' },
+      { color: logPalette.blue, caption: "<caption 1>" },
+      { color: logPalette.purple, caption: "<caption 2>" },
     ],
     timeDelta: 9,
-    data: ['<value 1>', '<value 2>'],
+    data: ["<value 1>", "<value 2>"],
   });
   expect(getMessages()).toMatchInlineSnapshot(`
     Array [
@@ -226,20 +228,20 @@ it('renders unstyled messages correctly', () => {
   `);
 });
 
-it('correctly truncates big objects', () => {
+it("correctly truncates big objects", () => {
   const { handler, getMessages } = getHandlerLocal({
-    logStyle: 'none',
+    logStyle: "none",
     maxLength: 10,
   });
 
   handler({
     stackLevel: 2,
     badges: [
-      { color: logPalette.blue, caption: '<caption 1>' },
-      { color: logPalette.purple, caption: '<caption 2>' },
+      { color: logPalette.blue, caption: "<caption 1>" },
+      { color: logPalette.purple, caption: "<caption 2>" },
     ],
     timeDelta: 0,
-    data: ['abc'],
+    data: ["abc"],
   });
   expect(getMessages()).toMatchInlineSnapshot(`
     Array [
@@ -255,11 +257,11 @@ it('correctly truncates big objects', () => {
   handler({
     stackLevel: 2,
     badges: [
-      { color: logPalette.blue, caption: '<caption 1>' },
-      { color: logPalette.purple, caption: '<caption 2>' },
+      { color: logPalette.blue, caption: "<caption 1>" },
+      { color: logPalette.purple, caption: "<caption 2>" },
     ],
     timeDelta: 0,
-    data: ['abcd'],
+    data: ["abcd"],
   });
   expect(getMessages()).toMatchInlineSnapshot(`
     Array [
@@ -290,9 +292,9 @@ it('correctly truncates big objects', () => {
   `);
 });
 
-it('shows correct severity levels', () => {
+it("shows correct severity levels", () => {
   const { handler, getMessages } = getHandlerLocal({
-    logStyle: 'ansi',
+    logStyle: "ansi",
   });
 
   handler({

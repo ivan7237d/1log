@@ -1,9 +1,9 @@
-import { assertNever, pipe } from 'antiutils';
-import { LogMessage } from '../../logger/handler';
-import { HandlerPlugin, pluginSymbol, PluginType } from '../../logger/plugin';
-import { Severity } from '../../logger/severity';
-import { detectedLogStyle } from './detectedLogStyle';
-import { pureConsoleHandler } from './pureConsoleHandler/pch';
+import { assertNever, pipe } from "antiutils";
+import { LogMessage } from "../../logger/handler";
+import { HandlerPlugin, pluginSymbol, PluginType } from "../../logger/plugin";
+import { Severity } from "../../logger/severity";
+import { detectedLogStyle } from "./detectedLogStyle";
+import { pureConsoleHandler } from "./pureConsoleHandler/pch";
 
 // This works around the problem that React overwrites console methods in dev
 // mode during test renders, leading to confusing badge numbers.
@@ -20,7 +20,7 @@ const consoleSnapshot = pipe(console, ({ debug, info, warn, error, log }) => ({
  * predicate to mute messages for which the predicate returns false.
  */
 export const consoleHandlerPlugin = (
-  filter?: (message: LogMessage) => boolean,
+  filter?: (message: LogMessage) => boolean
 ): HandlerPlugin => ({
   [pluginSymbol]: PluginType.Handler,
   handler: pipe(
@@ -47,6 +47,6 @@ export const consoleHandlerPlugin = (
               handler(message);
             }
           }
-        : handler,
+        : handler
   ),
 });

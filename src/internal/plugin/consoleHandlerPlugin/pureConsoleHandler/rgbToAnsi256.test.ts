@@ -1,6 +1,6 @@
-import { rgbToAnsi256 } from './rgbToAnsi256';
+import { rgbToAnsi256 } from "./rgbToAnsi256";
 
-it('works', () => {
+it("works", () => {
   expect(rgbToAnsi256(0, 0, 0)).toMatchInlineSnapshot(`16`);
   expect(rgbToAnsi256(255, 255, 255)).toMatchInlineSnapshot(`231`);
   expect(rgbToAnsi256(67, 67, 67)).toMatchInlineSnapshot(`238`);

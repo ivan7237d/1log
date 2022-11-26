@@ -1,9 +1,15 @@
-import { assertNever, pipe } from 'antiutils';
-import { LogMessage } from './logger/handler';
-import { normalizeSeverity } from './logger/normalizeSeverity';
-import { Severity } from './logger/severity';
-import { formatTime } from './plugin/consoleHandlerPlugin/pureConsoleHandler/formatTime';
-import { isMessages } from './plugin/mockHandlerPlugin';
+import { assertNever, pipe } from "antiutils";
+import { LogMessage } from "./logger/handler";
+import { normalizeSeverity } from "./logger/normalizeSeverity";
+import { Severity } from "./logger/severity";
+import { formatTime } from "./plugin/consoleHandlerPlugin/pureConsoleHandler/formatTime";
+import { isMessages } from "./plugin/mockHandlerPlugin";
+
+type Plugin = Parameters<typeof expect.addSnapshotSerializer>[0];
+type GetNewPlugin<Plugin> = Plugin extends { serialize: unknown }
+  ? Plugin
+  : never;
+type NewPlugin = GetNewPlugin<Plugin>;
 
 const formatMessageHeader = ({
   stackLevel,
@@ -14,29 +20,29 @@ const formatMessageHeader = ({
   [
     ...pipe(severity, normalizeSeverity, (severity) =>
       severity === Severity.debug
-        ? ['DEBUG']
+        ? ["DEBUG"]
         : severity === Severity.info
-        ? ['INFO']
+        ? ["INFO"]
         : severity === Severity.warn
-        ? ['WARNING']
+        ? ["WARNING"]
         : severity === Severity.error
-        ? ['ERROR']
+        ? ["ERROR"]
         : severity === undefined
         ? []
-        : assertNever(severity),
+        : assertNever(severity)
     ),
-    ...Array(stackLevel).fill('·'),
+    ...Array(stackLevel).fill("·"),
     ...badges.map((badge) => `[${badge.captionNoColor ?? badge.caption}]`),
-    '+' + formatTime(timeDelta),
-  ].join(' ');
+    "+" + formatTime(timeDelta),
+  ].join(" ");
 
-const serializeItems: import('pretty-format').NewPlugin['serialize'] = (
+const serializeItems: NewPlugin["serialize"] = (
   val,
   config,
   indentation,
   depth,
   refs,
-  printer,
+  printer
 ) => {
   // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
   const messages = val as LogMessage[];
@@ -49,17 +55,17 @@ const serializeItems: import('pretty-format').NewPlugin['serialize'] = (
           formatMessageHeader(message) +
           pipe(
             message.data.map((value) =>
-              printer(value, config, indentationItems, depth, refs),
+              printer(value, config, indentationItems, depth, refs)
             ),
             (values) =>
-              values.some((value) => value.includes('\n'))
+              values.some((value) => value.includes("\n"))
                 ? config.spacingOuter +
                   values
                     .map((value) => indentationItems + value)
                     .join(config.spacingInner) +
                   indentation
-                : values.map((value) => ' ' + value).join(''),
-          ),
+                : values.map((value) => " " + value).join("")
+          )
       )
       .join(config.spacingInner) + indentation
   );
@@ -68,7 +74,7 @@ const serializeItems: import('pretty-format').NewPlugin['serialize'] = (
 /**
  * A Jest serializer plugin that formats log messages.
  */
-export const jestMessagesSerializer: import('pretty-format').NewPlugin = {
+export const jestMessagesSerializer: NewPlugin = {
   test: isMessages,
   serialize: (val, config, indentation, depth, refs, printer) => {
     // eslint-disable-next-line @typescript-eslint/consistent-type-assertions

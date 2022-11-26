@@ -1,4 +1,4 @@
-import { Severity } from './severity';
+import { Severity } from "./severity";
 
 const severities = new Set<number | undefined>([
   Severity.debug,
@@ -11,5 +11,5 @@ const severities = new Set<number | undefined>([
  * @internal
  */
 export const normalizeSeverity = (
-  value: number | undefined,
+  value: number | undefined
 ): Severity | undefined => (severities.has(value) ? value : undefined);

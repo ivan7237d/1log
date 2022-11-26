@@ -1,11 +1,11 @@
-import { logPalette } from '../logPalette';
-import { badgePlugin } from '../plugin/badgePlugin';
-import { getMessages } from '../plugin/mockHandlerPlugin';
-import { debugPlugin } from '../plugin/severityPlugin/debugPlugin';
-import { infoPlugin } from '../plugin/severityPlugin/infoPlugin';
-import { resetBadgeNumbers } from './addNumberedBadge';
-import { installPlugins, log } from './logger';
-import { LogPlugin, pluginSymbol, PluginType, ProxyPlugin } from './plugin';
+import { logPalette } from "../logPalette";
+import { badgePlugin } from "../plugin/badgePlugin";
+import { getMessages } from "../plugin/mockHandlerPlugin";
+import { debugPlugin } from "../plugin/severityPlugin/debugPlugin";
+import { infoPlugin } from "../plugin/severityPlugin/infoPlugin";
+import { resetBadgeNumbers } from "./addNumberedBadge";
+import { installPlugins, log } from "./logger";
+import { LogPlugin, pluginSymbol, PluginType, ProxyPlugin } from "./plugin";
 
 /**
  * Returns all permutations.
@@ -21,8 +21,8 @@ const permute = <T>(array: T[]) => {
   while (i < length) {
     if (c[i] < i) {
       k = i % 2 && c[i];
-      p = array[i];
-      array[i] = array[k];
+      p = array[i]!;
+      array[i] = array[k]!;
       array[k] = p;
       ++c[i];
       i = 1;
@@ -41,7 +41,7 @@ const permute = <T>(array: T[]) => {
  */
 const sameResult = <Element, Result>(
   array: Element[],
-  callback: (array: Element) => Result,
+  callback: (array: Element) => Result
 ) => {
   const noResult = Symbol();
   const result = array.reduce(
@@ -52,7 +52,7 @@ const sameResult = <Element, Result>(
       }
       return result;
     },
-    noResult,
+    noResult
   );
   if (result === noResult) {
     fail();
@@ -60,18 +60,18 @@ const sameResult = <Element, Result>(
   return result;
 };
 
-test('usage with number of arguments other than 1', () => {
+test("usage with number of arguments other than 1", () => {
   expect(log()).toBeUndefined();
   expect(getMessages()).toMatchInlineSnapshot(`+0ms`);
   expect(log(1, 2)).toBeUndefined();
   expect(getMessages()).toMatchInlineSnapshot(`+0ms 1 2`);
-  expect(log(badgePlugin('<caption>'))()).toBeUndefined();
+  expect(log(badgePlugin("<caption>"))()).toBeUndefined();
   expect(getMessages()).toMatchInlineSnapshot(`[<caption>] +0ms`);
-  expect(log(badgePlugin('<caption>'))(1, 2)).toBeUndefined();
+  expect(log(badgePlugin("<caption>"))(1, 2)).toBeUndefined();
   expect(getMessages()).toMatchInlineSnapshot(`[<caption>] +0ms 1 2`);
 });
 
-test('plugins', () => {
+test("plugins", () => {
   const getMessagesForPlugins = (plugins: LogPlugin[][]) =>
     sameResult(plugins.flatMap(permute), (plugins) => {
       resetBadgeNumbers();
@@ -82,11 +82,11 @@ test('plugins', () => {
     [pluginSymbol]: PluginType.Proxy,
     scope: (value) => value === 42,
     transform: (log) => (value: unknown) => {
-      log([{ caption: 'proxy', color: logPalette.green }]);
+      log([{ caption: "proxy", color: logPalette.green }]);
       return value;
     },
   };
-  const plugins = [badgePlugin('a'), proxyPlugin];
+  const plugins = [badgePlugin("a"), proxyPlugin];
   expect(getMessagesForPlugins([plugins])).toMatchInlineSnapshot(`
     [a] [create 1] +0ms 42
     [a] [create 1] [proxy] +0ms
@@ -101,7 +101,7 @@ test('plugins', () => {
   `);
 });
 
-test('proxy plugin order', () => {
+test("proxy plugin order", () => {
   const log2 = log<[ProxyPlugin]>({
     [pluginSymbol]: PluginType.Proxy,
     scope: (value) => value === 42,
@@ -112,13 +112,13 @@ test('proxy plugin order', () => {
       [pluginSymbol]: PluginType.Proxy,
       scope: (value) => value === 42,
       transform: () => () => 2,
-    })(42),
+    })(42)
   ).toEqual(2);
 });
 
-test('badge plugin order', () => {
-  installPlugins(badgePlugin('a'));
-  installPlugins(badgePlugin('b'), badgePlugin('c'));
-  log(badgePlugin('d'))(badgePlugin('e'))(42);
+test("badge plugin order", () => {
+  installPlugins(badgePlugin("a"));
+  installPlugins(badgePlugin("b"), badgePlugin("c"));
+  log(badgePlugin("d"))(badgePlugin("e"))(42);
   expect(getMessages()).toMatchInlineSnapshot(`[a] [b] [c] [d] [e] +0ms 42`);
 });

@@ -1,5 +1,5 @@
-import { LogMessage } from '../logger/handler';
-import { HandlerPlugin, pluginSymbol, PluginType } from '../logger/plugin';
+import { LogMessage } from "../logger/handler";
+import { HandlerPlugin, pluginSymbol, PluginType } from "../logger/plugin";
 
 let messages: LogMessage[] = [];
 
@@ -10,7 +10,7 @@ const returnedMessageArrays = new WeakSet();
  * predicate to mute messages for which it returns false.
  */
 export const mockHandlerPlugin = (
-  filter?: (message: LogMessage) => boolean,
+  filter?: (message: LogMessage) => boolean
 ): HandlerPlugin => ({
   [pluginSymbol]: PluginType.Handler,
   handler: (message) => {

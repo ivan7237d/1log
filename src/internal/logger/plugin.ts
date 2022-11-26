@@ -1,6 +1,6 @@
-import { pipe } from 'antiutils';
-import memoize from 'monomemo';
-import { LogBadge, LogHandler } from './handler';
+import { pipe } from "antiutils";
+import memoize from "monomemo";
+import { LogBadge, LogHandler } from "./handler";
 
 /**
  * A logger available to proxy plugins.
@@ -9,7 +9,7 @@ export interface PluginLogger {
   (badges: LogBadge[], ...data: unknown[]): void;
 }
 
-export const pluginSymbol = Symbol('1log plugin');
+export const pluginSymbol = Symbol("1log plugin");
 
 export enum PluginType {
   Handler,
@@ -85,7 +85,7 @@ export interface CombinedPlugin {
 const appendBadge = memoize(
   (badgeCaptions: string[]) =>
     memoize((caption: string) => [...badgeCaptions, caption], new Map()),
-  new WeakMap(),
+  new WeakMap()
 );
 
 /**
@@ -93,7 +93,7 @@ const appendBadge = memoize(
  */
 export const combinedPluginReducer = (
   accumulator: CombinedPlugin,
-  value: LogPlugin,
+  value: LogPlugin
 ): CombinedPlugin =>
   value[pluginSymbol] === PluginType.Handler
     ? pipe(accumulator, ({ handlers, ...rest }) => ({
@@ -111,7 +111,7 @@ export const combinedPluginReducer = (
     ? pipe(accumulator, ({ badgeCaptions, ...rest }) => ({
         badgeCaptions: appendBadge(badgeCaptions)(
           // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
-          (value as BadgePlugin).caption,
+          (value as BadgePlugin).caption
         ),
         ...rest,
       }))

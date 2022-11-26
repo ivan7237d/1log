@@ -4,7 +4,7 @@
 export const rgbToAnsi256 = (
   red: number,
   green: number,
-  blue: number,
+  blue: number
 ): number =>
   red === green && green === blue
     ? // Use greyscale palette.

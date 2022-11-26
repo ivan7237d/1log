@@ -1,8 +1,8 @@
-import { pipe } from 'antiutils';
-import { log } from '../logger/logger';
-import { getMessages } from './mockHandlerPlugin';
+import { pipe } from "antiutils";
+import { log } from "../logger/logger";
+import { getMessages } from "./mockHandlerPlugin";
 
-test('basic usage', () => {
+test("basic usage", () => {
   const f = log(
     Object.assign(
       (...args: unknown[]) => {
@@ -12,27 +12,27 @@ test('basic usage', () => {
                     "<arg 2>",
                   ]
               `);
-        return '<return value 1>';
+        return "<return value 1>";
       },
-      { a: 1 },
-    ),
+      { a: 1 }
+    )
   );
   expect(f.a).toMatchInlineSnapshot(`1`);
-  f('<arg 1>', '<arg 2>');
+  f("<arg 1>", "<arg 2>");
   expect(getMessages()).toMatchInlineSnapshot(`
     [create 1] +0ms [Function]
     [create 1] [call 1] +0ms "<arg 1>" "<arg 2>"
     [create 1] [call 1] [return] +0ms "<return value 1>"
   `);
-  f('<arg 1>', '<arg 2>');
+  f("<arg 1>", "<arg 2>");
   expect(getMessages()).toMatchInlineSnapshot(`
     [create 1] [call 2] +0ms "<arg 1>" "<arg 2>"
     [create 1] [call 2] [return] +0ms "<return value 1>"
   `);
 });
 
-test('stack level', () => {
-  pipe(() => '<return value 1>', log, log)();
+test("stack level", () => {
+  pipe(() => "<return value 1>", log, log)();
   expect(getMessages()).toMatchInlineSnapshot(`
     [create 1] +0ms [Function]
     [create 2] +0ms [Function]
@@ -43,7 +43,7 @@ test('stack level', () => {
   `);
 });
 
-test('async function', async () => {
+test("async function", async () => {
   // .constructor === AsyncFunction.
   expect(await log(async () => 42)()).toMatchInlineSnapshot(`42`);
   expect(getMessages()).toMatchInlineSnapshot(`
@@ -57,10 +57,10 @@ test('async function', async () => {
   expect(
     await log(() =>
       Promise.resolve(42).then((value) => {
-        log('promise resolved');
+        log("promise resolved");
         return value;
-      }),
-    )(),
+      })
+    )()
   ).toMatchInlineSnapshot(`42`);
   expect(getMessages()).toMatchInlineSnapshot(`
     [create 2] +0ms [Function]
@@ -72,7 +72,7 @@ test('async function', async () => {
 
   // Rejection.
   await expect(log(() => Promise.reject(42))()).rejects.toMatchInlineSnapshot(
-    `42`,
+    `42`
   );
   expect(getMessages()).toMatchInlineSnapshot(`
     [create 3] +0ms [Function]

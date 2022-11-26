@@ -1,4 +1,4 @@
 /**
  * @internal
  */
-export type LogStyle = 'none' | 'css' | 'ansi';
+export type LogStyle = "none" | "css" | "ansi";

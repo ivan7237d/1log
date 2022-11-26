@@ -1,55 +1,24 @@
 {
   "root": true,
-  "parser": "@typescript-eslint/parser",
-  "parserOptions": { "project": "./tsconfig.json" },
-  "env": { "es6": true },
-  "ignorePatterns": [
-    "node_modules",
-    "build",
-    "coverage",
-    "defaultConfig",
-    "defaultJestConfig",
-    "setupTests.ts",
-    "babel.config.js"
-  ],
-  "plugins": ["import", "eslint-comments"],
+  "plugins": ["@typescript-eslint", "eslint-plugin-expect-type"],
+  "parserOptions": {
+    // Required by eslint-plugin-expect-type.
+    "project": "./tsconfig.json"
+  },
   "extends": [
     "eslint:recommended",
-    "plugin:eslint-comments/recommended",
     "plugin:@typescript-eslint/recommended",
-    "plugin:import/typescript",
-    "prettier"
+    "prettier",
+    "plugin:eslint-plugin-expect-type/recommended"
   ],
-  "globals": { "BigInt": true, "console": true, "WebAssembly": true },
+  // Change "warn" rules in @typescript-eslint/recommended to either "off" or "error".
   "rules": {
-    "@typescript-eslint/explicit-module-boundary-types": [
+    "@typescript-eslint/no-explicit-any": "off",
+    "@typescript-eslint/no-non-null-assertion": "off",
+    "@typescript-eslint/no-unused-vars": [
       "error",
-      { "allowArgumentsExplicitlyTypedAsAny": true }
+      { "ignoreRestSiblings": true }
     ],
-    "eslint-comments/disable-enable-pair": [
-      "error",
-      { "allowWholeFile": true }
-    ],
-    "eslint-comments/no-unused-disable": "error",
-    "eqeqeq": "error",
-    "curly": "error",
-    "@typescript-eslint/no-empty-function": "off",
-    "no-constant-condition": ["error", { "checkLoops": false }],
-    /*
-     * Disabled because of buggy behavior: in
-     *
-     * ```
-     * A extends (...args: infer Args) => infer FunctionResult
-     *   ? (...args: Args) => FunctionResult
-     *   : B
-     * ```
-     *
-     * `FunctionResult` is reported as unused.
-     */
-    "@typescript-eslint/no-unused-vars": "off",
-    "@typescript-eslint/consistent-type-assertions": [
-      "error",
-      { "assertionStyle": "never" }
-    ]
+    "@typescript-eslint/ban-ts-comment": "off"
   }
 }

@@ -1,6 +1,0 @@
-{
-  "name": "default-config",
-  "version": "1.0.0",
-  "main": "main/index.js",
-  "module": "module/index.js"
-}

@@ -11,7 +11,7 @@ import {
   promisePlugin,
   resetBadgeNumbers,
   resetTimeDelta,
-} from '../..';
+} from ".";
 
 expect.addSnapshotSerializer(jestMessagesSerializer);
 expect.addSnapshotSerializer(jestIterableSerializer);
@@ -22,11 +22,11 @@ installPlugins(
   functionPlugin,
   promisePlugin,
   iterablePlugin,
-  asyncIterablePlugin,
+  asyncIterablePlugin
 );
 
 beforeEach(() => {
-  jest.useFakeTimers('modern');
+  jest.useFakeTimers("modern");
   resetTimeDelta();
   resetBadgeNumbers();
   getMessages();

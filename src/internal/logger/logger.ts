@@ -1,17 +1,17 @@
-import { pipe } from 'antiutils';
-import memoize from 'monomemo';
-import { addNumberedBadge } from './addNumberedBadge';
-import { LogMessage } from './handler';
+import { pipe } from "antiutils";
+import memoize from "monomemo";
+import { addNumberedBadge } from "./addNumberedBadge";
+import { LogMessage } from "./handler";
 import {
   CombinedPlugin,
   combinedPluginReducer,
   LogPlugin,
   PluginLogger,
   pluginSymbol,
-} from './plugin';
-import { getStackLevel } from './stackLevel';
-import { systemPalette } from './systemPalette';
-import { excludeFromTimeDelta, getTimeDelta } from './timeDelta';
+} from "./plugin";
+import { getStackLevel } from "./stackLevel";
+import { systemPalette } from "./systemPalette";
+import { excludeFromTimeDelta, getTimeDelta } from "./timeDelta";
 
 /**
  * Combined globally installed plugins.
@@ -28,38 +28,38 @@ let globalCombinedPlugin: CombinedPlugin = {
 export const installPlugins = (...plugins: LogPlugin[]): void => {
   globalCombinedPlugin = plugins.reduce(
     combinedPluginReducer,
-    globalCombinedPlugin,
+    globalCombinedPlugin
   );
 };
 
 const getBadges = memoize(
   (badgeCaptions: string[]) =>
     badgeCaptions.map((caption) => ({ caption, color: systemPalette.blue })),
-  new WeakMap(),
+  new WeakMap()
 );
 
-const getPluginLogger = (combinedPlugin: CombinedPlugin): PluginLogger => (
-  badges,
-  ...data
-) => {
-  const message: LogMessage = {
-    severity: combinedPlugin.severity,
-    stackLevel: getStackLevel(),
-    badges: [...getBadges(combinedPlugin.badgeCaptions), ...badges],
-    timeDelta: getTimeDelta(),
-    data,
+const getPluginLogger =
+  (combinedPlugin: CombinedPlugin): PluginLogger =>
+  (badges, ...data) => {
+    const message: LogMessage = {
+      severity: combinedPlugin.severity,
+      stackLevel: getStackLevel(),
+      badges: [...getBadges(combinedPlugin.badgeCaptions), ...badges],
+      timeDelta: getTimeDelta(),
+      data,
+    };
+    combinedPlugin.handlers.forEach((handler) => handler(message));
   };
-  combinedPlugin.handlers.forEach((handler) => handler(message));
-};
 
 const addCreateBadge = memoize(
-  (_badgeCaptions: string[]) => addNumberedBadge('create', systemPalette.gray),
-  new WeakMap(),
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  (badgeCaptions: string[]) => addNumberedBadge("create", systemPalette.gray),
+  new WeakMap()
 );
 
 export interface Logger {
   <Parameters extends unknown[]>(...args: Parameters): Parameters extends [
-    LogPlugin,
+    LogPlugin
   ]
     ? Logger
     : Parameters extends [infer T]
@@ -82,11 +82,9 @@ const logLocal = (...args: any[]): any => {
   const [combinedPlugin = globalCombinedPlugin, externalArgs]: [
     CombinedPlugin,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    any[],
+    any[]
   ] = pipe(args[0], (value) =>
-    logLocalInternalArgs.has(value)
-      ? [value, args.slice(1)]
-      : [undefined, args],
+    logLocalInternalArgs.has(value) ? [value, args.slice(1)] : [undefined, args]
   );
   const pluginLogger = getPluginLogger(combinedPlugin);
   if (externalArgs.length === 1) {
@@ -97,7 +95,7 @@ const logLocal = (...args: any[]): any => {
       logLocalInternalArgs.add(newCombinedPlugin);
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       return excludeFromTimeDelta((...args: any[]) =>
-        logLocal(newCombinedPlugin, ...args),
+        logLocal(newCombinedPlugin, ...args)
       );
     }
     const proxyPlugin = [...combinedPlugin.proxyPlugins]
@@ -105,7 +103,7 @@ const logLocal = (...args: any[]): any => {
       .find((plugin) => plugin.scope(externalArg));
     if (proxyPlugin !== undefined) {
       const logWithCreate = addCreateBadge(combinedPlugin.badgeCaptions)(
-        pluginLogger,
+        pluginLogger
       );
       logWithCreate([], externalArg);
       return proxyPlugin.transform(logWithCreate)(externalArg);

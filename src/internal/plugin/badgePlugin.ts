@@ -1,4 +1,4 @@
-import { BadgePlugin, pluginSymbol, PluginType } from '../logger/plugin';
+import { BadgePlugin, pluginSymbol, PluginType } from "../logger/plugin";
 
 /**
  * Adds a blue-colored badge to log messages. Badges appear in the order that

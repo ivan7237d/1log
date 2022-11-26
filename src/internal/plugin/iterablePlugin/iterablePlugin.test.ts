@@ -1,16 +1,16 @@
-import { pipe } from 'antiutils';
-import { log } from '../../logger/logger';
-import { badgePlugin } from '../badgePlugin';
-import { getMessages } from '../mockHandlerPlugin';
-import { toIterable } from './toIterable';
+import { pipe } from "antiutils";
+import { log } from "../../logger/logger";
+import { badgePlugin } from "../badgePlugin";
+import { getMessages } from "../mockHandlerPlugin";
+import { toIterable } from "./toIterable";
 
-test('basic usage', () => {
+test("basic usage", () => {
   const iterable = pipe(
     new Set([1, 2]).values(),
-    log(badgePlugin('myIterable')),
+    log(badgePlugin("myIterable"))
   );
   expect(getMessages()).toMatchInlineSnapshot(
-    `[myIterable] [create 1] +0ms [IterableIterator]`,
+    `[myIterable] [create 1] +0ms [IterableIterator]`
   );
   expect([...iterable]).toMatchInlineSnapshot(`
     Array [
@@ -28,7 +28,7 @@ test('basic usage', () => {
   `);
 });
 
-test('stack level', () => {
+test("stack level", () => {
   [...pipe(new Set([1]).values(), log, log, log)];
   expect(getMessages()).toMatchInlineSnapshot(`
     [create 1] +0ms [IterableIterator]
@@ -49,7 +49,7 @@ test('stack level', () => {
   `);
 });
 
-test('returned value', () => {
+test("returned value", () => {
   const generatorFunction = function* () {
     yield 1;
     return 2;
@@ -64,9 +64,9 @@ test('returned value', () => {
   `);
 });
 
-test('argument passed to next', () => {
+test("argument passed to next", () => {
   const generatorFunction = function* (): Generator<number, void, number> {
-    log(badgePlugin('yield result'))(yield 1);
+    log(badgePlugin("yield result"))(yield 1);
   };
   const iterator = log(generatorFunction());
   iterator.next();
@@ -83,7 +83,7 @@ test('argument passed to next', () => {
   `);
 });
 
-test('toIterable', () => {
+test("toIterable", () => {
   [...log(toIterable(new Set([1, 2])))];
   expect(getMessages()).toMatchInlineSnapshot(`
     [create 1] +0ms [IterableIterator]

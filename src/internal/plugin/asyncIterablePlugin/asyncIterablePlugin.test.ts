@@ -1,34 +1,34 @@
-import { log } from '../../logger/logger';
-import { getMessages } from '../mockHandlerPlugin';
-import { toAsyncIterable } from './toAsyncIterable';
-import { setImmediate } from 'timers';
-import { badgePlugin } from '../badgePlugin';
+import { setImmediate } from "timers";
+import { log } from "../../logger/logger";
+import { badgePlugin } from "../badgePlugin";
+import { getMessages } from "../mockHandlerPlugin";
+import { toAsyncIterable } from "./toAsyncIterable";
 
 const timer = (duration: number) =>
   new Promise((resolve) => {
     setTimeout(resolve, duration);
   });
 
-const autoAdvanceTimers = <Result>(
-  callback: () => Promise<Result>,
-) => async () => {
-  const promise = callback();
-  let resolved = false;
-  promise.then(() => {
-    resolved = true;
-  });
-  while (!resolved) {
-    await new Promise(setImmediate);
-    if (jest.getTimerCount() === 0) {
-      break;
+const autoAdvanceTimers =
+  <Result>(callback: () => Promise<Result>) =>
+  async () => {
+    const promise = callback();
+    let resolved = false;
+    promise.then(() => {
+      resolved = true;
+    });
+    while (!resolved) {
+      await new Promise(setImmediate);
+      if (jest.getTimerCount() === 0) {
+        break;
+      }
+      jest.advanceTimersToNextTimer();
     }
-    jest.advanceTimersToNextTimer();
-  }
-  return await promise;
-};
+    return await promise;
+  };
 
 test(
-  'basic usage',
+  "basic usage",
   autoAdvanceTimers(async () => {
     async function* asyncIterable() {
       await timer(1000);
@@ -55,11 +55,11 @@ test(
       [create 1] [next 3] [await] +0ms Promise {}
       [create 1] [next 3] [done] +1.000s undefined
     `);
-  }),
+  })
 );
 
 test(
-  'error',
+  "error",
   autoAdvanceTimers(async () => {
     async function* asyncIterable() {
       yield 42;
@@ -82,11 +82,11 @@ test(
       [create 1] [next 2] [await] +0ms Promise {}
       [create 1] [next 2] [reject] +0ms 43
     `);
-  }),
+  })
 );
 
 test(
-  'stack level',
+  "stack level",
   autoAdvanceTimers(async () => {
     async function* asyncIterable() {
       await timer(1000);
@@ -114,16 +114,16 @@ test(
       [create 1] [next 2] [done] +1.000s undefined
       [create 2] [next 2] [done] +0ms undefined
     `);
-  }),
+  })
 );
 
-test('argument passed to next and returned value', async () => {
+test("argument passed to next and returned value", async () => {
   const generatorFunction = async function* (): AsyncGenerator<
     number,
     number,
     number
   > {
-    log(badgePlugin('yield result'))(yield 1);
+    log(badgePlugin("yield result"))(yield 1);
     return 2;
   };
   const iterator = log(generatorFunction());
@@ -144,7 +144,7 @@ test('argument passed to next and returned value', async () => {
 });
 
 test(
-  'toAsyncIterable',
+  "toAsyncIterable",
   autoAdvanceTimers(async () => {
     async function* asyncIterable() {
       await timer(1000);
@@ -177,5 +177,5 @@ test(
       [create 1] [next 2] [await] +0ms Promise {}
       [create 1] [next 2] [done] +1.000s undefined
     `);
-  }),
+  })
 );

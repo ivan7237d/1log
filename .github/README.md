@@ -1,11 +1,5 @@
 # 1log
 
-[![npm version](https://img.shields.io/npm/v/1log.svg?style=flat&color=brightgreen)](https://www.npmjs.com/package/1log)
-[![gzip size](https://badgen.net/bundlephobia/minzip/1log?color=green)](https://bundlephobia.com/result?p=1log)
-[![tree shaking](https://badgen.net/bundlephobia/tree-shaking/1log)](https://bundlephobia.com/result?p=1log)
-[![types](https://img.shields.io/npm/types/1log?color=brightgreen)](https://www.npmjs.com/package/1log)
-[![coverage status](https://coveralls.io/repos/github/ivan7237d/1log/badge.svg?branch=master)](https://coveralls.io/github/ivan7237d/1log?branch=master)
-
 Log function with superpowers.
 
 ## Table of contents
@@ -54,27 +48,25 @@ Log function with superpowers.
 
 1. Install the npm package:
 
-   ```
-   yarn add 1log
-   ```
-
-   or
-
-   ```
-   npm install 1log --save
-   ```
+```bash
+$ npm install 1log
+# or
+$ yarn add 1log
+# or
+$ pnpm add 1log
+```
 
 2. If you want to log messages to the console, add the [default config](#default-config) to your top-level module (skip this step if you're building a library and only need to use logging in tests):
 
    ```ts
    // ATTENTION: this line should come before imports of modules that call `log`.
-   import '1log/defaultConfig';
+   import "1log/defaultConfig";
    ```
 
 3. If you want to use log snapshots in Jest tests, add the [default Jest config](#default-jest-config) to the file referenced by `setupFilesAfterEnv` Jest configuration option (in the case of Create React App this is `src/setupTests.ts`/`.js`):
 
    ```ts
-   import '1log/defaultJestConfig';
+   import "1log/defaultJestConfig";
    ```
 
 ## Usage
@@ -88,17 +80,17 @@ The library provides a function `log` that can be used just like the regular `co
   - Log a message using `console.error` instead of the default `console.log`:
 
     ```ts
-    import { log } from '1log';
+    import { log } from "1log";
 
-    log(errorPlugin)('your message');
+    log(errorPlugin)("your message");
     ```
 
   - Prefix all messages logged by a certain module with a badge:
 
     ```ts
-    import { log as logExternal } from '1log';
+    import { log as logExternal } from "1log";
 
-    const log = logExternal(badgePlugin('your caption'));
+    const log = logExternal(badgePlugin("your caption"));
 
     // Rest of the module containing `log` calls.
     ```
@@ -106,7 +98,7 @@ The library provides a function `log` that can be used just like the regular `co
   - Log all messages using `console.debug` by default:
 
     ```ts
-    import { debugPlugin, installPlugin } from '1log';
+    import { debugPlugin, installPlugin } from "1log";
 
     installPlugin(debugPlugin);
     ```
@@ -118,7 +110,7 @@ Both of these superpowers are used by plugins such as [`functionPlugin`](#functi
 As an example, let's log two functions one of which is calling the other:
 
 ```ts
-import { log } from '1log';
+import { log } from "1log";
 
 const f1 = log((x: number) => x * 10);
 const f2 = log((x: number) => f1(x));
@@ -136,11 +128,11 @@ Indentation indicates (synchronous) stack level.
 If you mark each function with its own badge,
 
 ```ts
-import { badgePlugin, log } from '1log';
+import { badgePlugin, log } from "1log";
 
-const f1 = log(badgePlugin('f1'))((x: number) => x * 10);
+const f1 = log(badgePlugin("f1"))((x: number) => x * 10);
 //            ^^^^^^^^^^^^^^^^^^^
-const f2 = log(badgePlugin('f2'))((x: number) => f1(x));
+const f2 = log(badgePlugin("f2"))((x: number) => f1(x));
 //            ^^^^^^^^^^^^^^^^^^^
 f2(42);
 ```
@@ -158,7 +150,7 @@ f2(42);
 Inspecting log messages can be useful in tests, especially in combination with Jest's snapshots feature. When running tests, instead of logging messages to the console, they are placed in a buffer, and by calling `getMessages()`, you can retrieve them and clear the buffer. Let's take a look at a sample test:
 
 ```ts
-import { getMessages, log } from '1log';
+import { getMessages, log } from "1log";
 
 /**
  * The function that we'll be testing. Returns a promise resolving to 42 after a
@@ -169,7 +161,7 @@ const timer = (duration: number) =>
     setTimeout(() => resolve(42), duration);
   });
 
-test('timer', async () => {
+test("timer", async () => {
   const promise = log(timer)(500);
   jest.runAllTimers();
   await promise;
@@ -196,14 +188,14 @@ import {
   installPlugins,
   iterablePlugin,
   promisePlugin,
-} from '1log';
+} from "1log";
 
 installPlugins(
   consoleHandlerPlugin(),
   functionPlugin,
   promisePlugin,
   iterablePlugin,
-  asyncIterablePlugin,
+  asyncIterablePlugin
 );
 ```
 
@@ -225,7 +217,7 @@ import {
   promisePlugin,
   resetBadgeNumbers,
   resetTimeDelta,
-} from '1log';
+} from "1log";
 
 // Add a Jest snapshot serializer that formats log messages.
 expect.addSnapshotSerializer(jestMessagesSerializer);
@@ -241,12 +233,12 @@ installPlugins(
   functionPlugin,
   promisePlugin,
   iterablePlugin,
-  asyncIterablePlugin,
+  asyncIterablePlugin
 );
 
 beforeEach(() => {
   // Use fake timers to make time deltas predicable.
-  jest.useFakeTimers('modern');
+  jest.useFakeTimers("modern");
   // Reset 1log's internal timer.
   resetTimeDelta();
   // Reset numbers in badges like [create <number>].
@@ -266,8 +258,8 @@ afterEach(() => {
 You can disable logging in production by not installing some of the plugins. For example, if you use Webpack, instead of importing `'1log/defaultConfig'`, you can import a file with the following contents:
 
 ```ts
-if (process.env.NODE_ENV !== 'production') {
-  require('1log/defaultConfig');
+if (process.env.NODE_ENV !== "production") {
+  require("1log/defaultConfig");
 }
 
 export {};
@@ -286,9 +278,9 @@ With this configuration,
 Besides using the `log` function in unit tests, sometimes a library needs to log information for the benefit of the library user. In this case we recommend adding a module like this:
 
 ```ts
-import { badgePlugin, log } from '1log';
+import { badgePlugin, log } from "1log";
 
-export const prefixedLog = log(badgePlugin('<library name>'));
+export const prefixedLog = log(badgePlugin("<library name>"));
 ```
 
 and using `prefixedLog` in any code that's included in the build. This way,
@@ -310,7 +302,7 @@ Can optionally be passed a predicate to mute messages for which the predicate re
 ```ts
 consoleHandlerPlugin(
   ({ badges, severity }) =>
-    badges[0]?.caption !== '<caption>' || severity === Severity.error,
+    badges[0]?.caption !== "<caption>" || severity === Severity.error
 );
 ```
 
@@ -329,7 +321,7 @@ If the piped value is a function (`constructor` property is `Function` or `Async
 Example (sync function):
 
 ```ts
-import { log } from '1log';
+import { log } from "1log";
 
 log((x: number) => x * 10)(42);
 ```
@@ -339,7 +331,7 @@ log((x: number) => x * 10)(42);
 Example (async function):
 
 ```ts
-import { log } from '1log';
+import { log } from "1log";
 
 log(async (x: number) => x * 10)(42);
 ```
@@ -353,7 +345,7 @@ If the piped value is a promise, logs its creation and outcome.
 Example (promise fullfilled):
 
 ```ts
-import { log } from '1log';
+import { log } from "1log";
 
 log((async () => 42)());
 ```
@@ -363,12 +355,12 @@ log((async () => 42)());
 Example (promise rejected):
 
 ```ts
-import { log } from '1log';
+import { log } from "1log";
 
 log(
   (async () => {
     throw 42;
-  })(),
+  })()
 ).catch(() => {});
 ```
 
@@ -387,7 +379,7 @@ value !== undefined && value !== null && value[Symbol.iterator]?.() === value;
 Example:
 
 ```ts
-import { log } from '1log';
+import { log } from "1log";
 
 [...log(new Set([1, 2]).values())];
 ```
@@ -421,7 +413,7 @@ value !== undefined &&
 Example:
 
 ```ts
-import { log } from '1log';
+import { log } from "1log";
 
 const timer = (duration: number) =>
   new Promise<number>((resolve) => {
@@ -477,9 +469,9 @@ import {
   infoPlugin,
   log as logExternal,
   warnPlugin,
-} from '1log';
+} from "1log";
 
-const log = logExternal(badgePlugin('yourBadge'));
+const log = logExternal(badgePlugin("yourBadge"));
 log(42);
 log(debugPlugin)(42);
 log(infoPlugin)(42);
@@ -509,4 +501,4 @@ Plugin type signature is documented in file [plugin.ts](https://github.com/ivan7
 
 ---
 
-[Contributing guidelines](https://github.com/ivan7237d/antiutils/blob/master/.github/CONTRIBUTING.md)
+[Contributing guidelines](https://github.com/ivan7237d/1log/blob/master/.github/CONTRIBUTING.md)

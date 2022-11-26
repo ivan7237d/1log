@@ -1,11 +1,11 @@
-import { log } from './logger/logger';
-import { getMessages } from './plugin/mockHandlerPlugin';
-import { debugPlugin } from './plugin/severityPlugin/debugPlugin';
-import { errorPlugin } from './plugin/severityPlugin/errorPlugin';
-import { infoPlugin } from './plugin/severityPlugin/infoPlugin';
-import { warnPlugin } from './plugin/severityPlugin/warnPlugin';
+import { log } from "./logger/logger";
+import { getMessages } from "./plugin/mockHandlerPlugin";
+import { debugPlugin } from "./plugin/severityPlugin/debugPlugin";
+import { errorPlugin } from "./plugin/severityPlugin/errorPlugin";
+import { infoPlugin } from "./plugin/severityPlugin/infoPlugin";
+import { warnPlugin } from "./plugin/severityPlugin/warnPlugin";
 
-test('severity levels', () => {
+test("severity levels", () => {
   log(debugPlugin)();
   log(warnPlugin)();
   log(infoPlugin)();
@@ -18,7 +18,7 @@ test('severity levels', () => {
   `);
 });
 
-test('data with newlines', () => {
+test("data with newlines", () => {
   log({ a: 1 });
   expect(getMessages()).toMatchInlineSnapshot(`
     +0ms
@@ -28,7 +28,7 @@ test('data with newlines', () => {
   `);
 });
 
-test('messages nested in other objects', () => {
+test("messages nested in other objects", () => {
   log();
   expect([getMessages()]).toMatchInlineSnapshot(`
     Array [

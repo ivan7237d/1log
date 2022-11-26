@@ -3,9 +3,9 @@ import {
   getTimeDelta,
   includeInTimeDelta,
   resetTimeDelta,
-} from './timeDelta';
+} from "./timeDelta";
 
-test('basic usage', () => {
+test("basic usage", () => {
   jest.advanceTimersByTime(1);
   excludeFromTimeDelta(() => {
     jest.advanceTimersByTime(10);
@@ -22,18 +22,18 @@ test('basic usage', () => {
   })();
 });
 
-test('errors', () => {
+test("errors", () => {
   expect(getTimeDelta).toThrowErrorMatchingInlineSnapshot(
-    `"getTimeDelta cannot be called while we're counting time towards delta."`,
+    `"getTimeDelta cannot be called while we're counting time towards delta."`
   );
   excludeFromTimeDelta(() => {
     expect(resetTimeDelta).toThrowErrorMatchingInlineSnapshot(
-      `"resetTimeDelta cannot be called while we're not counting time towards delta."`,
+      `"resetTimeDelta cannot be called while we're not counting time towards delta."`
     );
   })();
 });
 
-test('superflous excludes/includes do not throw', () => {
+test("superflous excludes/includes do not throw", () => {
   excludeFromTimeDelta(() => {
     excludeFromTimeDelta(() => {
       expect(getTimeDelta()).toMatchInlineSnapshot(`0`);

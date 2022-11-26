@@ -1,7 +1,5 @@
-const extractLargerUnits = (value: number, multiplier: number) => [
-  Math.floor(value / multiplier),
-  value % multiplier,
-];
+const extractLargerUnits = (value: number, multiplier: number) =>
+  [Math.floor(value / multiplier), value % multiplier] as const;
 
 /**
  * @internal
@@ -15,7 +13,7 @@ export const formatTime = (time: number): string => {
   }
   const [totalMinutes, milliseconds] = extractLargerUnits(
     totalMilliseconds,
-    60 * 1000,
+    60 * 1000
   );
   const resultWithSeconds = `${(milliseconds / 1000).toLocaleString(undefined, {
     minimumFractionDigits: 3,

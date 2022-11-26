@@ -1,4 +1,4 @@
-import { PluginLogger } from './plugin';
+import { PluginLogger } from "./plugin";
 
 /**
  * Counters are specific to an era.
@@ -36,7 +36,7 @@ export const addNumberedBadge = (
   /**
    * The same format as in `LogBadge`.
    */
-  color: string,
+  color: string
 ): ((log: PluginLogger) => PluginLogger) => {
   let eraLocal: symbol;
   let counter: number;
@@ -51,7 +51,7 @@ export const addNumberedBadge = (
         index = ++counter;
         return log(
           [{ caption: `${captionBase} ${index}`, color }, ...badges],
-          ...args,
+          ...args
         );
       }
       return log(
@@ -63,7 +63,7 @@ export const addNumberedBadge = (
           },
           ...badges,
         ],
-        ...args,
+        ...args
       );
     };
   };

@@ -1,12 +1,12 @@
-import { pipe } from 'antiutils';
-import { addNumberedBadge } from '../../logger/addNumberedBadge';
-import { LogPlugin, pluginSymbol, PluginType } from '../../logger/plugin';
-import { increaseStackLevel } from '../../logger/stackLevel';
+import { pipe } from "antiutils";
+import { addNumberedBadge } from "../../logger/addNumberedBadge";
+import { LogPlugin, pluginSymbol, PluginType } from "../../logger/plugin";
+import { increaseStackLevel } from "../../logger/stackLevel";
 import {
   excludeFromTimeDelta,
   includeInTimeDelta,
-} from '../../logger/timeDelta';
-import { logPalette } from '../../logPalette';
+} from "../../logger/timeDelta";
+import { logPalette } from "../../logPalette";
 
 /**
  * For a value that satisfies
@@ -27,36 +27,36 @@ export const iterablePlugin: LogPlugin = {
     value !== null &&
     // eslint-disable-next-line @typescript-eslint/consistent-type-assertions, @typescript-eslint/no-explicit-any
     (value as any)[Symbol.iterator]?.() === value,
-  transform: (log) => <T>(
-    iterator: IterableIterator<T>,
-  ): IterableIterator<T> => {
-    const addNextBadge = addNumberedBadge('next', logPalette.green);
-    return {
-      next: excludeFromTimeDelta((...nextArgs) => {
-        const logWithNextBadge = addNextBadge(log);
-        logWithNextBadge([], ...nextArgs);
-        const result = pipe(
-          () => iterator.next(...nextArgs),
-          includeInTimeDelta,
-          increaseStackLevel,
-        )();
-        const { value, done } = result;
-        logWithNextBadge(
-          [
-            done
-              ? { caption: `done`, color: logPalette.purple }
-              : {
-                  caption: `yield`,
-                  color: logPalette.yellow,
-                },
-          ],
-          value,
-        );
-        return result;
-      }),
-      [Symbol.iterator]: function () {
-        return this;
-      },
-    };
-  },
+  transform:
+    (log) =>
+    <T>(iterator: IterableIterator<T>): IterableIterator<T> => {
+      const addNextBadge = addNumberedBadge("next", logPalette.green);
+      return {
+        next: excludeFromTimeDelta((...nextArgs) => {
+          const logWithNextBadge = addNextBadge(log);
+          logWithNextBadge([], ...nextArgs);
+          const result = pipe(
+            () => iterator.next(...nextArgs),
+            includeInTimeDelta,
+            increaseStackLevel
+          )();
+          const { value, done } = result;
+          logWithNextBadge(
+            [
+              done
+                ? { caption: `done`, color: logPalette.purple }
+                : {
+                    caption: `yield`,
+                    color: logPalette.yellow,
+                  },
+            ],
+            value
+          );
+          return result;
+        }),
+        [Symbol.iterator]: function () {
+          return this;
+        },
+      };
+    },
 };

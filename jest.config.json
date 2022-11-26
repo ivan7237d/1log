@@ -1,0 +1,4 @@
+{
+  "roots": ["<rootDir>/src/"],
+  "setupFilesAfterEnv": ["<rootDir>/src/setupTests.ts"]
+}
