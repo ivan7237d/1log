@@ -6,12 +6,7 @@ test("basic usage", () => {
   const f = log(
     Object.assign(
       (...args: unknown[]) => {
-        expect(args).toMatchInlineSnapshot(`
-                  Array [
-                    "<arg 1>",
-                    "<arg 2>",
-                  ]
-              `);
+        expect(args).toEqual(["<arg 1>", "<arg 2>"]);
         return "<return value 1>";
       },
       { a: 1 }

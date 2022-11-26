@@ -13,7 +13,7 @@ test("basic usage", () => {
     `[myIterable] [create 1] +0ms [IterableIterator]`
   );
   expect([...iterable]).toMatchInlineSnapshot(`
-    Array [
+    [
       1,
       2,
     ]

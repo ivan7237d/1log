@@ -45,8 +45,8 @@ it("renders css-styled messages correctly", () => {
     data: ["<value 1>", "<value 2>"],
   });
   expect(getMessages()).toMatchInlineSnapshot(`
-    Array [
-      Array [
+    [
+      [
         40,
         "%cERROR%c%c %c%c·%c%c %c%c·%c%c %c%c<caption 1>%c%c %c%c<caption 2>%c%c %c%c+9ms%c",
         "color: #c0c0c0",
@@ -85,8 +85,8 @@ it("renders css-styled messages correctly", () => {
     data: ["<data>"],
   });
   expect(getMessages()).toMatchInlineSnapshot(`
-    Array [
-      Array [
+    [
+      [
         undefined,
         "%c<caption 1>%c%c %c%c+10ms%c",
         "background: #29a9fb; color: #ffffff; padding: 0 3px;",
@@ -108,8 +108,8 @@ it("renders css-styled messages correctly", () => {
     data: ["<data>"],
   });
   expect(getMessages()).toMatchInlineSnapshot(`
-    Array [
-      Array [
+    [
+      [
         undefined,
         "%c<caption 1>%c%c %c%c+1.000s%c",
         "background: #29a9fb; color: #ffffff; padding: 0 3px;",
@@ -140,8 +140,8 @@ it("renders ansi-styled messages correctly", () => {
     data: ["<value 1>", "<value 2>"],
   });
   expect(getMessages()).toMatchInlineSnapshot(`
-    Array [
-      Array [
+    [
+      [
         40,
         "[38;5;210mERROR[0m [2m·[0m [2m·[0m [38;5;75m[<caption 1>][0m [38;5;176m[<caption 2>][0m [2;3m+9ms[0m",
         "<value 1>",
@@ -158,8 +158,8 @@ it("renders ansi-styled messages correctly", () => {
     data: ["<data>"],
   });
   expect(getMessages()).toMatchInlineSnapshot(`
-    Array [
-      Array [
+    [
+      [
         undefined,
         "[38;5;75m[<caption 1>][0m [3m+10ms[0m",
         "<data>",
@@ -175,8 +175,8 @@ it("renders ansi-styled messages correctly", () => {
     data: ["<data>"],
   });
   expect(getMessages()).toMatchInlineSnapshot(`
-    Array [
-      Array [
+    [
+      [
         undefined,
         "[38;5;75m[<caption 1>][0m [1;3m+1.000s[0m",
         "<data>",
@@ -201,12 +201,12 @@ it("renders unstyled messages correctly", () => {
     data: ["<value 1>", "<value 2>"],
   });
   expect(getMessages()).toMatchInlineSnapshot(`
-    Array [
-      Array [
+    [
+      [
         40,
         "ERROR · · [<caption 1>] [<caption 2>] +9ms [
-     \\"<value 1>\\",
-     \\"<value 2>\\"
+     "<value 1>",
+     "<value 2>"
     ]",
       ],
     ]
@@ -219,8 +219,8 @@ it("renders unstyled messages correctly", () => {
     data: [],
   });
   expect(getMessages()).toMatchInlineSnapshot(`
-    Array [
-      Array [
+    [
+      [
         undefined,
         "+0ms",
       ],
@@ -244,11 +244,11 @@ it("correctly truncates big objects", () => {
     data: ["abc"],
   });
   expect(getMessages()).toMatchInlineSnapshot(`
-    Array [
-      Array [
+    [
+      [
         undefined,
         "· · [<caption 1>] [<caption 2>] +0ms [
-     \\"abc\\"
+     "abc"
     ]",
       ],
     ]
@@ -264,11 +264,11 @@ it("correctly truncates big objects", () => {
     data: ["abcd"],
   });
   expect(getMessages()).toMatchInlineSnapshot(`
-    Array [
-      Array [
+    [
+      [
         undefined,
         "· · [<caption 1>] [<caption 2>] +0ms [
-     \\"abcd\\"
+     "abcd"
     ... [truncated]",
       ],
     ]
@@ -283,8 +283,8 @@ it("correctly truncates big objects", () => {
     data: [objectWithCircularReference],
   });
   expect(getMessages()).toMatchInlineSnapshot(`
-    Array [
-      Array [
+    [
+      [
         undefined,
         "+0ms [object Object]",
       ],
@@ -326,20 +326,20 @@ it("shows correct severity levels", () => {
     severity: Severity.error,
   });
   expect(getMessages()).toMatchInlineSnapshot(`
-    Array [
-      Array [
+    [
+      [
         10,
         "[2mDEBUG[0m [2;3m+0ms[0m",
       ],
-      Array [
+      [
         20,
         "[2mINFO[0m [2;3m+0ms[0m",
       ],
-      Array [
+      [
         30,
         "[38;5;184mWARNING[0m [2;3m+0ms[0m",
       ],
-      Array [
+      [
         40,
         "[38;5;210mERROR[0m [2;3m+0ms[0m",
       ],

@@ -238,7 +238,7 @@ installPlugins(
 
 beforeEach(() => {
   // Use fake timers to make time deltas predicable.
-  jest.useFakeTimers("modern");
+  jest.useFakeTimers();
   // Reset 1log's internal timer.
   resetTimeDelta();
   // Reset numbers in badges like [create <number>].

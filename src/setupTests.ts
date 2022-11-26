@@ -26,7 +26,7 @@ installPlugins(
 );
 
 beforeEach(() => {
-  jest.useFakeTimers("modern");
+  jest.useFakeTimers();
   resetTimeDelta();
   resetBadgeNumbers();
   getMessages();

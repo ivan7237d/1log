@@ -22,7 +22,7 @@ test("data with newlines", () => {
   log({ a: 1 });
   expect(getMessages()).toMatchInlineSnapshot(`
     +0ms
-      Object {
+      {
         "a": 1,
       }
   `);
@@ -31,7 +31,7 @@ test("data with newlines", () => {
 test("messages nested in other objects", () => {
   log();
   expect([getMessages()]).toMatchInlineSnapshot(`
-    Array [
+    [
       [Log messages],
     ]
   `);

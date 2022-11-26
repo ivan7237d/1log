@@ -157,12 +157,12 @@ test(
       await timer(1000);
     }
     expect(getMessages()).toMatchInlineSnapshot(`
-          +0ms
-            Object {
-              Symbol(Symbol.asyncIterator): [Function],
-            }
-          +1.000s 42
-      `);
+      +0ms
+        {
+          Symbol(Symbol.asyncIterator): [Function],
+        }
+      +1.000s 42
+    `);
     for await (const value of log(toAsyncIterable(nonMatchingIterable))) {
       log(value);
       await timer(1000);
