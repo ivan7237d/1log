@@ -3,7 +3,6 @@ import { getMessages } from "../plugin/mockHandlerPlugin";
 import { resetBadgeNumbers } from "./addNumberedBadge";
 import { log } from "./logger";
 
-// eslint-disable-next-line @typescript-eslint/no-empty-function
 const voidFunction = () => {};
 
 test("incrementing numbers", () => {

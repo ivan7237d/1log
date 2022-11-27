@@ -15,9 +15,7 @@ export const detectedLogStyle: LogStyle = (() => {
     typeof navigator !== "undefined" &&
     (/iPad|iPhone|iPod/.test(navigator.platform) ||
       (navigator.platform === "MacIntel" &&
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/consistent-type-assertions
         (navigator as any).maxTouchPoints !== undefined &&
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/consistent-type-assertions
         (navigator as any).maxTouchPoints > 1));
 
   const isIOsChrome = isIOs && navigator.userAgent.match("CriOS");

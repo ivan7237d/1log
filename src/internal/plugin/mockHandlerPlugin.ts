@@ -35,6 +35,5 @@ export const getMessages = (): LogMessage[] => {
 /**
  * Checks whether the value is one returned by `getMessages`.
  */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const isMessages = (value: any): boolean =>
   returnedMessageArrays.has(value);

@@ -16,7 +16,6 @@ if (typeof performance === "undefined") {
   // read require off the module object to get around the bundlers.
   // we don't want them to detect a require and bundle a Node polyfill.
   const requireString = ("require" + Math.random()).slice(0, 7);
-  // eslint-disable-next-line @typescript-eslint/consistent-type-assertions, @typescript-eslint/no-explicit-any
   const nodeRequire = module && (module as any)[requireString];
 
   global.performance = nodeRequire("perf_hooks").performance;
@@ -79,7 +78,6 @@ export const includeInTimeDelta =
         lastTime = performance.now();
         return callback(...args);
       } finally {
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         timeDelta += performance.now() - lastTime!;
         lastTime = undefined;
       }

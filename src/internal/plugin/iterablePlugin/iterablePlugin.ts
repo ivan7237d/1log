@@ -25,7 +25,6 @@ export const iterablePlugin: LogPlugin = {
   scope: (value) =>
     value !== undefined &&
     value !== null &&
-    // eslint-disable-next-line @typescript-eslint/consistent-type-assertions, @typescript-eslint/no-explicit-any
     (value as any)[Symbol.iterator]?.() === value,
   transform:
     (log) =>

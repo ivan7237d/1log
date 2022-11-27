@@ -44,7 +44,6 @@ const serializeItems: NewPlugin["serialize"] = (
   refs,
   printer
 ) => {
-  // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
   const messages = val as LogMessage[];
   const indentationItems = indentation + config.indent;
   return (
@@ -77,7 +76,6 @@ const serializeItems: NewPlugin["serialize"] = (
 export const jestMessagesSerializer: NewPlugin = {
   test: isMessages,
   serialize: (val, config, indentation, depth, refs, printer) => {
-    // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
     const messages = val as LogMessage[];
     return messages.length === 0
       ? `[No log messages]`

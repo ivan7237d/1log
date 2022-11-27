@@ -6,7 +6,6 @@ import { excludeFromTimeDelta, includeInTimeDelta } from "../logger/timeDelta";
 import { logPalette } from "../logPalette";
 import { isPromise } from "./isPromise";
 
-// eslint-disable-next-line @typescript-eslint/no-empty-function
 const AsyncFunction = (async () => {}).constructor;
 
 /**
@@ -20,17 +19,12 @@ export const functionPlugin: ProxyPlugin = {
     value !== null &&
     value !== undefined &&
     pipe(
-      // eslint-disable-next-line @typescript-eslint/consistent-type-assertions, @typescript-eslint/no-explicit-any
       (value as any).constructor,
       (value) => value === Function || value === AsyncFunction
     ),
   transform:
     (log) =>
-    (
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      value: any
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    ): any => {
+    (value: any): any => {
       const addCallBadge = addNumberedBadge("call", logPalette.green);
       return Object.assign(
         excludeFromTimeDelta((...args) => {
@@ -52,7 +46,6 @@ export const functionPlugin: ProxyPlugin = {
           );
           return resultIsPromise
             ? new Promise((resolve, reject) => {
-                // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
                 (result as Promise<unknown>).then(
                   excludeFromTimeDelta((result) => {
                     logWithCallBadge(

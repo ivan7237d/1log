@@ -41,7 +41,6 @@ export interface ProxyPlugin {
    * Takes a logger pre-configured with a "create" badge, and returns a function
    * that transforms a value to its proxy.
    */
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   transform: (log: PluginLogger) => any;
 }
 
@@ -97,20 +96,17 @@ export const combinedPluginReducer = (
 ): CombinedPlugin =>
   value[pluginSymbol] === PluginType.Handler
     ? pipe(accumulator, ({ handlers, ...rest }) => ({
-        // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
         handlers: [...handlers, (value as HandlerPlugin).handler],
         ...rest,
       }))
     : value[pluginSymbol] === PluginType.Proxy
     ? pipe(accumulator, ({ proxyPlugins, ...rest }) => ({
-        // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
         proxyPlugins: [...proxyPlugins, value as ProxyPlugin],
         ...rest,
       }))
     : value[pluginSymbol] === PluginType.Badge
     ? pipe(accumulator, ({ badgeCaptions, ...rest }) => ({
         badgeCaptions: appendBadge(badgeCaptions)(
-          // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
           (value as BadgePlugin).caption
         ),
         ...rest,
@@ -118,10 +114,8 @@ export const combinedPluginReducer = (
     : pipe(accumulator, ({ severity, ...rest }) => ({
         severity:
           severity === undefined ||
-          // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
           (value as SeverityPlugin).severity > severity
-            ? // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
-              (value as SeverityPlugin).severity
+            ? (value as SeverityPlugin).severity
             : severity,
         ...rest,
       }));

@@ -11,9 +11,7 @@ const getPromise = () => {
   });
   return {
     promise,
-    // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
     resolve: resolve as (value?: unknown) => void,
-    // eslint-disable-next-line @typescript-eslint/consistent-type-assertions, @typescript-eslint/no-explicit-any
     reject: reject as (reason?: any) => void,
   };
 };

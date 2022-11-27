@@ -77,11 +77,9 @@ const logLocalInternalArgs = new WeakSet();
  * of type `CombinedPlugin` which is marked as internal by adding it to
  * `logLocalInternalArgs` WeakSet.
  */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const logLocal = (...args: any[]): any => {
   const [combinedPlugin = globalCombinedPlugin, externalArgs]: [
     CombinedPlugin,
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     any[]
   ] = pipe(args[0], (value) =>
     logLocalInternalArgs.has(value) ? [value, args.slice(1)] : [undefined, args]
@@ -93,7 +91,6 @@ const logLocal = (...args: any[]): any => {
       const plugin: LogPlugin = externalArg;
       const newCombinedPlugin = combinedPluginReducer(combinedPlugin, plugin);
       logLocalInternalArgs.add(newCombinedPlugin);
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       return excludeFromTimeDelta((...args: any[]) =>
         logLocal(newCombinedPlugin, ...args)
       );
@@ -119,5 +116,4 @@ const logLocal = (...args: any[]): any => {
  * If there is 1 agrument and it's not a plugin, returns the argument possibly
  * proxied by a plugin.
  */
-// eslint-disable-next-line @typescript-eslint/consistent-type-assertions
 export const log = excludeFromTimeDelta(logLocal) as Logger;

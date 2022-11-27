@@ -1,24 +1,24 @@
 {
   "root": true,
-  "plugins": ["@typescript-eslint", "eslint-plugin-expect-type"],
+  "plugins": ["eslint-plugin-expect-type"],
   "parserOptions": {
     // Required by eslint-plugin-expect-type.
     "project": "./tsconfig.json"
   },
   "extends": [
     "eslint:recommended",
-    "plugin:@typescript-eslint/recommended",
+    "plugin:@typescript-eslint/base",
+    "plugin:@typescript-eslint/eslint-recommended",
     "prettier",
-    "plugin:eslint-plugin-expect-type/recommended"
+    "plugin:eslint-plugin-expect-type/recommended",
+    "plugin:eslint-comments/recommended"
   ],
-  // Change "warn" rules in @typescript-eslint/recommended to either "off" or "error".
   "rules": {
-    "@typescript-eslint/no-explicit-any": "off",
-    "@typescript-eslint/no-non-null-assertion": "off",
+    "no-unused-vars": "off",
     "@typescript-eslint/no-unused-vars": [
       "error",
       { "ignoreRestSiblings": true }
     ],
-    "@typescript-eslint/ban-ts-comment": "off"
+    "eslint-comments/no-unused-disable": "error"
   }
 }
