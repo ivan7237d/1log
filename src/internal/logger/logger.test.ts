@@ -102,17 +102,16 @@ test("plugins", () => {
 });
 
 test("proxy plugin order", () => {
-  const log2 = log<[ProxyPlugin]>({
-    [pluginSymbol]: PluginType.Proxy,
-    scope: (value) => value === 42,
-    transform: () => () => 1,
-  });
   expect(
-    log2<[ProxyPlugin]>({
+    log({
+      [pluginSymbol]: PluginType.Proxy,
+      scope: (value) => value === 42,
+      transform: () => () => 1,
+    } satisfies ProxyPlugin)({
       [pluginSymbol]: PluginType.Proxy,
       scope: (value) => value === 42,
       transform: () => () => 2,
-    })(42)
+    } satisfies ProxyPlugin)(42)
   ).toEqual(2);
 });
 
