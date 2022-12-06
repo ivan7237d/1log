@@ -1,19 +1,8 @@
 {
+  "extends": "../../tsconfig",
   "compilerOptions": {
-    "target": "es2021",
-    "lib": ["es2021", "WebWorker"],
-    "outDir": "build/main",
     "rootDir": "src",
-    "moduleResolution": "node",
-    "module": "commonjs",
-    "declaration": true,
-    "inlineSourceMap": true,
-    "esModuleInterop": true,
-    "isolatedModules": true,
-    "incremental": true,
-    "strict": true,
-    "noUncheckedIndexedAccess": true,
-    "forceConsistentCasingInFileNames": true
-  },
-  "include": ["src/**/*.ts"]
+    "outDir": "build/main",
+    "module": "commonjs"
+  }
 }
