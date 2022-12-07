@@ -4,7 +4,7 @@
     "test:lint": "eslint .",
     "test:prettier": "prettier --list-different --ignore-unknown '**' '!pnpm-lock.yaml'",
     "test:tsc": "pnpm -r test:tsc",
-    "test": "run-p test:*",
+    "test": "run-p --print-label test:*",
     "watch": "jest --watch"
   },
   "devDependencies": {
