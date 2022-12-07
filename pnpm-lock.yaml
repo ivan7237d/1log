@@ -16,6 +16,7 @@ importers:
       eslint-plugin-eslint-comments: ^3.2.0
       eslint-plugin-expect-type: ^0.2.1
       jest: ^29.3.1
+      npm-run-all: ^4.1.5
       prettier: ^2.7.1
       typescript: ^4.8.3
     devDependencies:
@@ -31,6 +32,7 @@ importers:
       eslint-plugin-eslint-comments: 3.2.0_eslint@8.28.0
       eslint-plugin-expect-type: 0.2.1_hsf322ms6xhhd4b5ne6lb74y4a
       jest: 29.3.1_@types+node@18.11.9
+      npm-run-all: 4.1.5
       prettier: 2.8.0
       typescript: 4.9.3
 
@@ -38,12 +40,9 @@ importers:
     specifiers:
       antiutils: ^4.0.1
       monomemo: ^1.0.1
-      npm-run-all: ^4.1.5
     dependencies:
       antiutils: 4.0.1
       monomemo: 1.0.1
-    devDependencies:
-      npm-run-all: 4.1.5
 
 packages:
 
