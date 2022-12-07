@@ -1,2 +1,4 @@
 .DS_Store
 /node_modules
+/packages/*/build
+/packages/*/node_modules
