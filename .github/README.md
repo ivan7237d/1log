@@ -499,6 +499,22 @@ Plugin type signature is documented in file [plugin.ts](https://github.com/ivan7
 
 - If you're proxying a user function, make sure to copy over any properties, because a function can couple as an object: `Object.assign(yourProxyFunction, originalFunction)`.
 
+## Philosophy
+
+Say you want a reusable piece of code that customizes `console.log` by prefixing messages with "hello world". Your first thought would be a decorator function like this:
+
+```ts
+const addHelloWorld =
+  (log) =>
+  (...args) =>
+    log("hello world", ...args);
+
+const customLog = addHelloWorld(console.log);
+
+// Prints "hello world 1".
+customLog(1);
+```
+
 ---
 
 [Contributing guidelines](https://github.com/ivan7237d/1log/blob/master/.github/CONTRIBUTING.md)
