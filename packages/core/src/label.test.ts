@@ -1,4 +1,4 @@
-import { label, labels } from "./label";
+import { label, labelsSymbol } from "./label";
 import { voidLog } from "./log";
 import { testPlugin } from "./testPlugin";
 
@@ -6,7 +6,7 @@ test("adding labels, meta type", () => {
   const log = voidLog.add(
     (data) => {
       // $ExpectType Label[] | undefined
-      data.meta[labels];
+      data.meta[labelsSymbol];
       expect(data).toMatchInlineSnapshot(`
         {
           "args": [
@@ -14,7 +14,7 @@ test("adding labels, meta type", () => {
           ],
           "meta": {
             Symbol(testPluginSymbol): "a",
-            Symbol(labels): [
+            Symbol(labelsSymbol): [
               {
                 "caption": "label1",
               },

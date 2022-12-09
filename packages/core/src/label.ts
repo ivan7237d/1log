@@ -6,11 +6,11 @@ export interface Label {
   color?: ColorName;
 }
 
-export const labels = Symbol("labels");
+export const labelsSymbol = Symbol("labelsSymbol");
 
 declare module "./log" {
   interface Meta {
-    [labels]?: Label[];
+    [labelsSymbol]?: Label[];
   }
 }
 
@@ -20,9 +20,9 @@ export const label =
     args,
     meta: {
       ...meta,
-      [labels]: [
+      [labelsSymbol]: [
         typeof arg === "string" ? { caption: arg } : arg,
-        ...(meta[labels] ?? []),
+        ...(meta[labelsSymbol] ?? []),
       ],
     },
   });

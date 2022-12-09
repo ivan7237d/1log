@@ -1,4 +1,4 @@
-export { label, labels } from "./label";
+export { label, labelsSymbol } from "./label";
 export type { Label } from "./label";
 export { voidLog } from "./log";
 export type { Data, Log, Meta, Plugin } from "./log";
