@@ -18,10 +18,10 @@ declare module "./log" {
  * A plugin that adds a label to the log message. The argument can be either a
  * caption or an object containing caption and color name.
  *
- * The following will add labels 1 & 2 (in this order):
+ * The following will add labels 1, 2 & 3 (displayed in this order):
  *
  * ```ts
- * log.add(label("label 1")).add(label("label 2"));
+ * log.add(label("1"), label("2")).add(label("3"));
  * ```
  */
 export const label =
