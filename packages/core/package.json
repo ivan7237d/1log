@@ -20,9 +20,5 @@
     "build:main": "tsc",
     "build:module": "tsc -p tsconfig.module.json",
     "test:tsc": "tsc --noEmit"
-  },
-  "dependencies": {
-    "antiutils": "^4.0.1",
-    "monomemo": "^1.0.1"
   }
 }
