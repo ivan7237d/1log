@@ -515,7 +515,7 @@ const customLog = addHelloWorld(console.log);
 customLog(1);
 ```
 
-It may seem strange that the core includes such un-abstract things as labels and the color palette, but there's reasoning behind this. A label is just an abstract label - a combination of a caption and a color - and the core doesn't care how it will be rendered. A color is an abstract color: an object with shades from 50 to 900. The Tailwind CSS palette enables consistent colors.
+It may seem strange that the core includes such un-abstract things as labels and the color palette, but there's reasoning behind this. A label is just an abstract label - a combination of a caption and a color - and the core doesn't care how it will be rendered. A color is an abstract color: a name like "amber" plus an object with shades 50-900 from Tailwind CSS palette that can be used to represent this color in any context.
 
 ---
 
