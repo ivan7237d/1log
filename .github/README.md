@@ -2,14 +2,22 @@
 
 WIP.
 
-## Installing
+## Installation
 
 ```bash
-$ npm install 1log
-# or
-$ yarn add 1log
-# or
-$ pnpm add 1log
+npm install @1log/core
+```
+
+or
+
+```bash
+yarn add @1log/core
+```
+
+or
+
+```bash
+pnpm add @1log/core
 ```
 
 ## Philosophy
