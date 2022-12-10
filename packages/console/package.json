@@ -1,7 +1,7 @@
 {
-  "name": "@1log/core",
+  "name": "@1log/console",
   "version": "0.0.1",
-  "description": "A modular logging framework",
+  "description": "Console plugin for 1log",
   "repository": "https://github.com/ivan7237d/1log.git",
   "license": "MIT",
   "main": "build/main/index.js",
@@ -13,5 +13,8 @@
     "!**/*.test.*",
     "!**/setupTests.*"
   ],
-  "sideEffects": false
+  "sideEffects": false,
+  "dependencies": {
+    "@1log/core": "workspace:^"
+  }
 }

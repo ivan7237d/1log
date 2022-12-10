@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "target": "es2021",
+    "lib": ["es2021", "WebWorker"],
+    "moduleResolution": "node",
+    "declaration": true,
+    "inlineSourceMap": true,
+    "esModuleInterop": true,
+    "isolatedModules": true,
+    "incremental": true,
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "forceConsistentCasingInFileNames": true,
+    "composite": true
+  }
+}

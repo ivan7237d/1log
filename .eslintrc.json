@@ -3,7 +3,11 @@
   "plugins": ["eslint-plugin-expect-type"],
   "parserOptions": {
     // Required by eslint-plugin-expect-type.
-    "project": "./tsconfig.json"
+    //
+    // typescript-eslint currently [does not support project
+    // references](https://github.com/typescript-eslint/typescript-eslint/issues/2094),
+    // so linting requires building first.
+    "project": "./tsconfig.base.json"
   },
   "extends": [
     "eslint:recommended",

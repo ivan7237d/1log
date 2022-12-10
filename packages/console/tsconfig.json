@@ -1,5 +1,6 @@
 {
   "extends": "../../tsconfig.base",
+  "references": [{ "path": "../core" }],
   "compilerOptions": {
     "rootDir": "src",
     "outDir": "build/module",
