@@ -1,15 +1,16 @@
 {
   "name": "@1log/console",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Console plugin for 1log",
   "repository": "https://github.com/ivan7237d/1log.git",
   "license": "MIT",
+  "module": "build/module/index.js",
   "main": "build/main/index.js",
   "types": "build/types/index.d.ts",
-  "module": "build/module/index.js",
   "files": [
-    "build/main",
     "build/module",
+    "build/main",
+    "build/types",
     "!**/*.test.*",
     "!**/setupTests.*"
   ],
