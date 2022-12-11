@@ -1,7 +1,7 @@
 {
   "name": "@1log/core",
   "version": "0.0.2",
-  "description": "A modular logging framework",
+  "description": "1log core",
   "repository": "https://github.com/ivan7237d/1log.git",
   "license": "MIT",
   "module": "build/module/index.js",
