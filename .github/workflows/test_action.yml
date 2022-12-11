@@ -1,0 +1,24 @@
+name: Test and maybe publish
+on:
+  push:
+    branches:
+      - master
+jobs:
+  publish:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v2.2.4
+        with:
+          version: 7
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          cache: "pnpm"
+      - run: pnpm install
+      - name: Build/test
+        run: pnpm test
+      - name: Test tagging
+        run: |
+          git tag test.tag.2
+          git push --tags
