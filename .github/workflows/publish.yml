@@ -2,7 +2,7 @@ name: Test and maybe publish
 on:
   push:
     branches:
-      - never
+      - master
 jobs:
   publish:
     runs-on: ubuntu-20.04
@@ -16,25 +16,12 @@ jobs:
           node-version: 16
           cache: "pnpm"
       - run: pnpm install
-      - name: Build/test
+      - name: Build and test
         run: pnpm test
       - name: Publish Packages
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
           pnpm config set "//registry.npmjs.org/:_authToken" "${NPM_TOKEN}"
-      - id: publish
-        uses: JS-DevTools/npm-publish@v1
-        with:
-          token: ${{ secrets.NPM_TOKEN }}
-      - name: Add tag
-        if: steps.publish.outputs.type != 'none'
-        uses: actions/github-script@v6
-        with:
-          script: |
-            github.rest.git.createRef({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              ref: 'refs/tags/v${{ steps.publish.outputs.version }}',
-              sha: context.sha
-            })
+          pnpm --recursive --parallel exec bash ../../publish.sh
+          git push --tags
