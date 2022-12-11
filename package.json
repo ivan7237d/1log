@@ -1,8 +1,8 @@
 {
   "scripts": {
-    "build:clean": "pnpm --recursive exec rm -rf build",
+    "build:clean": "pnpm --recursive --parallel exec rm -rf build",
     "build:module": "tsc --build",
-    "build:main": "pnpm --recursive exec babel build/module --out-dir build/main",
+    "build:main": "pnpm --recursive --parallel exec babel build/module --out-dir build/main",
     "build": "run-s --print-label build:*",
     "test:jest": "jest",
     "test:lint": "eslint .",
