@@ -2,7 +2,7 @@ name: Test and maybe publish
 on:
   push:
     branches:
-      - master
+      - never
 jobs:
   publish:
     runs-on: ubuntu-20.04

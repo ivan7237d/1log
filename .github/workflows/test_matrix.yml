@@ -1,0 +1,13 @@
+name: Test and matrix
+on:
+  push:
+    branches:
+      - master
+jobs:
+  publish:
+    runs-on: ubuntu-20.04
+    strategy:
+      matrix:
+        package: [$(ls packages)]
+    steps:
+      - run: cd packages/${{ matrix.package }} && echo $PWD
