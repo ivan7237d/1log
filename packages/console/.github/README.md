@@ -1,4 +1,4 @@
-# 1log/console
+# @1log/console
 
 Logs messages using console.\* methods.
 
