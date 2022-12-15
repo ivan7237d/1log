@@ -1,4 +1,8 @@
-export interface Meta {}
+import { Label, labelsSymbol } from "./label";
+
+export interface Meta {
+  [labelsSymbol]?: Label[];
+}
 
 export interface Data {
   args: unknown[];

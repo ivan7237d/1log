@@ -20,7 +20,7 @@ test("adding labels, meta type", () => {
               },
               {
                 "caption": "label2",
-                "color": "amber",
+                "color": "yellow",
               },
             ],
           },
@@ -29,7 +29,7 @@ test("adding labels, meta type", () => {
       return data;
     },
     label("label1"),
-    label({ caption: "label2", color: "amber" }),
+    label({ caption: "label2", color: "yellow" }),
     testPlugin("a")
   );
   log();

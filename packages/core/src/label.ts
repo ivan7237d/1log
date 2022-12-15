@@ -8,12 +8,6 @@ export interface Label {
 
 export const labelsSymbol = Symbol("labelsSymbol");
 
-declare module "./log" {
-  interface Meta {
-    [labelsSymbol]?: Label[];
-  }
-}
-
 /**
  * A plugin that adds a label to the log message. The argument can be either a
  * caption or an object containing caption and color name.

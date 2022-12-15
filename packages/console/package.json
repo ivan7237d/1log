@@ -16,6 +16,10 @@
   ],
   "sideEffects": false,
   "dependencies": {
-    "@1log/core": "workspace:^"
+    "@1log/core": "workspace:^",
+    "antiutils": "^4.0.2"
+  },
+  "devDependencies": {
+    "colorjs.io": "^0.4.2"
   }
 }
