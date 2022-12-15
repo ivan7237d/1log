@@ -19,7 +19,7 @@ const log = voidLog.add(consolePlugin({ showDelta: false }));
 Options:
 
 | Option     | Type                                   | Description                               | Default value                                         |
-| ---------- | -------------------------------------- | ----------------------------------------- | ----------------------------------------------------- |
+| :--------- | :------------------------------------- | :---------------------------------------- | :---------------------------------------------------- |
 | showDelta  | boolean                                | Show time delta from the previous message | `true`                                                |
 | showLabels | boolean                                | Show labels                               | `true`                                                |
 | format     | `"none" \| "css" \| "ansi"` (`Format`) | Format to use for colors, italics etc.    | `"ansi"` when run in Node/Deno/Bun, `"css"` otherwise |
@@ -34,7 +34,7 @@ Returns a plugin that sets `[severitySymbol]` prop of log message metadata to th
 log.add(severity("error"))(yourError);
 ```
 
-consolePlugin will then use the corresponding method of `console` to log the message. If severity is not set, it will use `console.log`.
+`consolePlugin` will then use the corresponding method of `console` to log the message. If severity is not set, it will use `console.log`.
 
 ---
 
