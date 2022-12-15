@@ -1,4 +1,4 @@
-# 1log/core
+# @1log/core
 
 ## Installation and usage
 
