@@ -1,14 +1,18 @@
 import { label, voidLog } from "@1log/core";
-import { consolePlugin, getTimeDelta, resetTimeDelta } from "./consolePlugin";
+import { consolePlugin } from "./consolePlugin";
 import { severity } from "./severity";
+import { resetTimeDelta } from "./timeDelta";
 
-beforeEach(() => {
+beforeAll(() => {
   jest.useFakeTimers();
-  resetTimeDelta();
+});
+
+afterAll(() => {
+  jest.useRealTimers();
 });
 
 afterEach(() => {
-  jest.useRealTimers();
+  resetTimeDelta();
   jest.restoreAllMocks();
 });
 
@@ -64,38 +68,26 @@ test("severity levels", () => {
   calls.length = 0;
 });
 
-test("getTimeDelta", () => {
-  expect(getTimeDelta()).toMatchInlineSnapshot(`undefined`);
-  jest.advanceTimersByTime(17);
-  expect(getTimeDelta()).toMatchInlineSnapshot(`17`);
-  jest.advanceTimersByTime(16);
-  expect(getTimeDelta()).toMatchInlineSnapshot(`undefined`);
-  jest.advanceTimersByTime(1);
-  expect(getTimeDelta()).toMatchInlineSnapshot(`17`);
-});
-
 test("css format", () => {
   const log = voidLog.add(
     consolePlugin({ format: "css" }),
     label({ caption: "green", color: "green" }),
     label({ caption: "blue" })
   );
+  const spy = jest.spyOn(console, "log").mockImplementation();
   log();
   jest.advanceTimersByTime(500);
-  const spy = jest.spyOn(console, "log");
   log(1);
-  expect(spy.mock.calls).toMatchInlineSnapshot(`
+  expect(spy.mock.lastCall).toMatchInlineSnapshot(`
     [
-      [
-        "%cgreen%c %cblue%c %c+500%c",
-        "background: #16a34a; color: #ffffff; padding: 0 3px",
-        "",
-        "background: #2563eb; color: #ffffff; padding: 0 3px",
-        "",
-        "font-style: italic",
-        "",
-        1,
-      ],
+      "%cgreen%c %cblue%c %c+500%c",
+      "background: #16a34a; color: #ffffff; padding: 0 3px",
+      "",
+      "background: #2563eb; color: #ffffff; padding: 0 3px",
+      "",
+      "font-style: italic",
+      "",
+      1,
     ]
   `);
 });
@@ -106,18 +98,16 @@ test("ansi format", () => {
     label({ caption: "green", color: "green" }),
     label({ caption: "blue" })
   );
+  const spy = jest.spyOn(console, "log").mockImplementation();
   log();
   jest.advanceTimersByTime(500);
-  const spy = jest.spyOn(console, "log");
   log(1);
-  expect(spy.mock.calls).toMatchInlineSnapshot(`
+  expect(spy.mock.lastCall).toMatchInlineSnapshot(`
     [
-      [
-        "[38;5;35m[green][0m",
-        "[38;5;27m[blue][0m",
-        "[3m+500[0m",
-        1,
-      ],
+      "[38;5;35m[green][0m",
+      "[38;5;27m[blue][0m",
+      "[3m+500[0m",
+      1,
     ]
   `);
 });
@@ -128,18 +118,16 @@ test("no format", () => {
     label({ caption: "green", color: "green" }),
     label({ caption: "blue" })
   );
+  const spy = jest.spyOn(console, "log").mockImplementation();
   log();
   jest.advanceTimersByTime(500);
-  const spy = jest.spyOn(console, "log");
   log(1);
-  expect(spy.mock.calls).toMatchInlineSnapshot(`
+  expect(spy.mock.lastCall).toMatchInlineSnapshot(`
     [
-      [
-        "[green]",
-        "[blue]",
-        "+500",
-        1,
-      ],
+      "[green]",
+      "[blue]",
+      "+500",
+      1,
     ]
   `);
 });

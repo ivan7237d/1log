@@ -2,11 +2,11 @@
 
 Logs messages using console.\* methods.
 
-## Installation
+## Installation and usage
 
 Please see [1log readme](https://github.com/ivan7237d/1log).
 
-## Usage
+## API
 
 ### consolePlugin
 
@@ -24,7 +24,7 @@ Options:
 | showLabels | boolean                                | Show labels                               | `true`                                                |
 | format     | `"none" \| "css" \| "ansi"` (`Format`) | Format to use for colors, italics etc.    | `"ansi"` when run in Node/Deno/Bun, `"css"` otherwise |
 
-Time delta is not included in the first message, and also not included if it's less or equal to 16ms (deltas that small are too much affected by the overhead of logging itself).
+Time delta is not included in the first message, and also not included if it's less than 1/60th of a second (deltas that small are too much affected by the overhead of logging itself).
 
 ### severity
 

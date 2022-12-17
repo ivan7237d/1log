@@ -1,7 +1,7 @@
 {
-  "name": "@1log/console",
-  "version": "0.0.3",
-  "description": "Console plugin for 1log",
+  "name": "@1log/jest",
+  "version": "0.0.1",
+  "description": "A 1log plugin that buffers log entries and lets you snapshot them in Jest tests.",
   "repository": "https://github.com/ivan7237d/1log.git",
   "license": "MIT",
   "module": "build/module/index.js",
@@ -20,6 +20,6 @@
     "antiutils": "^4.0.2"
   },
   "devDependencies": {
-    "colorjs.io": "^0.4.2"
+    "pretty-format": "^29.3.1"
   }
 }

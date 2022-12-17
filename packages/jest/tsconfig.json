@@ -1,0 +1,10 @@
+{
+  "extends": "../../tsconfig.base",
+  "references": [{ "path": "../core" }],
+  "compilerOptions": {
+    "rootDir": "src",
+    "outDir": "build/module",
+    "declarationDir": "build/types",
+    "module": "esnext"
+  }
+}

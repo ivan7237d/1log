@@ -2,6 +2,7 @@
   "files": [],
   "references": [
     { "path": "./packages/core" },
-    { "path": "./packages/console" }
+    { "path": "./packages/console" },
+    { "path": "./packages/jest" }
   ]
 }

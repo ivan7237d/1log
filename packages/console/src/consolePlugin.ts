@@ -2,6 +2,7 @@ import { labelsSymbol, palette, Plugin } from "@1log/core";
 import { assertNever, pipe } from "antiutils";
 import { ansiPalette } from "./ansiPalette";
 import { severitySymbol } from "./severity";
+import { getTimeDelta } from "./timeDelta";
 
 export type Format = "none" | "css" | "ansi";
 
@@ -34,25 +35,6 @@ const renderWithCssStyles = (...args: { caption: string; style: string }[]) => [
   args.map(({ caption }) => `%c${caption}%c`).join(" "),
   ...args.flatMap(({ style }) => [style, ""]),
 ];
-
-let lastTime: number | undefined = undefined;
-
-export const getTimeDelta = () => {
-  const time = Date.now();
-  if (lastTime === undefined) {
-    lastTime = time;
-  } else {
-    const timeDelta = time - lastTime;
-    if (timeDelta > 16) {
-      lastTime = time;
-      return timeDelta;
-    }
-  }
-};
-
-export const resetTimeDelta = () => {
-  lastTime = undefined;
-};
 
 export const consolePlugin = (options?: {
   showDelta?: boolean;
