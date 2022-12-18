@@ -1,0 +1,24 @@
+{
+  "name": "@1log/promise",
+  "version": "0.0.1",
+  "description": "Logs fulfillment/rejection of a promise",
+  "repository": "https://github.com/ivan7237d/1log.git",
+  "license": "MIT",
+  "module": "build/module/index.js",
+  "main": "build/main/index.js",
+  "types": "build/types/index.d.ts",
+  "files": [
+    "build/module",
+    "build/main",
+    "build/types",
+    "!**/*.test.*",
+    "!**/setupTests.*"
+  ],
+  "sideEffects": false,
+  "dependencies": {
+    "@1log/core": "workspace:^"
+  },
+  "devDependencies": {
+    "@1log/jest": "workspace:^"
+  }
+}

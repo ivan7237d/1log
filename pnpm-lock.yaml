@@ -63,6 +63,15 @@ importers:
     devDependencies:
       pretty-format: 29.3.1
 
+  packages/promise:
+    specifiers:
+      '@1log/core': workspace:^
+      '@1log/jest': workspace:^
+    dependencies:
+      '@1log/core': link:../core
+    devDependencies:
+      '@1log/jest': link:../jest
+
 packages:
 
   /@ampproject/remapping/2.2.0:
