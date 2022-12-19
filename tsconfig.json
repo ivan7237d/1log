@@ -3,6 +3,7 @@
   "references": [
     { "path": "./packages/console" },
     { "path": "./packages/core" },
+    { "path": "./packages/function" },
     { "path": "./packages/jest" },
     { "path": "./packages/promise" }
   ]

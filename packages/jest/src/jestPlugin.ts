@@ -1,4 +1,4 @@
-import { labelsSymbol, Plugin } from "@1log/core";
+import { getInstanceSymbol, labelsSymbol, Plugin } from "@1log/core";
 import { formatDuration } from "./formatDuration";
 import { getTimeDelta } from "./timeDelta";
 
@@ -9,6 +9,16 @@ export interface Entry {
 }
 let buffer: Entry[] = [];
 
+let instanceSymbol = getInstanceSymbol();
+
+const maybeReset = () => {
+  const freshInstanceSymbol = getInstanceSymbol();
+  if (freshInstanceSymbol !== instanceSymbol) {
+    instanceSymbol = freshInstanceSymbol;
+    buffer = [];
+  }
+};
+
 export const jestPlugin = (options?: {
   showDelta?: boolean;
   showLabels?: boolean;
@@ -17,6 +27,7 @@ export const jestPlugin = (options?: {
   const showLabels = options?.showLabels ?? true;
   return (data) => {
     const timeDelta = showDelta ? getTimeDelta() : undefined;
+    maybeReset();
     buffer.push({
       labels: ((showLabels ? data.meta[labelsSymbol] : undefined) ?? []).map(
         ({ caption }) => caption
@@ -34,7 +45,14 @@ export const jestPlugin = (options?: {
  */
 const bufferSet = new WeakSet();
 
+let haveAddedSnapshotSerializer = false;
+
 export const readLog = () => {
+  maybeReset();
+  if (!haveAddedSnapshotSerializer) {
+    expect.addSnapshotSerializer(jestMessagesSerializer);
+    haveAddedSnapshotSerializer = true;
+  }
   const snapshot = buffer;
   buffer = [];
   bufferSet.add(snapshot);
@@ -98,5 +116,3 @@ export const jestMessagesSerializer: NewPlugin = {
         );
   },
 };
-
-expect.addSnapshotSerializer(jestMessagesSerializer);

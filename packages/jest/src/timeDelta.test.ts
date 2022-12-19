@@ -1,8 +1,9 @@
-import { areTimersFake, getTimeDelta, resetTimeDelta } from "./timeDelta";
+import { resetLog } from "@1log/core";
+import { areTimersFake, getTimeDelta } from "./timeDelta";
 
 afterEach(() => {
   jest.useRealTimers();
-  resetTimeDelta();
+  resetLog();
 });
 
 test("areTimersFake", () => {

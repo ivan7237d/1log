@@ -49,13 +49,12 @@ expect(readLog()).toMatchInlineSnapshot(`> [your label] 1`);
 ### With time deltas
 
 ```ts
-import { voidLog } from "@1log/core";
+import { resetLog, voidLog } from "@1log/core";
 import { jestPlugin, readLog, resetTimeDelta } from "@1log/jest";
 
 afterEach(() => {
   jest.useRealTimers();
-  resetTimeDelta();
-  readLog();
+  resetLog();
 });
 
 test("", () => {
@@ -93,10 +92,6 @@ Time delta is not included in the first message, and also not included if it's e
 ### readLog
 
 Returns buffered log entries and clears the buffer. Log entries is of type `Entry[]`, but the main intended use of this array is with `expect(...).toMatchInlineSnapshot()` or `expect(...).toMatchSnapshot()`.
-
-### resetTimeDelta
-
-Resets the internal state that's used for time deltas. Call this function whenever you call `jest.useRealTimers()` (see an example in the Usage section above).
 
 ---
 

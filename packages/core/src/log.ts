@@ -14,11 +14,11 @@ export interface Plugin {
 }
 
 export interface Log {
-  <T>(...args: [...unknown[], T]): T;
-  /**
-   * Logs arguments and returns the last argument.
-   */
-  (): void;
+  <Args extends unknown[]>(...args: Args): Args extends [...unknown[], infer T]
+    ? T
+    : Args extends []
+    ? void
+    : Args[number] | void;
   /**
    * Immutably adds plugins.
    *
@@ -38,7 +38,7 @@ const getLog = (plugins: Plugin[]): Log =>
         args,
         meta: {},
       });
-      return args[args.length - 1];
+      return args[args.length - 1] as any;
     },
     {
       add: (...extraPlugins: Plugin[]) => getLog([...plugins, ...extraPlugins]),

@@ -52,6 +52,19 @@ importers:
   packages/core:
     specifiers: {}
 
+  packages/function:
+    specifiers:
+      '@1log/core': workspace:^
+      '@1log/jest': workspace:^
+      '@1log/promise': workspace:^
+      antiutils: ^4.0.2
+    dependencies:
+      '@1log/core': link:../core
+      '@1log/promise': link:../promise
+      antiutils: 4.0.2
+    devDependencies:
+      '@1log/jest': link:../jest
+
   packages/jest:
     specifiers:
       '@1log/core': workspace:^

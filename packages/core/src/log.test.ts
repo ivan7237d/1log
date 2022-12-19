@@ -7,6 +7,12 @@ test("Log interface", () => {
 
   // $ExpectType number
   voidLog("a", 1);
+
+  // $ExpectType void
+  voidLog(...[]);
+
+  // $ExpectType number | void
+  voidLog(...[1]);
 });
 
 test("applying plugins", () => {

@@ -30,17 +30,18 @@ import { getLogPromise } from "@1log/promise";
 const log = voidLog.add(consolePlugin());
 const logPromise = getLogPromise(log);
 
-// Logs `[resolve] 1`.
 logPromise(Promise.resolve(1));
+// [resolve] 1
 
-// Logs `[reject] 1`.
 logPromise(Promise.reject(1));
+// [reject] 1
 
-// Logs `[your label] [resolve] 1`.
 logPromise("your label", Promise.resolve(1));
+// [your label] [resolve] 1
 
 // Equivalent to the previous call.
 logPromise("your label")(Promise.resolve(1));
+// [your label] [resolve] 1
 ```
 
 ---

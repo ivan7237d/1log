@@ -1,7 +1,7 @@
 {
-  "name": "@1log/jest",
-  "version": "0.0.2",
-  "description": "A 1log plugin that buffers log entries and lets you snapshot them in Jest tests.",
+  "name": "@1log/function",
+  "version": "0.0.1",
+  "description": "Logs calls, returns and throws of a regular or async function",
   "repository": "https://github.com/ivan7237d/1log.git",
   "license": "MIT",
   "module": "build/module/index.js",
@@ -17,9 +17,10 @@
   "sideEffects": false,
   "dependencies": {
     "@1log/core": "workspace:^",
+    "@1log/promise": "workspace:^",
     "antiutils": "^4.0.2"
   },
   "devDependencies": {
-    "pretty-format": "^29.3.1"
+    "@1log/jest": "workspace:^"
   }
 }

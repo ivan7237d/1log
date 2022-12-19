@@ -1,12 +1,10 @@
-import { label, voidLog } from "@1log/core";
+import { label, resetLog, voidLog } from "@1log/core";
 import { format } from "pretty-format";
 import { jestMessagesSerializer, jestPlugin, readLog } from "./jestPlugin";
-import { resetTimeDelta } from "./timeDelta";
 
 afterEach(() => {
   jest.useRealTimers();
-  resetTimeDelta();
-  readLog();
+  resetLog();
 });
 
 test("empty log", () => {
