@@ -39,26 +39,15 @@ test("only label as arg", () => {
   `);
 });
 
-test("label in options", () => {
-  logFunction({ labelCaption: "client" }, (x: number) => x + 1)(1);
-  expect(readLog()).toMatchInlineSnapshot(`
-    > [client] [call 1] 1
-    > [client] [1] [return] 2
-  `);
-});
-
-test("filter, throw", () => {
-  logFunction({ filter: ["call"] }, (x: number) => x + 1)(1);
-  expect(readLog()).toMatchInlineSnapshot(`> [call 1] 1`);
-
-  logFunction({ filter: ["return"] }, (x: number) => x + 1)(1);
-  expect(readLog()).toMatchInlineSnapshot(`> [1] [return] 2`);
-
-  const f = logFunction({ filter: ["throw"] }, () => {
+test("throw", () => {
+  const f = logFunction(() => {
     throw new Error("a");
   });
   expect(f).toThrowErrorMatchingInlineSnapshot(`"a"`);
-  expect(readLog()).toMatchInlineSnapshot(`> [1] [throw] [Error: a]`);
+  expect(readLog()).toMatchInlineSnapshot(`
+    > [call 1]
+    > [1] [throw] [Error: a]
+  `);
 });
 
 test("count", () => {
