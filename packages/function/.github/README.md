@@ -1,6 +1,6 @@
 # @1log/function
 
-Logs calls, returns and throws of a regular or async function
+Logs arguments, returned value and errors for a regular or async function.
 
 ## Installation
 

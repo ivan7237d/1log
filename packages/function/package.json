@@ -1,7 +1,7 @@
 {
   "name": "@1log/function",
   "version": "0.0.2",
-  "description": "Logs calls, returns and throws of a regular or async function",
+  "description": "Logs arguments, returned value and errors for a regular or async function",
   "repository": "https://github.com/ivan7237d/1log.git",
   "license": "MIT",
   "module": "build/module/index.js",
