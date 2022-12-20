@@ -25,11 +25,16 @@ pnpm add @1log/core @1log/jest
 ### Basic
 
 ```ts
-import { voidLog } from "@1log/core";
+import { resetLog, voidLog } from "@1log/core";
 import { jestPlugin, readLog } from "@1log/jest";
 
+const log = voidLog.add(jestPlugin());
+
+afterEach(() => {
+  resetLog();
+});
+
 test("", () => {
-  const log = voidLog.add(jestPlugin());
   log(1);
   log(2);
   expect(readLog()).toMatchInlineSnapshot(`
@@ -52,13 +57,14 @@ expect(readLog()).toMatchInlineSnapshot(`> [your label] 1`);
 import { resetLog, voidLog } from "@1log/core";
 import { jestPlugin, readLog, resetTimeDelta } from "@1log/jest";
 
+const log = voidLog.add(jestPlugin());
+
 afterEach(() => {
   jest.useRealTimers();
   resetLog();
 });
 
 test("", () => {
-  const log = voidLog.add(jestPlugin());
   jest.useFakeTimers();
   log(1);
   jest.advanceTimersByTime(500);

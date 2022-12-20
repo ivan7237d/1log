@@ -22,13 +22,23 @@ pnpm add @1log/console @1log/core @1log/function
 
 ## Usage
 
+Create a function `logFunction`, probably in a separate module:
+
 ```ts
+// log.ts
+
 import { consolePlugin } from "@1log/console";
 import { voidLog } from "@1log/core";
 import { getLogFunction } from "@1log/function";
 
-const log = voidLog.add(consolePlugin());
-const logFunction = getLogFunction(log);
+export const log = voidLog.add(consolePlugin());
+export const logFunction = getLogFunction(log);
+```
+
+Then wrap functions with it:
+
+```ts
+import { logFunction } from "./log";
 
 const f = logFunction((x: number) => x + 1);
 f(1);
@@ -43,6 +53,17 @@ await g();
 // [call 1]
 // [1] [return promise]
 // [1] [resolve] 1
+```
+
+You can add a label as follows:
+
+```ts
+const f = logFunction("f", (x: number) => x + 1);
+// [f] [call 1] 1
+// [f] [1] [return] 2
+
+// Equivalent to the previous example.
+const f = logFunction("f")((x: number) => x + 1);
 ```
 
 ---

@@ -101,4 +101,18 @@ test("examples in readme", async () => {
     > [1] [return promise]
     > [1] [resolve] 1
   `);
+
+  const f2 = logFunction("f", (x: number) => x + 1);
+  f2(1);
+  expect(readLog()).toMatchInlineSnapshot(`
+    > [f] [call 1] 1
+    > [f] [1] [return] 2
+  `);
+
+  const f3 = logFunction("f")((x: number) => x + 1);
+  f3(1);
+  expect(readLog()).toMatchInlineSnapshot(`
+    > [f] [call 1] 1
+    > [f] [1] [return] 2
+  `);
 });
