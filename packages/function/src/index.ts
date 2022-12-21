@@ -25,6 +25,8 @@ export const getLogFunction = (log: Log): LogFunction => {
       arg2 === undefined
         ? [undefined, arg1 as (...args: unknown[]) => unknown]
         : [arg1 as string, arg2 as (...args: unknown[]) => unknown];
+    const logWithClientLabel =
+      labelCaption === undefined ? log : log.add(label(labelCaption));
     let callCount = 0;
     let instanceSymbol = getInstanceSymbol();
     return (...args: unknown[]) => {
@@ -35,8 +37,6 @@ export const getLogFunction = (log: Log): LogFunction => {
         }
       });
       callCount++;
-      const logWithClientLabel =
-        labelCaption === undefined ? log : log.add(label(labelCaption));
       logWithClientLabel.add(
         label({ caption: `call ${callCount}`, color: "purple" })
       )(...args);

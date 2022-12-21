@@ -16,9 +16,9 @@ export const getLogPromise = (log: Log): LogPromise => {
       arg2 === undefined
         ? [undefined, arg1 as Promise<unknown>]
         : [arg1 as string, arg2 as Promise<unknown>];
+    const logWithClientLabel =
+      labelCaption !== undefined ? log.add(label(labelCaption)) : log;
     return new Promise<unknown>((resolve, reject) => {
-      const logWithClientLabel =
-        labelCaption !== undefined ? log.add(label(labelCaption)) : log;
       return promise.then(
         (value) => {
           logWithClientLabel.add(label({ caption: "resolve", color: "green" }))(
