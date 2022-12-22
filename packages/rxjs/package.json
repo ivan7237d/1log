@@ -1,7 +1,7 @@
 {
-  "name": "@1log/promise",
-  "version": "0.0.3",
-  "description": "Log fulfillment/rejection of a promise",
+  "name": "@1log/rxjs",
+  "version": "0.0.1",
+  "description": "Log everything that happens to an RxJS observable",
   "repository": "https://github.com/ivan7237d/1log.git",
   "license": "MIT",
   "module": "build/module/index.js",
@@ -15,11 +15,15 @@
     "!**/setupTests.*"
   ],
   "sideEffects": false,
+  "peerDependencies": {
+    "rxjs": "^7.0.0"
+  },
   "dependencies": {
-    "@1log/core": "workspace:^"
+    "@1log/core": "workspace:^",
+    "antiutils": "^4.0.2"
   },
   "devDependencies": {
     "@1log/jest": "workspace:^",
-    "antiutils": "4.0.2"
+    "rxjs": "7.0.0"
   }
 }

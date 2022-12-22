@@ -1,6 +1,6 @@
 # @1log/promise
 
-Logs fulfillment/rejection of a promise.
+Log fulfillment/rejection of a promise.
 
 ## Installation
 

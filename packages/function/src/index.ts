@@ -3,16 +3,25 @@ import { getLogPromise } from "@1log/promise";
 import { pipe } from "antiutils";
 
 interface LogFunction {
-  <Args extends unknown[], Retval>(
-    labelCaption: string,
-    f: (...args: Args) => Retval
-  ): (...args: Args) => Retval;
-  <Args extends unknown[], Retval>(f: (...args: Args) => Retval): (
+  <
+    Args extends
+      | [f: (...args: any) => any]
+      | [labelCaption: string, f: (...args: any) => any]
+      | [labelCaption: string]
+  >(
     ...args: Args
-  ) => Retval;
-  (labelCaption: string): <Args extends unknown[], Retval>(
-    f: (...args: Args) => Retval
-  ) => (...args: Args) => Retval;
+  ): Args extends [f: (...args: infer FArgs) => infer Retval]
+    ? (...args: FArgs) => Retval
+    : Args extends [
+        labelCaption: string,
+        f: (...args: infer FArgs) => infer Retval
+      ]
+    ? (...args: FArgs) => Retval
+    : Args extends [labelCaption: string]
+    ? <FArgs extends unknown[], Retval>(
+        f: (...args: FArgs) => Retval
+      ) => (...args: FArgs) => Retval
+    : never;
 }
 
 export const getLogFunction = (log: Log): LogFunction => {

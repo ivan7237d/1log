@@ -1,16 +1,27 @@
 import { label, Log } from "@1log/core";
 
 interface LogPromise {
-  <T>(labelCaption: string, value: Promise<T>): Promise<T>;
-  <T>(value: Promise<T>): Promise<T>;
-  (labelCaption: string): <T>(value: Promise<T>) => Promise<T>;
+  <
+    Args extends
+      | [promise: Promise<unknown>]
+      | [labelCaption: string, promise: Promise<unknown>]
+      | [labelCaption: string]
+  >(
+    ...args: Args
+  ): Args extends [promise: Promise<infer T>]
+    ? Promise<T>
+    : Args extends [labelCaption: string, promise: Promise<infer T>]
+    ? Promise<T>
+    : Args extends [labelCaption: string]
+    ? <T>(promise: Promise<T>) => Promise<T>
+    : never;
 }
 
 export const getLogPromise = (log: Log): LogPromise => {
   const logPromise = ((...args: unknown[]) => {
     const [arg1, arg2] = args;
     if (typeof arg1 === "string" && arg2 === undefined) {
-      return (value: Promise<unknown>) => logPromise(arg1, value);
+      return (promise: Promise<unknown>) => logPromise(arg1, promise);
     }
     const [labelCaption, promise] =
       arg2 === undefined

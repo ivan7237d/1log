@@ -1,5 +1,6 @@
 import { voidLog } from "@1log/core";
 import { jestPlugin, readLog } from "@1log/jest";
+import { pipe } from "antiutils";
 import { getLogPromise } from ".";
 
 const log = voidLog.add(jestPlugin());
@@ -23,6 +24,8 @@ test("only promise as arg", async () => {
   logPromise(promise);
   await promise;
   expect(readLog()).toMatchInlineSnapshot(`> [resolve] 1`);
+  // $ExpectType Promise<number>
+  pipe(Promise.resolve(1), logPromise);
 });
 
 test("only label as arg", async () => {
@@ -31,6 +34,8 @@ test("only label as arg", async () => {
   logPromise("client")(promise);
   await promise;
   expect(readLog()).toMatchInlineSnapshot(`> [client] [resolve] 1`);
+  // $ExpectType Promise<number>
+  pipe(Promise.resolve(1), logPromise("client"));
 });
 
 test("returned value", async () => {

@@ -5,6 +5,7 @@
     { "path": "./packages/core" },
     { "path": "./packages/function" },
     { "path": "./packages/jest" },
-    { "path": "./packages/promise" }
+    { "path": "./packages/promise" },
+    { "path": "./packages/rxjs" }
   ]
 }

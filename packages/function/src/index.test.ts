@@ -1,5 +1,6 @@
 import { resetLog, voidLog } from "@1log/core";
 import { jestPlugin, readLog } from "@1log/jest";
+import { pipe } from "antiutils";
 import { getLogFunction } from ".";
 
 const log = voidLog.add(jestPlugin());
@@ -27,6 +28,8 @@ test("only function as arg", () => {
     > [call 1] 1
     > [1] [return] 2
   `);
+  // $ExpectType (x: number) => number
+  pipe((x: number) => x + 1, logFunction);
 });
 
 test("only label as arg", () => {
@@ -37,6 +40,8 @@ test("only label as arg", () => {
     > [client] [call 1] 1
     > [client] [1] [return] 2
   `);
+  // $ExpectType (x: number) => number
+  pipe((x: number) => x + 1, logFunction("client"));
 });
 
 test("throw", () => {
