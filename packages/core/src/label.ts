@@ -9,14 +9,9 @@ export interface Label {
 export const labelsSymbol = Symbol("labelsSymbol");
 
 /**
- * A plugin that adds a label to the log message. The argument can be either a
- * caption or an object containing caption and color name.
- *
- * The following will add labels 1, 2 & 3 (displayed in this order):
- *
- * ```ts
- * log.add(label("1"), label("2")).add(label("3"));
- * ```
+ * A plugin that adds an object of shape `{caption: string; color?: ColorName}`
+ * (`Label`) to the top of `meta[labelsSymbol]` array. The argument can be
+ * either a caption or an object containing caption and color name.
  */
 export const label =
   (arg: string | Label): Plugin =>
