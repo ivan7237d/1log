@@ -59,7 +59,11 @@ log.add(severity("error"))("oops");
 
 ## Plugins
 
-A plugin is a function that takes and returns a "data" object of shape `{args, meta}` where `args` is the arguments passed to the log function, and `meta` is an object of type `Meta` that has metadata on the log message. The data object is passed through all the plugins in the following order: `log.add(called3rd).add(called2nd, called1rst)`.
+A plugin is a function that takes and returns a "data" object of shape `{args, meta}` where `args` is the arguments passed to the log function, and `meta` is an object of type `Meta` that has metadata on the log message. The data object is passed through all the plugins in the following order:
+
+```ts
+log.add(called3rd).add(called2nd, called1rst);
+```
 
 For example, `severity` plugin from the code sample above adds a property `[severitySymbol]: "error"` to `meta`, which `consolePlugin` then sees and uses `console.error` to log the message. If we wanted to only log errors, we could create a plugin inline in `log.ts` as follows:
 
