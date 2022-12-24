@@ -88,7 +88,7 @@ declare module "@1log/core" {
 
 ## Packages
 
-- [core](https://github.com/ivan7237d/1log/tree/master/packages/core): `voidLog`, abstract labels, color palette, and a mechanism to reset stateful plugins.
+- [core](https://github.com/ivan7237d/1log/tree/master/packages/core): `voidLog`, the notion of labels, color palette, and a mechanism to reset stateful plugins.
 - [console](https://github.com/ivan7237d/1log/tree/master/packages/console): a plugin that logs messages using console.\* methods (supports colored labels, time deltas and severity levels).
 - [jest](https://github.com/ivan7237d/1log/tree/master/packages/jest): a plugin that buffers log messages and lets you snapshot them in Jest tests (supports labels and time deltas).
 - [promise](https://github.com/ivan7237d/1log/tree/master/packages/promise): log fulfillment/rejection of a promise.
