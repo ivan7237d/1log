@@ -1,44 +1,92 @@
 # 1log
 
-WIP.
+An unopinionated JS/TS logging framework.
+
+- Provides a `console.log` equivalent that can be used in the middle of expressions, like `f(log(arg))`.
+
+- Has a minimal core and leaves as much as possible of the implementation details to plugins.
 
 ## Installation
 
 ```bash
-npm install @1log/core
+npm install @1log/console @1log/core
 ```
 
 or
 
 ```bash
-yarn add @1log/core
+yarn add @1log/console @1log/core
 ```
 
 or
 
 ```bash
-pnpm add @1log/core
+pnpm add @1log/console @1log/core
 ```
 
-## Philosophy
+## Usage
 
-Say you want to build a "plugin" that customizes `console.log` by prefixing log messages with "hello world". A simple way to do it would be a decorator function like this:
+Create a `log` function, probably in a separate module:
 
 ```ts
-const addHelloWorld =
-  (log) =>
-  (...args) =>
-    log("hello world", ...args);
+// log.ts
 
-const customLog = addHelloWorld(console.log);
+import { consolePlugin } from "@1log/console";
+import { voidLog } from "@1log/core";
 
-// Prints "hello world 1".
-customLog(1);
+export const log = voidLog.add(consolePlugin());
 ```
 
-TODO: 1log is the same approach w/ a couple of tweaks.
+This function can be used just like `console.log`, but has two additional features. First, it returns the last argument passed to it instead of `void`, so as mentioned above, can be inserted in an expression. Second, calling `log.add(...plugins)` returns a new log function with more plugins added to it. For example, to prefix all log messages from some module with a label, you would do
 
-It may seem strange that the core includes such un-abstract things as labels and the color palette, but there's reasoning behind this. A label is just an abstract label - a combination of a caption and a color - and the core doesn't care how it will be rendered. A color is an abstract color: a name like "amber" plus an object with shades 50-900 from Tailwind CSS palette that can be used to represent this color in any context.
+```ts
+import { label } from "@1log/core";
+import { log as baseLog } from "./log";
+
+const log = baseLog.add(label("your module"));
+
+log("will have prefix");
+```
+
+Another example: use `console.error` instead of `console.log`:
+
+```ts
+import { severity } from "@1log/console";
+import { log } from "./log";
+
+log.add(severity("error"))("oops");
+```
+
+## Plugins
+
+A plugin is a function that takes and returns a "data" object of shape `{args, meta}` where `args` is the arguments passed to the log function, and `meta` is an object of type `Meta` that has metadata on the log message. The data object is passed through all the plugins in the following order: `log.add(called3rd).add(called2nd, called1rst)`.
+
+For example, `severity` plugin from the code sample above adds a property `[severitySymbol]: "error"` to `meta`, which `consolePlugin` then sees and uses `console.error` to log the message. If we wanted to only log errors, we could create a plugin inline in `log.ts` as follows:
+
+```ts
+// log.ts
+
+import { consolePlugin, severitySymbol } from "@1log/console";
+import { voidLog } from "@1log/core";
+
+export const log = voidLog.add((data) =>
+  data.meta[severitySymbol] === "error" ? consolePlugin(data) : data
+);
+```
+
+If you're adding your own props to `meta`, it's recommended to use a `Symbol` as key and augment the `Meta` interface like this:
+
+```ts
+export const yourSymbol = Symbol("yourSymbol");
+
+declare module "@1log/core" {
+  interface Meta {
+    [yourSymbol]?: YourPropertyValueType;
+  }
+}
+```
+
+## Packages
 
 ---
 
