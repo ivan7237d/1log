@@ -18,14 +18,14 @@ export const formatDuration = (time: number): string => {
     return resultWithSeconds;
   }
   const [totalHours, minutes] = extractLargerUnits(totalMinutes, 60);
-  const resultWithMinutes = `${minutes}m ${resultWithSeconds}`;
+  const resultWithMinutes = `${minutes}m,${resultWithSeconds}`;
   if (totalHours === 0) {
     return resultWithMinutes;
   }
   const [totalDays, hours] = extractLargerUnits(totalHours, 24);
-  const resultWithHours = `${hours}h ${resultWithMinutes}`;
+  const resultWithHours = `${hours}h,${resultWithMinutes}`;
   if (totalDays === 0) {
     return resultWithHours;
   }
-  return `${totalDays.toLocaleString()}d ${resultWithHours}`;
+  return `${totalDays.toLocaleString()}d,${resultWithHours}`;
 };
