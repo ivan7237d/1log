@@ -42,17 +42,17 @@ export const getLogObservable = (log: Log): LogObservable => {
       });
       subscribeCount++;
       logWithClientLabel.add(
-        label({ caption: `subscribe ${subscribeCount}`, color: "violet" })
+        label({ caption: `subscribe ${subscribeCount}`, color: "green" })
       )();
       const logWithSubscribeCountLabel = logWithClientLabel.add(
-        label({ caption: `${subscribeCount}`, color: "violet" })
+        label({ caption: `${subscribeCount}`, color: "green" })
       );
       let nextCount = 0;
       const subscription = source.subscribe({
         next: (value) => {
           nextCount++;
           logWithSubscribeCountLabel.add(
-            label({ caption: `next ${nextCount}`, color: "green" })
+            label({ caption: `next ${nextCount}`, color: "violet" })
           )(value);
           subscriber.next(value);
         },
@@ -64,14 +64,14 @@ export const getLogObservable = (log: Log): LogObservable => {
         },
         complete: () => {
           logWithSubscribeCountLabel.add(
-            label({ caption: `complete`, color: "yellow" })
+            label({ caption: `complete`, color: "orange" })
           )();
           subscriber.complete();
         },
       });
       return () => {
         logWithSubscribeCountLabel.add(
-          label({ caption: `unsubscribe`, color: "orange" })
+          label({ caption: `unsubscribe`, color: "yellow" })
         )();
         subscription.unsubscribe();
       };

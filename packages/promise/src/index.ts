@@ -32,9 +32,9 @@ export const getLogPromise = (log: Log): LogPromise => {
     return new Promise<unknown>((resolve, reject) => {
       return promise.then(
         (value) => {
-          logWithClientLabel.add(label({ caption: "resolve", color: "green" }))(
-            value
-          );
+          logWithClientLabel.add(
+            label({ caption: "resolve", color: "violet" })
+          )(value);
           resolve(value);
         },
         (error) => {

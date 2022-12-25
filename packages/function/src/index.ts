@@ -47,10 +47,10 @@ export const getLogFunction = (log: Log): LogFunction => {
       });
       callCount++;
       logWithClientLabel.add(
-        label({ caption: `call ${callCount}`, color: "violet" })
+        label({ caption: `call ${callCount}`, color: "green" })
       )(...args);
       const logWithCountLabel = logWithClientLabel.add(
-        label({ caption: `${callCount}`, color: "violet" })
+        label({ caption: `${callCount}`, color: "green" })
       );
       let retval;
       try {
@@ -65,7 +65,7 @@ export const getLogFunction = (log: Log): LogFunction => {
         )();
         return getLogPromise(logWithCountLabel)(retval);
       }
-      logWithCountLabel.add(label({ caption: "return", color: "green" }))(
+      logWithCountLabel.add(label({ caption: "return", color: "violet" }))(
         retval
       );
       return retval;
