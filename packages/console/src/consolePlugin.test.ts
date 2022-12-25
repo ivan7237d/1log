@@ -69,15 +69,19 @@ test("severity levels", () => {
 });
 
 test("css format", () => {
-  const log = voidLog.add(
-    consolePlugin({ format: "css" }),
+  const spy = jest.spyOn(console, "log").mockImplementation();
+  const log = voidLog.add(consolePlugin({ format: "css" }));
+  log(1);
+  expect(spy.mock.lastCall).toMatchInlineSnapshot(`
+    [
+      1,
+    ]
+  `);
+  jest.advanceTimersByTime(500);
+  log.add(
     label({ caption: "green", color: "green" }),
     label({ caption: "blue" })
-  );
-  const spy = jest.spyOn(console, "log").mockImplementation();
-  log();
-  jest.advanceTimersByTime(500);
-  log(1);
+  )(1);
   expect(spy.mock.lastCall).toMatchInlineSnapshot(`
     [
       "%cgreen%c %cblue%c %c+500%c",

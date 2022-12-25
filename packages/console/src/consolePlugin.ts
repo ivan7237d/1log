@@ -31,10 +31,13 @@ const ansiClear = `\u001B[0m`;
 
 const ansiColor = (color: number) => `\u001B[38;5;${color}m`;
 
-const renderWithCssStyles = (...args: { caption: string; style: string }[]) => [
-  args.map(({ caption }) => `%c${caption}%c`).join(" "),
-  ...args.flatMap(({ style }) => [style, ""]),
-];
+const renderWithCssStyles = (...args: { caption: string; style: string }[]) =>
+  args.length === 0
+    ? []
+    : [
+        args.map(({ caption }) => `%c${caption}%c`).join(" "),
+        ...args.flatMap(({ style }) => [style, ""]),
+      ];
 
 export const consolePlugin = (options?: {
   showDelta?: boolean;
