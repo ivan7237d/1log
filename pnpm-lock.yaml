@@ -44,9 +44,9 @@ importers:
       antiutils: ^4.0.2
       colorjs.io: ^0.4.2
     dependencies:
-      '@1log/core': link:../core
       antiutils: 4.0.2
     devDependencies:
+      '@1log/core': link:../core
       colorjs.io: 0.4.2
 
   packages/core:
