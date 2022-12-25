@@ -1,6 +1,7 @@
 import { labelsSymbol, palette, Plugin } from "@1log/core";
 import { assertNever, pipe } from "antiutils";
 import { ansiPalette } from "./ansiPalette";
+import { formatDuration } from "./formatDuration";
 import { severitySymbol } from "./severity";
 import { getTimeDelta } from "./timeDelta";
 
@@ -53,7 +54,8 @@ export const consolePlugin = (options?: {
     const labels = showLabels ? data.meta[labelsSymbol] : undefined;
     const timeDeltaCaption = pipe(
       showDelta ? getTimeDelta() : undefined,
-      (timeDelta) => (timeDelta !== undefined ? `+${timeDelta}` : undefined)
+      (timeDelta) =>
+        timeDelta !== undefined ? `+${formatDuration(timeDelta)}` : undefined
     );
     console[severity ?? "log"](
       ...(format === "css"

@@ -84,7 +84,7 @@ test("css format", () => {
   )(1);
   expect(spy.mock.lastCall).toMatchInlineSnapshot(`
     [
-      "%cgreen%c %cblue%c %c+500%c",
+      "%cgreen%c %cblue%c %c+500ms%c",
       "background: #16a34a; color: #ffffff; padding: 0 3px",
       "",
       "background: #2563eb; color: #ffffff; padding: 0 3px",
@@ -110,7 +110,7 @@ test("ansi format", () => {
     [
       "[38;5;35m[green][0m",
       "[38;5;27m[blue][0m",
-      "[3m+500[0m",
+      "[3m+500ms[0m",
       1,
     ]
   `);
@@ -130,7 +130,7 @@ test("no format", () => {
     [
       "[green]",
       "[blue]",
-      "+500",
+      "+500ms",
       1,
     ]
   `);
