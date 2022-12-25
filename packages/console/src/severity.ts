@@ -10,9 +10,6 @@ declare module "@1log/core" {
   }
 }
 
-/**
- * A plugin that sets severity level.
- */
 export const severity =
   (severity: Severity): Plugin =>
   ({ args, meta }) => ({

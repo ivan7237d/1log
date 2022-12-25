@@ -19,15 +19,6 @@ export interface Log {
     : Args extends []
     ? void
     : Args[number] | void;
-  /**
-   * Immutably adds plugins.
-   *
-   * The last plugin added/listed is called first:
-   *
-   * ```ts
-   * log.add(called3rd).add(called2nd, called1rst);
-   * ```
-   */
   add: (...plugins: Plugin[]) => Log;
 }
 
