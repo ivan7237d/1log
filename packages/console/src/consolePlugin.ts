@@ -63,7 +63,7 @@ export const consolePlugin = (options?: {
             ...(labels
               ? labels.map(({ caption, color = "blue" }) => ({
                   caption,
-                  style: `background: ${palette[color]["600"]}; color: #ffffff; padding: 0 3px`,
+                  style: `color: ${palette[color]["600"]}; border: 1px solid currentColor; border-radius: 3px; padding: 0 3px`,
                 }))
               : []),
             ...(timeDeltaCaption
