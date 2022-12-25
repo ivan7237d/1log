@@ -74,7 +74,7 @@ import { consolePlugin, severitySymbol } from "@1log/console";
 import { voidLog } from "@1log/core";
 
 export const log = voidLog.add((data) =>
-  data.meta[severitySymbol] === "error" ? consolePlugin(data) : data
+  data.meta[severitySymbol] === "error" ? consolePlugin()(data) : data
 );
 ```
 
