@@ -42,10 +42,10 @@ export const getLogObservable = (log: Log): LogObservable => {
       });
       subscribeCount++;
       logWithClientLabel.add(
-        label({ caption: `subscribe ${subscribeCount}`, color: "purple" })
+        label({ caption: `subscribe ${subscribeCount}`, color: "violet" })
       )();
       const logWithSubscribeCountLabel = logWithClientLabel.add(
-        label({ caption: `${subscribeCount}`, color: "purple" })
+        label({ caption: `${subscribeCount}`, color: "violet" })
       );
       let nextCount = 0;
       const subscription = source.subscribe({

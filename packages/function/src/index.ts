@@ -47,10 +47,10 @@ export const getLogFunction = (log: Log): LogFunction => {
       });
       callCount++;
       logWithClientLabel.add(
-        label({ caption: `call ${callCount}`, color: "purple" })
+        label({ caption: `call ${callCount}`, color: "violet" })
       )(...args);
       const logWithCountLabel = logWithClientLabel.add(
-        label({ caption: `${callCount}`, color: "purple" })
+        label({ caption: `${callCount}`, color: "violet" })
       );
       let retval;
       try {

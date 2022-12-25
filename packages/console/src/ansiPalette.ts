@@ -12,7 +12,7 @@ export const ansiPalette: Record<ColorName, number> = {
   green: 35,
   cyan: 31,
   blue: 27,
-  indigo: 62,
-  purple: 129,
+  violet: 93,
+  fuchsia: 164,
   pink: 161,
 };

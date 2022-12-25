@@ -1,6 +1,6 @@
 {
   "name": "@1log/function",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Log arguments, returned value and errors for a regular or async function",
   "repository": "https://github.com/ivan7237d/1log.git",
   "license": "MIT",
