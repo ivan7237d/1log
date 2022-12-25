@@ -59,10 +59,10 @@ importers:
       '@1log/promise': workspace:^
       antiutils: ^4.0.2
     dependencies:
-      '@1log/core': link:../core
       '@1log/promise': link:../promise
       antiutils: 4.0.2
     devDependencies:
+      '@1log/core': link:../core
       '@1log/jest': link:../jest
 
   packages/jest:
@@ -71,19 +71,18 @@ importers:
       antiutils: ^4.0.2
       pretty-format: ^29.3.1
     dependencies:
-      '@1log/core': link:../core
       antiutils: 4.0.2
     devDependencies:
+      '@1log/core': link:../core
       pretty-format: 29.3.1
 
   packages/promise:
     specifiers:
       '@1log/core': workspace:^
       '@1log/jest': workspace:^
-      antiutils: 4.0.2
-    dependencies:
-      '@1log/core': link:../core
+      antiutils: ^4.0.2
     devDependencies:
+      '@1log/core': link:../core
       '@1log/jest': link:../jest
       antiutils: 4.0.2
 
@@ -94,9 +93,9 @@ importers:
       antiutils: ^4.0.2
       rxjs: 7.0.0
     dependencies:
-      '@1log/core': link:../core
       antiutils: 4.0.2
     devDependencies:
+      '@1log/core': link:../core
       '@1log/jest': link:../jest
       rxjs: 7.0.0
 

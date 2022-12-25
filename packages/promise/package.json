@@ -1,6 +1,6 @@
 {
   "name": "@1log/promise",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Log fulfillment/rejection of a promise",
   "repository": "https://github.com/ivan7237d/1log.git",
   "license": "MIT",
@@ -15,11 +15,12 @@
     "!**/setupTests.*"
   ],
   "sideEffects": false,
-  "dependencies": {
+  "peerDependencies": {
     "@1log/core": "workspace:^"
   },
   "devDependencies": {
+    "@1log/core": "workspace:^",
     "@1log/jest": "workspace:^",
-    "antiutils": "4.0.2"
+    "antiutils": "^4.0.2"
   }
 }

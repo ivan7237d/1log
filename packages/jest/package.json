@@ -1,6 +1,6 @@
 {
   "name": "@1log/jest",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "A 1log plugin that buffers log entries and lets you snapshot them in Jest tests.",
   "repository": "https://github.com/ivan7237d/1log.git",
   "license": "MIT",
@@ -15,11 +15,14 @@
     "!**/setupTests.*"
   ],
   "sideEffects": false,
+  "peerDependencies": {
+    "@1log/core": "workspace:^"
+  },
   "dependencies": {
-    "@1log/core": "workspace:^",
     "antiutils": "^4.0.2"
   },
   "devDependencies": {
+    "@1log/core": "workspace:^",
     "pretty-format": "^29.3.1"
   }
 }
