@@ -26,7 +26,7 @@ const isBun = !!(
   process.isBun
 );
 
-const ansiItalic = `\u001B[3m`;
+const ansiBold = `\u001B[1m`;
 
 const ansiClear = `\u001B[0m`;
 
@@ -67,7 +67,7 @@ export const consolePlugin = (options?: {
                 }))
               : []),
             ...(timeDeltaCaption
-              ? [{ caption: timeDeltaCaption, style: "font-style: italic" }]
+              ? [{ caption: timeDeltaCaption, style: "font-weight: bold" }]
               : [])
           )
         : [
@@ -83,7 +83,7 @@ export const consolePlugin = (options?: {
             ...(timeDeltaCaption
               ? [
                   format === "ansi"
-                    ? `${ansiItalic}${timeDeltaCaption}${ansiClear}`
+                    ? `${ansiBold}${timeDeltaCaption}${ansiClear}`
                     : format === "none"
                     ? `${timeDeltaCaption}`
                     : assertNever(format),

@@ -89,7 +89,7 @@ test("css format", () => {
       "",
       "color: #2563eb; border: 1px solid currentColor; border-radius: 3px; padding: 0 3px",
       "",
-      "font-style: italic",
+      "font-weight: bold",
       "",
       1,
     ]
@@ -110,7 +110,7 @@ test("ansi format", () => {
     [
       "[38;5;35m[green][0m",
       "[38;5;27m[blue][0m",
-      "[3m+500ms[0m",
+      "[1m+500ms[0m",
       1,
     ]
   `);
