@@ -1,6 +1,6 @@
 {
   "name": "@1log/console",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Console plugin for 1log",
   "repository": "https://github.com/ivan7237d/1log.git",
   "license": "MIT",
@@ -15,11 +15,14 @@
     "!**/setupTests.*"
   ],
   "sideEffects": false,
+  "peerDependencies": {
+    "@1log/core": "workspace:^"
+  },
   "dependencies": {
-    "@1log/core": "workspace:^",
     "antiutils": "^4.0.2"
   },
   "devDependencies": {
+    "@1log/core": "workspace:^",
     "colorjs.io": "^0.4.2"
   }
 }
