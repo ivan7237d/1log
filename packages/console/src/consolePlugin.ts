@@ -62,8 +62,8 @@ export const consolePlugin = (options?: {
         ? renderWithCssStyles(
             ...(labels
               ? labels.map(({ caption, color = "blue" }) => ({
-                  caption,
-                  style: `color: ${palette[color]["600"]}; border: 1px solid currentColor; border-radius: 3px; padding: 0 3px`,
+                  caption: `[${caption}]`,
+                  style: `color: ${palette[color]["600"]}`,
                 }))
               : []),
             ...(timeDeltaCaption

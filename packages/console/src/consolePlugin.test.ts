@@ -84,10 +84,10 @@ test("css format", () => {
   )(1);
   expect(spy.mock.lastCall).toMatchInlineSnapshot(`
     [
-      "%cgreen%c %cblue%c %c+500ms%c",
-      "color: #16a34a; border: 1px solid currentColor; border-radius: 3px; padding: 0 3px",
+      "%c[green]%c %c[blue]%c %c+500ms%c",
+      "color: #16a34a",
       "",
-      "color: #2563eb; border: 1px solid currentColor; border-radius: 3px; padding: 0 3px",
+      "color: #2563eb",
       "",
       "font-weight: bold",
       "",

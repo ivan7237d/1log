@@ -1,6 +1,6 @@
 {
   "name": "@1log/console",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "description": "Console plugin for 1log",
   "repository": "https://github.com/ivan7237d/1log.git",
   "license": "MIT",
