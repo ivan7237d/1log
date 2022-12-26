@@ -29,7 +29,7 @@ Create a function `logObservable`, probably in a separate module:
 
 import { consolePlugin } from "@1log/console";
 import { voidLog } from "@1log/core";
-import { getLogObservable } from "@1log/function";
+import { getLogObservable } from "@1log/rxjs";
 
 export const log = voidLog.add(consolePlugin());
 export const logObservable = getLogObservable(log);
