@@ -47,8 +47,19 @@ test("", () => {
 ### With labels
 
 ```ts
-log.add(label("your label"))(1);
-expect(readLog()).toMatchInlineSnapshot(`> [your label] 1`);
+import { label, resetLog, voidLog } from "@1log/core";
+import { jestPlugin, readLog } from "@1log/jest";
+
+const log = voidLog.add(jestPlugin());
+
+afterEach(() => {
+  resetLog();
+});
+
+test("", () => {
+  log.add(label("your label"))(1);
+  expect(readLog()).toMatchInlineSnapshot(`> [your label] 1`);
+});
 ```
 
 ### With time deltas
@@ -75,6 +86,14 @@ test("", () => {
   `);
 });
 ```
+
+### Alongside consolePlugin
+
+There are two options:
+
+- Have two separate log functions, one that uses `jestPlugin` and one that uses `consolePlugin`.
+
+- Have a `log.ts` module like the example in [1log readme](https://github.com/ivan7237d/1log#usage) and [stub it out](https://jestjs.io/docs/manual-mocks#mocking-user-modules) in tests with a module that uses `jestPlugin` instead of `consolePlugin`.
 
 ## API
 
