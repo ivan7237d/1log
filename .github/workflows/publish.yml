@@ -18,12 +18,10 @@ jobs:
       - run: pnpm install
       - name: Build and test
         run: pnpm test
-      - name: Show changes
-        run: git diff
-      # - name: Publish Packages
-      #   env:
-      #     NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-      #   run: |
-      #     pnpm config set "//registry.npmjs.org/:_authToken" "${NPM_TOKEN}"
-      #     pnpm --recursive --parallel exec bash ../../scripts/publish.sh
-      #     git push --tags
+      - name: Publish Packages
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          pnpm config set "//registry.npmjs.org/:_authToken" "${NPM_TOKEN}"
+          pnpm --recursive --parallel exec bash ../../scripts/publish.sh
+          git push --tags
