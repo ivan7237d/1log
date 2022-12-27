@@ -3,3 +3,5 @@
 /packages/*/build
 /packages/*/node_modules
 /temp
+# Written when github action publishes packages.
+/.npmrc
