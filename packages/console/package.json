@@ -1,6 +1,6 @@
 {
   "name": "@1log/console",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "description": "Console plugin for 1log",
   "repository": "https://github.com/ivan7237d/1log.git",
   "license": "MIT",
@@ -19,7 +19,7 @@
     "@1log/core": "workspace:^"
   },
   "dependencies": {
-    "antiutils": "^4.0.2"
+    "antiutils": "^4.1.2"
   },
   "devDependencies": {
     "@1log/core": "workspace:^",

@@ -1,6 +1,6 @@
 {
   "name": "@1log/function",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "Log arguments, returned value and errors for a regular or async function",
   "repository": "https://github.com/ivan7237d/1log.git",
   "license": "MIT",
@@ -20,7 +20,7 @@
   },
   "dependencies": {
     "@1log/promise": "workspace:^",
-    "antiutils": "^4.0.2"
+    "antiutils": "^4.1.2"
   },
   "devDependencies": {
     "@1log/core": "workspace:^",

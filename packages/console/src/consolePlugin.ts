@@ -9,7 +9,9 @@ export type Format = "none" | "css" | "ansi";
 
 const isNode =
   typeof process !== "undefined" &&
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
   process.versions != null &&
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
   process.versions.node != null;
 
 const isDeno =
@@ -72,21 +74,23 @@ export const consolePlugin = (options?: {
           )
         : [
             ...(labels
-              ? labels.map(({ caption, color = "blue" }) =>
+              ? labels.map(({ caption, color = "blue" }): string =>
                   format === "ansi"
                     ? `${ansiColor(ansiPalette[color])}[${caption}]${ansiClear}`
-                    : format === "none"
+                    : // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+                    format === "none"
                     ? `[${caption}]`
-                    : assertNever(format)
+                    : assertNever()
                 )
               : []),
             ...(timeDeltaCaption
               ? [
                   format === "ansi"
                     ? `${ansiBold}${timeDeltaCaption}${ansiClear}`
-                    : format === "none"
+                    : // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+                    format === "none"
                     ? `${timeDeltaCaption}`
-                    : assertNever(format),
+                    : assertNever(),
                 ]
               : []),
           ]),

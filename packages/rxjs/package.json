@@ -1,6 +1,6 @@
 {
   "name": "@1log/rxjs",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Log everything that happens to an RxJS observable",
   "repository": "https://github.com/ivan7237d/1log.git",
   "license": "MIT",
@@ -20,7 +20,7 @@
     "rxjs": "^7.0.0"
   },
   "dependencies": {
-    "antiutils": "^4.0.2"
+    "antiutils": "^4.1.2"
   },
   "devDependencies": {
     "@1log/core": "workspace:^",

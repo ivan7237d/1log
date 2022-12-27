@@ -29,8 +29,8 @@ export const getLogPromise = (log: Log): LogPromise => {
         : [arg1 as string, arg2 as Promise<unknown>];
     const logWithClientLabel =
       labelCaption !== undefined ? log.add(label(labelCaption)) : log;
-    return new Promise<unknown>((resolve, reject) => {
-      return promise.then(
+    return new Promise<unknown>((resolve, reject) =>
+      promise.then(
         (value) => {
           logWithClientLabel.add(
             label({ caption: "resolve", color: "violet" })
@@ -43,8 +43,8 @@ export const getLogPromise = (log: Log): LogPromise => {
           );
           reject(error);
         }
-      );
-    });
+      )
+    );
   }) as LogPromise;
   return logPromise;
 };
