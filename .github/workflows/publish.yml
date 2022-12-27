@@ -22,6 +22,6 @@ jobs:
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
-          pnpm config set "//registry.npmjs.org/:_authToken" "${NPM_TOKEN}"
+          pnpm config set --global "//registry.npmjs.org/:_authToken" "${NPM_TOKEN}"
           pnpm --recursive --parallel exec bash ../../scripts/publish.sh
           git push --tags

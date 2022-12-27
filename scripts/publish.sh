@@ -1,7 +1,6 @@
 REPO_VERSION=$(pnpm pkg get version | sed 's/"//g')
 # PUBLISHED_VERSION will be blank if the package is not published yet (404).
 PUBLISHED_VERSION=$(pnpm view "$PNPM_PACKAGE_NAME" version)
-git status
 if [ $REPO_VERSION != "$PUBLISHED_VERSION" ]
   then
     pnpm publish --access=public || exit 1
