@@ -117,7 +117,3 @@ Time delta is not included in the first message, and also not included if it's e
 ### readLog
 
 Returns buffered log entries and clears the buffer. Log entries is of type `Entry[]`, but the main intended use of this array is with `expect(...).toMatchInlineSnapshot()` or `expect(...).toMatchSnapshot()`.
-
----
-
-[Contributing guidelines](https://github.com/ivan7237d/1log/blob/master/.github/CONTRIBUTING.md)

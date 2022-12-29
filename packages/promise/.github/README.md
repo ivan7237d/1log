@@ -56,7 +56,3 @@ const promise1 = logPromise("your label", Promise.resolve(1));
 // Equivalent to the previous example.
 const promise2 = logPromise("your label")(Promise.resolve(1));
 ```
-
----
-
-[Contributing guidelines](https://github.com/ivan7237d/1log/blob/master/.github/CONTRIBUTING.md)

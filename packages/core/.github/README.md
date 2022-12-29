@@ -26,7 +26,3 @@ A subset of Tailwind palette, an object whose keys are color names (`ColorName`)
 ### resetLog
 
 A function that you can call to indicate to all stateful plugins that they should reset their state. Resets the Symbol returned by its sister function `getInstanceSymbol`.
-
----
-
-[Contributing guidelines](https://github.com/ivan7237d/1log/blob/master/.github/CONTRIBUTING.md)

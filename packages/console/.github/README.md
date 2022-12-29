@@ -35,7 +35,3 @@ log.add(severity("error"))(yourError);
 ```
 
 `consolePlugin` will then use the corresponding method of `console` to log the message. If severity is not set, it will use `console.log`.
-
----
-
-[Contributing guidelines](https://github.com/ivan7237d/1log/blob/master/.github/CONTRIBUTING.md)

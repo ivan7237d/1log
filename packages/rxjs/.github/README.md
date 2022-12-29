@@ -63,7 +63,3 @@ observable.subscribe();
 // Equivalent to the previous example.
 const observable = logObservable("your label", of("a"));
 ```
-
----
-
-[Contributing guidelines](https://github.com/ivan7237d/1log/blob/master/.github/CONTRIBUTING.md)
