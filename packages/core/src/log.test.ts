@@ -1,22 +1,22 @@
-import { voidLog } from "./log";
+import { noopLog } from "./log";
 import { testPlugin } from "./testPlugin";
 
 test("Log interface", () => {
   // $ExpectType void
-  voidLog();
+  noopLog();
 
   // $ExpectType number
-  voidLog("a", 1);
+  noopLog("a", 1);
 
   // $ExpectType void
-  voidLog(...[]);
+  noopLog(...[]);
 
   // $ExpectType number | void
-  voidLog(...[1]);
+  noopLog(...[1]);
 });
 
 test("applying plugins", () => {
-  const log = voidLog
+  const log = noopLog
     .add(
       (data) => {
         expect(data).toMatchInlineSnapshot(`

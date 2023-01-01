@@ -1,4 +1,4 @@
-import { label, resetLog, voidLog } from "@1log/core";
+import { label, noopLog, resetLog } from "@1log/core";
 import { format } from "pretty-format";
 import { jestMessagesSerializer, jestPlugin, readLog } from "./jestPlugin";
 
@@ -30,7 +30,7 @@ test("depth", () => {
 });
 
 test("empty entry", () => {
-  const log = voidLog.add(jestPlugin());
+  const log = noopLog.add(jestPlugin());
   log();
   const entries = readLog();
   expect([...entries]).toMatchInlineSnapshot(`
@@ -55,7 +55,7 @@ test("empty entry", () => {
 
 test("non-empty single-line entry", () => {
   jest.useFakeTimers();
-  const log = voidLog.add(jestPlugin());
+  const log = noopLog.add(jestPlugin());
   log();
   readLog();
   jest.advanceTimersByTime(1000);
@@ -90,7 +90,7 @@ test("non-empty single-line entry", () => {
 
 test("multiline entry", () => {
   jest.useFakeTimers();
-  const log = voidLog.add(jestPlugin());
+  const log = noopLog.add(jestPlugin());
   log();
   readLog();
   jest.advanceTimersByTime(1000);
@@ -143,7 +143,7 @@ test("multiline entry", () => {
 
 test("multiple entries", () => {
   jest.useFakeTimers();
-  const log = voidLog.add(jestPlugin());
+  const log = noopLog.add(jestPlugin());
   log();
   log();
   const entries = readLog();
@@ -176,7 +176,7 @@ test("multiple entries", () => {
 });
 
 test("readme examples", () => {
-  const log = voidLog.add(jestPlugin());
+  const log = noopLog.add(jestPlugin());
   log(1);
   log(2);
   expect(readLog()).toMatchInlineSnapshot(`

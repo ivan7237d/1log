@@ -1,9 +1,9 @@
 import { label, labelsSymbol } from "./label";
-import { voidLog } from "./log";
+import { noopLog } from "./log";
 import { testPlugin } from "./testPlugin";
 
 test("adding labels, meta type", () => {
-  const log = voidLog.add(
+  const log = noopLog.add(
     (data) => {
       // $ExpectType Label[] | undefined
       data.meta[labelsSymbol];

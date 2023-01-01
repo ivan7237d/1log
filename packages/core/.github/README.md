@@ -6,7 +6,7 @@ Please see [1log readme](https://github.com/ivan7237d/1log).
 
 ## API
 
-### voidLog
+### noopLog
 
 A log function that does nothing. The type of this and any derived log function is `Log`, and the package also exports types `Data`, `Meta`, and `Plugin`.
 

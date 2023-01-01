@@ -32,9 +32,9 @@ Create a `log` function, probably in a separate module:
 // log.ts
 
 import { consolePlugin } from "@1log/console";
-import { voidLog } from "@1log/core";
+import { noopLog } from "@1log/core";
 
-export const log = voidLog.add(consolePlugin());
+export const log = noopLog.add(consolePlugin());
 ```
 
 This function can be used just like `console.log`, but has two additional features. First, it returns the last argument passed to it instead of `void`, so as mentioned above, can be inserted in an expression. Second, calling `log.add(...plugins)` returns a new log function with more plugins added to it. For example, to prefix all log messages from some module with a label, you would do
@@ -71,9 +71,9 @@ For example, `severity` plugin from the code sample above adds a property `[seve
 // log.ts
 
 import { consolePlugin, severitySymbol } from "@1log/console";
-import { voidLog } from "@1log/core";
+import { noopLog } from "@1log/core";
 
-export const log = voidLog.add((data) =>
+export const log = noopLog.add((data) =>
   data.meta[severitySymbol] === "error" ? consolePlugin()(data) : data
 );
 ```
@@ -92,7 +92,7 @@ declare module "@1log/core" {
 
 ## Packages
 
-- [core](https://github.com/ivan7237d/1log/tree/master/packages/core): `voidLog`, the notion of labels, color palette, and a mechanism to reset stateful plugins.
+- [core](https://github.com/ivan7237d/1log/tree/master/packages/core): `noopLog`, the notion of labels, color palette, and a mechanism to reset stateful plugins.
 - [console](https://github.com/ivan7237d/1log/tree/master/packages/console): a plugin that logs messages using console.\* methods (supports colored labels, time deltas and severity levels).
 - [jest](https://github.com/ivan7237d/1log/tree/master/packages/jest): a plugin that buffers log messages and lets you snapshot them in Jest tests (supports labels and time deltas).
 - [promise](https://github.com/ivan7237d/1log/tree/master/packages/promise): log fulfillment/rejection of a promise.

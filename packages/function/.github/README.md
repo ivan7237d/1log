@@ -28,10 +28,10 @@ Create a function `logFunction`, probably in a separate module:
 // log.ts
 
 import { consolePlugin } from "@1log/console";
-import { voidLog } from "@1log/core";
+import { noopLog } from "@1log/core";
 import { getLogFunction } from "@1log/function";
 
-export const log = voidLog.add(consolePlugin());
+export const log = noopLog.add(consolePlugin());
 export const logFunction = getLogFunction(log);
 ```
 

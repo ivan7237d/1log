@@ -1,6 +1,6 @@
 {
   "name": "@1log/rxjs",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Log everything that happens to an RxJS observable",
   "repository": "https://github.com/ivan7237d/1log.git",
   "license": "MIT",

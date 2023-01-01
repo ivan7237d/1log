@@ -1,4 +1,4 @@
-import { label, voidLog } from "@1log/core";
+import { label, noopLog } from "@1log/core";
 import { consolePlugin } from "./consolePlugin";
 import { severity } from "./severity";
 import { resetTimeDelta } from "./timeDelta";
@@ -23,7 +23,7 @@ test("severity levels", () => {
       .spyOn(console, severity)
       .mockImplementation(() => calls.push(severity));
   });
-  const baseLog = voidLog.add(
+  const baseLog = noopLog.add(
     consolePlugin({ format: "none", showDelta: false })
   );
 
@@ -70,7 +70,7 @@ test("severity levels", () => {
 
 test("css format", () => {
   const spy = jest.spyOn(console, "log").mockImplementation();
-  const log = voidLog.add(consolePlugin({ format: "css" }));
+  const log = noopLog.add(consolePlugin({ format: "css" }));
   log(1);
   expect(spy.mock.lastCall).toMatchInlineSnapshot(`
     [
@@ -97,7 +97,7 @@ test("css format", () => {
 });
 
 test("ansi format", () => {
-  const log = voidLog.add(
+  const log = noopLog.add(
     consolePlugin(),
     label({ caption: "green", color: "green" }),
     label({ caption: "blue" })
@@ -117,7 +117,7 @@ test("ansi format", () => {
 });
 
 test("no format", () => {
-  const log = voidLog.add(
+  const log = noopLog.add(
     consolePlugin({ format: "none" }),
     label({ caption: "green", color: "green" }),
     label({ caption: "blue" })

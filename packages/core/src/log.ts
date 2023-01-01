@@ -36,4 +36,4 @@ const getLog = (plugins: Plugin[]): Log =>
     }
   );
 
-export const voidLog: Log = getLog([]);
+export const noopLog: Log = getLog([]);

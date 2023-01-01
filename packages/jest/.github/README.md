@@ -25,10 +25,10 @@ pnpm add @1log/core @1log/jest
 ### Basic
 
 ```ts
-import { resetLog, voidLog } from "@1log/core";
+import { resetLog, noopLog } from "@1log/core";
 import { jestPlugin, readLog } from "@1log/jest";
 
-const log = voidLog.add(jestPlugin());
+const log = noopLog.add(jestPlugin());
 
 afterEach(() => {
   resetLog();
@@ -47,10 +47,10 @@ test("", () => {
 ### With labels
 
 ```ts
-import { label, resetLog, voidLog } from "@1log/core";
+import { label, resetLog, noopLog } from "@1log/core";
 import { jestPlugin, readLog } from "@1log/jest";
 
-const log = voidLog.add(jestPlugin());
+const log = noopLog.add(jestPlugin());
 
 afterEach(() => {
   resetLog();
@@ -65,10 +65,10 @@ test("", () => {
 ### With time deltas
 
 ```ts
-import { resetLog, voidLog } from "@1log/core";
+import { resetLog, noopLog } from "@1log/core";
 import { jestPlugin, readLog, resetTimeDelta } from "@1log/jest";
 
-const log = voidLog.add(jestPlugin());
+const log = noopLog.add(jestPlugin());
 
 afterEach(() => {
   jest.useRealTimers();
@@ -102,15 +102,15 @@ There are two options:
 Takes an optional config object and returns a `Plugin`:
 
 ```ts
-const log = voidLog.add(jestPlugin({ showDelta: false }));
+const log = noopLog.add(jestPlugin({ showDelta: false }));
 ```
 
 Options:
 
-| Option     | Type    | Description                               | Default value                 |
-| :--------- | :------ | :---------------------------------------- | :---------------------------- |
-| showDelta  | boolean | Show time delta from the previous message | `true` when using fake timers |
-| showLabels | boolean | Show labels                               | `true`                        |
+| Option     | Type    | Description                                      | Default value                 |
+| :--------- | :------ | :----------------------------------------------- | :---------------------------- |
+| showDelta  | boolean | Show time delta relative to the previous message | `true` when using fake timers |
+| showLabels | boolean | Show labels                                      | `true`                        |
 
 Time delta is not included in the first message, and also not included if it's equal to 0.
 

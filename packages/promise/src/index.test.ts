@@ -1,9 +1,9 @@
-import { voidLog } from "@1log/core";
+import { noopLog } from "@1log/core";
 import { jestPlugin, readLog } from "@1log/jest";
 import { pipe } from "antiutils";
 import { getLogPromise } from ".";
 
-const log = voidLog.add(jestPlugin());
+const log = noopLog.add(jestPlugin());
 const logPromise = getLogPromise(log);
 
 afterEach(() => {
