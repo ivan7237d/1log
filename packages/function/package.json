@@ -20,7 +20,7 @@
   },
   "dependencies": {
     "@1log/promise": "workspace:^",
-    "antiutils": "^4.1.2"
+    "pipe-function": "^1.0.0"
   },
   "devDependencies": {
     "@1log/core": "workspace:^",

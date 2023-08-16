@@ -1,6 +1,6 @@
 import { noopLog, resetLog } from "@1log/core";
 import { jestPlugin, readLog } from "@1log/jest";
-import { pipe } from "antiutils";
+import { pipe } from "pipe-function";
 import { getLogFunction } from ".";
 
 const log = noopLog.add(jestPlugin());

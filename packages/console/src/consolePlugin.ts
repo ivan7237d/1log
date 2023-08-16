@@ -1,5 +1,5 @@
 import { labelsSymbol, palette, Plugin } from "@1log/core";
-import { pipe } from "antiutils";
+import { pipe } from "pipe-function";
 import { ansiPalette } from "./ansiPalette";
 import { formatDuration } from "./formatDuration";
 import { severitySymbol } from "./severity";

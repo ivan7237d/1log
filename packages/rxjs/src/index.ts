@@ -1,5 +1,5 @@
 import { getInstanceSymbol, label, Log } from "@1log/core";
-import { pipe } from "antiutils";
+import { pipe } from "pipe-function";
 import { Observable } from "rxjs";
 
 interface LogObservable {
