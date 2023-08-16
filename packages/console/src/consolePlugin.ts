@@ -1,5 +1,5 @@
 import { labelsSymbol, palette, Plugin } from "@1log/core";
-import { assertNever, pipe } from "antiutils";
+import { pipe } from "antiutils";
 import { ansiPalette } from "./ansiPalette";
 import { formatDuration } from "./formatDuration";
 import { severitySymbol } from "./severity";
@@ -77,20 +77,14 @@ export const consolePlugin = (options?: {
               ? labels.map(({ caption, color = "blue" }): string =>
                   format === "ansi"
                     ? `${ansiColor(ansiPalette[color])}[${caption}]${ansiClear}`
-                    : // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-                    format === "none"
-                    ? `[${caption}]`
-                    : assertNever()
+                    : (format satisfies "none", `[${caption}]`)
                 )
               : []),
             ...(timeDeltaCaption
               ? [
                   format === "ansi"
                     ? `${ansiBold}${timeDeltaCaption}${ansiClear}`
-                    : // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-                    format === "none"
-                    ? `${timeDeltaCaption}`
-                    : assertNever(),
+                    : (format satisfies "none", `${timeDeltaCaption}`),
                 ]
               : []),
           ]),
