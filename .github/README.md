@@ -57,7 +57,16 @@ import { log } from "./log";
 log.add(severity("error"))("oops");
 ```
 
-## Plugins
+## Packages
+
+- [core](https://github.com/ivan7237d/1log/tree/master/packages/core): `noopLog`, the notion of labels, color palette, and a mechanism to reset stateful plugins.
+- [console](https://github.com/ivan7237d/1log/tree/master/packages/console): a plugin that logs messages using console.\* methods (supports colored labels, time deltas and severity levels).
+- [jest](https://github.com/ivan7237d/1log/tree/master/packages/jest): a plugin that buffers log messages and lets you snapshot them in Jest tests (supports labels and time deltas).
+- [promise](https://github.com/ivan7237d/1log/tree/master/packages/promise): log fulfillment/rejection of a promise.
+- [function](https://github.com/ivan7237d/1log/tree/master/packages/function): log arguments, returned value and errors for a regular or async function.
+- [rxjs](https://github.com/ivan7237d/1log/tree/master/packages/rxjs): log everything that happens to an RxJS observable.
+
+## Plugin authoring
 
 A plugin is a function that takes and returns a "data" object of shape `{args, meta}` where `args` is the arguments passed to the log function, and `meta` is an object of type `Meta` that has metadata on the log message. The data object is passed through all the plugins in the following order:
 
@@ -89,15 +98,6 @@ declare module "@1log/core" {
   }
 }
 ```
-
-## Packages
-
-- [core](https://github.com/ivan7237d/1log/tree/master/packages/core): `noopLog`, the notion of labels, color palette, and a mechanism to reset stateful plugins.
-- [console](https://github.com/ivan7237d/1log/tree/master/packages/console): a plugin that logs messages using console.\* methods (supports colored labels, time deltas and severity levels).
-- [jest](https://github.com/ivan7237d/1log/tree/master/packages/jest): a plugin that buffers log messages and lets you snapshot them in Jest tests (supports labels and time deltas).
-- [promise](https://github.com/ivan7237d/1log/tree/master/packages/promise): log fulfillment/rejection of a promise.
-- [function](https://github.com/ivan7237d/1log/tree/master/packages/function): log arguments, returned value and errors for a regular or async function.
-- [rxjs](https://github.com/ivan7237d/1log/tree/master/packages/rxjs): log everything that happens to an RxJS observable.
 
 ---
 
