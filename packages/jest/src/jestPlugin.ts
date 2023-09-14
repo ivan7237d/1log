@@ -47,18 +47,6 @@ const bufferSet = new WeakSet();
 
 let haveAddedSnapshotSerializer = false;
 
-export const readLog = () => {
-  maybeReset();
-  if (!haveAddedSnapshotSerializer) {
-    expect.addSnapshotSerializer(jestMessagesSerializer);
-    haveAddedSnapshotSerializer = true;
-  }
-  const snapshot = buffer;
-  buffer = [];
-  bufferSet.add(snapshot);
-  return snapshot;
-};
-
 type JestPlugin = Parameters<typeof expect.addSnapshotSerializer>[0];
 type GetNewPlugin<JestPlugin> = JestPlugin extends { serialize: unknown }
   ? JestPlugin
@@ -115,4 +103,16 @@ export const jestMessagesSerializer: NewPlugin = {
           printer
         );
   },
+};
+
+export const readLog = () => {
+  maybeReset();
+  if (!haveAddedSnapshotSerializer) {
+    expect.addSnapshotSerializer(jestMessagesSerializer);
+    haveAddedSnapshotSerializer = true;
+  }
+  const snapshot = buffer;
+  buffer = [];
+  bufferSet.add(snapshot);
+  return snapshot;
 };

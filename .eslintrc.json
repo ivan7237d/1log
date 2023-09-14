@@ -46,6 +46,7 @@
         "message": "Prefer named exports"
       }
     ],
-    "curly": "error"
+    "curly": "error",
+    "no-use-before-define": "error"
   }
 }
