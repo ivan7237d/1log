@@ -2,7 +2,7 @@ import { getInstanceSymbol, label, Log } from "@1log/core";
 import { pipe } from "pipe-function";
 import { Observable } from "rxjs";
 
-interface LogObservable {
+export interface LogObservable {
   <
     Args extends
       | [source: Observable<unknown>]

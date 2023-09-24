@@ -2,7 +2,7 @@ import { getInstanceSymbol, label, Log } from "@1log/core";
 import { getLogPromise } from "@1log/promise";
 import { pipe } from "pipe-function";
 
-interface LogFunction {
+export interface LogFunction {
   <
     Args extends
       | [f: (...args: any) => any]

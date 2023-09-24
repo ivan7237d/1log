@@ -1,6 +1,6 @@
 import { label, Log } from "@1log/core";
 
-interface LogPromise {
+export interface LogPromise {
   <
     Args extends
       | [promise: Promise<unknown>]
