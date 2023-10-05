@@ -47,6 +47,7 @@
       }
     ],
     "curly": "error",
-    "no-use-before-define": "error"
+    "no-use-before-define": "error",
+    "@typescript-eslint/no-confusing-void-expression": "error"
   }
 }

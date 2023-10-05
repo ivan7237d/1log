@@ -5,7 +5,7 @@ import { palette } from "@1log/core";
 import Color from "colorjs.io";
 import { ansiColors } from "./ansiColors";
 
-const getNearestAnsiColor = (baseColor: Color) => {
+const getNearestAnsiColor = (baseColor: Color): number => {
   let index, delta;
   ansiColors.forEach((ansiColor, currentIndex) => {
     const currentDelta = new Color(ansiColor).deltaE(baseColor, "2000");
