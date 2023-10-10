@@ -18,6 +18,8 @@
     "plugin:eslint-comments/recommended"
   ],
   "rules": {
+    // Fix "eslint:recommended".
+    "no-ex-assign": "off",
     // Rules that prevent unused code.
     "no-unused-vars": "off",
     "@typescript-eslint/no-unused-vars": [
