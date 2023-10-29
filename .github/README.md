@@ -9,19 +9,19 @@ An unopinionated JS/TS logging framework.
 ## Installation
 
 ```bash
-npm install @1log/console @1log/core
+bun add @1log/console @1log/core
 ```
 
-or
+```bash
+pnpm add @1log/console @1log/core
+```
 
 ```bash
 yarn add @1log/console @1log/core
 ```
 
-or
-
 ```bash
-pnpm add @1log/console @1log/core
+npm install @1log/console @1log/core
 ```
 
 ## Usage

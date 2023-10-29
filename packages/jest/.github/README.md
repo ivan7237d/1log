@@ -66,7 +66,7 @@ test("", () => {
 
 ```ts
 import { resetLog, noopLog } from "@1log/core";
-import { jestPlugin, readLog, resetTimeDelta } from "@1log/jest";
+import { jestPlugin, readLog } from "@1log/jest";
 
 const log = noopLog.add(jestPlugin());
 
