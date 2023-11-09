@@ -85,6 +85,8 @@ test("", () => {
     > +500ms 2
   `);
 });
+
+Since there is no time delta logged for the first log entry, in cases when you want to track the time it took before that first entry, log another item just to capture the starting time, e.g. `log("start")`.
 ```
 
 ### Alongside consolePlugin
@@ -94,6 +96,10 @@ There are two options:
 - Have two separate log functions, one that uses `jestPlugin` and one that uses `consolePlugin`.
 
 - Have a `log.ts` module like the example in [1log readme](https://github.com/ivan7237d/1log#usage) and [stub it out](https://jestjs.io/docs/manual-mocks#mocking-user-modules) in tests with a module that uses `jestPlugin` instead of `consolePlugin`.
+
+## Word of caution
+
+It's easy to create large snapshots with this plugin, and it's tempting to do that since you're testing more things that way. It's a deal with the devil though - when you or someone else comes back to this test later, it may end up hard to figure out what the snapshot is actually testing and what makes it correct. It's usually better to keep snapshots small.
 
 ## API
 
