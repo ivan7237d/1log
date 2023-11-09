@@ -4,7 +4,7 @@ An unopinionated JS/TS logging framework.
 
 - Provides a `console.log` equivalent that can be used in the middle of expressions, like `f(log(arg))`.
 
-- Has a minimal core and leaves as much as possible of the implementation details to plugins.
+- Has a minimal core and a simple plugins system.
 
 ## Installation
 
