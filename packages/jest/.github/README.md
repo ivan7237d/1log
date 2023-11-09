@@ -85,9 +85,9 @@ test("", () => {
     > +500ms 2
   `);
 });
+```
 
 Since there is no time delta logged for the first log entry, in cases when you want to track the time it took before that first entry, log another item just to capture the starting time, e.g. `log("start")`.
-```
 
 ### Alongside consolePlugin
 
